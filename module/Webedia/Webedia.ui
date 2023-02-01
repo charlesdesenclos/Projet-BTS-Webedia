@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WebediaClass</class>
+ <widget class="QMainWindow" name="WebediaClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>403</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Webedia</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QLabel" name="label_nom">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>80</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>    Nom :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_afficheresultat">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>60</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_creation">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>310</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Création</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_nom_module">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>80</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_bdd">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>90</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>10</y>
+      <width>451</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>5</width>
+      <height>5</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="sizeIncrement">
+     <size>
+      <width>5</width>
+      <height>5</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>5</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>              Création d'un module</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_couleu_rouge">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>140</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Couleur rouge  :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_couleeur_rouge">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>140</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_nom_Equipement">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>110</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_nom_equipement">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>110</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nom Equipement :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_couleur_bleu">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>170</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Couleur bleu :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_couleur_vert">
+    <property name="geometry">
+     <rect>
+      <x>76</x>
+      <y>200</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Couleur vert :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_couleur_bleu">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>170</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_couleur_vert">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>200</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuCr_ation">
+    <property name="title">
+     <string>Création</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuModifier">
+    <property name="title">
+     <string>Modifier</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuSupprimer">
+    <property name="title">
+     <string>Supprimer</string>
+    </property>
+   </widget>
+   <addaction name="menuCr_ation"/>
+   <addaction name="menuModifier"/>
+   <addaction name="menuSupprimer"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Webedia.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButton_creation</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onCreationButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listWidget_nom_Equipement</sender>
+   <signal>itemClicked(QListWidgetItem*)</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onListWidgetClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onCreationButtonClicked()</slot>
+  <slot>onListWidgetClicked()</slot>
+ </slots>
+</ui>
