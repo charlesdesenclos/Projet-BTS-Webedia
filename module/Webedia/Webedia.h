@@ -10,6 +10,8 @@
 #include <QSqlQuery>
 #include <QtSql>
 
+#include <QString>
+
 class Webedia : public QMainWindow
 {
     Q_OBJECT
@@ -31,5 +33,7 @@ public slots :
     void RequeteInsert(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, QString id_equipement);
     void RequeteSelect(QSqlDatabase db);
     QString onListWidgetClicked(QSqlDatabase db);
+    void RequeteInsertEquipement(QSqlDatabase db, QString nom_equipement, QString adresse_equipement);
+    void onAjoutEquipementButtonClicked();
  
 };

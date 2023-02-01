@@ -135,8 +135,36 @@ void Webedia::onCreationButtonClicked()
 
     RequeteInsert(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, onListWidgetClicked(ConnexionBDD()));
 
+}
+
+void Webedia::RequeteInsertEquipement(QSqlDatabase db, QString nom_equipement, QString adresse_equipement)
+{
+    if (db.open())
+    {
+        ui->label_bdd->setText("Database: connection ok");
+        QSqlQuery query;
 
 
+        query.prepare("INSERT INTO `Equipement`(`nom`, `adresse`) VALUES(:nom, :adresse)");
+
+        query.bindValue(":nom", nom_equipement);
+        query.bindValue(":adresse", adresse_equipement);
+        //query.bindValue("id_equipement", )
+        query.exec();
+        db.close();
+
+
+    }
+    
+}
+
+void Webedia::onAjoutEquipementButtonClicked()
+{
+    QString nom_equipement = ui->lineEdit_nom_equipement->text();
+
+    QString adresse_equipement = ui->lineEdit_adresse_equipement->text();
+
+    RequeteInsertEquipement(ConnexionBDD(), nom_equipement, adresse_equipement);
 
 }
 

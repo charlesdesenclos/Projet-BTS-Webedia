@@ -1,6 +1,2 @@
 ﻿  uic Webedia.ui
-  Webedia.cpp
-  main.cpp
-C:\Users\Formation\source\repos\Webedia\Webedia\Webedia.cpp(115): warning C4715: 'Webedia::onListWidgetClicked' : les chemins de contrôle ne retournent pas tous une valeur
-  moc_Webedia.cpp
-  Webedia.vcxproj -> C:\Users\Formation\source\repos\Webedia\x64\Debug\Webedia.exe
+C:\Users\darkt\AppData\Local\QtMsBuild\qt_globals.targets(293,5): error : [QtRunWork] Error starting process /uic: Le fichier spécifié est introuvable

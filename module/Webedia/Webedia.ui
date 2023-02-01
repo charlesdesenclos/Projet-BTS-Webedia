@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>971</width>
     <height>403</height>
    </rect>
   </property>
@@ -216,13 +216,63 @@
      </rect>
     </property>
    </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>60</y>
+      <width>191</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>             Ajout d'un equipement</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_nom_equipement_2">
+         <property name="text">
+          <string>Nom equipement :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_adresse_equipement">
+         <property name="text">
+          <string>Adresse :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEdit_nom_equipement"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_adresse_equipement"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_ajout_equipement">
+       <property name="text">
+        <string>Ajout d'un equipement</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>971</width>
      <height>21</height>
     </rect>
    </property>
@@ -292,9 +342,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_ajout_equipement</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onAjoutEquipementButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>785</x>
+     <y>231</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>485</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onCreationButtonClicked()</slot>
   <slot>onListWidgetClicked()</slot>
+  <slot>onAjoutEquipementButtonClicked()</slot>
  </slots>
 </ui>
