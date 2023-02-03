@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
@@ -21,6 +22,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -43,6 +45,15 @@ public:
     QLabel *label_couleur_vert;
     QLineEdit *lineEdit_couleur_bleu;
     QLineEdit *lineEdit_couleur_vert;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QLabel *label_2;
+    QFormLayout *formLayout;
+    QLabel *label_nom_equipement_2;
+    QLabel *label_adresse_equipement;
+    QLineEdit *lineEdit_nom_equipement;
+    QLineEdit *lineEdit_adresse_equipement;
+    QPushButton *pushButton_ajout_equipement;
     QMenuBar *menuBar;
     QMenu *menuCr_ation;
     QMenu *menuModifier;
@@ -54,7 +65,7 @@ public:
     {
         if (WebediaClass->objectName().isEmpty())
             WebediaClass->setObjectName(QString::fromUtf8("WebediaClass"));
-        WebediaClass->resize(600, 403);
+        WebediaClass->resize(971, 403);
         centralWidget = new QWidget(WebediaClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         label_nom = new QLabel(centralWidget);
@@ -111,10 +122,54 @@ public:
         lineEdit_couleur_vert = new QLineEdit(centralWidget);
         lineEdit_couleur_vert->setObjectName(QString::fromUtf8("lineEdit_couleur_vert"));
         lineEdit_couleur_vert->setGeometry(QRect(160, 200, 113, 20));
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(690, 60, 191, 151));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label_2 = new QLabel(verticalLayoutWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        verticalLayout->addWidget(label_2);
+
+        formLayout = new QFormLayout();
+        formLayout->setSpacing(6);
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        label_nom_equipement_2 = new QLabel(verticalLayoutWidget);
+        label_nom_equipement_2->setObjectName(QString::fromUtf8("label_nom_equipement_2"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, label_nom_equipement_2);
+
+        label_adresse_equipement = new QLabel(verticalLayoutWidget);
+        label_adresse_equipement->setObjectName(QString::fromUtf8("label_adresse_equipement"));
+
+        formLayout->setWidget(1, QFormLayout::LabelRole, label_adresse_equipement);
+
+        lineEdit_nom_equipement = new QLineEdit(verticalLayoutWidget);
+        lineEdit_nom_equipement->setObjectName(QString::fromUtf8("lineEdit_nom_equipement"));
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, lineEdit_nom_equipement);
+
+        lineEdit_adresse_equipement = new QLineEdit(verticalLayoutWidget);
+        lineEdit_adresse_equipement->setObjectName(QString::fromUtf8("lineEdit_adresse_equipement"));
+
+        formLayout->setWidget(1, QFormLayout::FieldRole, lineEdit_adresse_equipement);
+
+
+        verticalLayout->addLayout(formLayout);
+
+        pushButton_ajout_equipement = new QPushButton(verticalLayoutWidget);
+        pushButton_ajout_equipement->setObjectName(QString::fromUtf8("pushButton_ajout_equipement"));
+
+        verticalLayout->addWidget(pushButton_ajout_equipement);
+
         WebediaClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(WebediaClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 21));
+        menuBar->setGeometry(QRect(0, 0, 971, 21));
         menuCr_ation = new QMenu(menuBar);
         menuCr_ation->setObjectName(QString::fromUtf8("menuCr_ation"));
         menuModifier = new QMenu(menuBar);
@@ -136,6 +191,7 @@ public:
         retranslateUi(WebediaClass);
         QObject::connect(pushButton_creation, SIGNAL(clicked()), WebediaClass, SLOT(onCreationButtonClicked()));
         QObject::connect(listWidget_nom_Equipement, SIGNAL(itemClicked(QListWidgetItem*)), WebediaClass, SLOT(onListWidgetClicked()));
+        QObject::connect(pushButton_ajout_equipement, SIGNAL(clicked()), WebediaClass, SLOT(onAjoutEquipementButtonClicked()));
 
         QMetaObject::connectSlotsByName(WebediaClass);
     } // setupUi
@@ -152,6 +208,10 @@ public:
         label_nom_equipement->setText(QCoreApplication::translate("WebediaClass", "Nom Equipement :", nullptr));
         label_couleur_bleu->setText(QCoreApplication::translate("WebediaClass", "Couleur bleu :", nullptr));
         label_couleur_vert->setText(QCoreApplication::translate("WebediaClass", "Couleur vert :", nullptr));
+        label_2->setText(QCoreApplication::translate("WebediaClass", "             Ajout d'un equipement", nullptr));
+        label_nom_equipement_2->setText(QCoreApplication::translate("WebediaClass", "Nom equipement :", nullptr));
+        label_adresse_equipement->setText(QCoreApplication::translate("WebediaClass", "Adresse :", nullptr));
+        pushButton_ajout_equipement->setText(QCoreApplication::translate("WebediaClass", "Ajout d'un equipement", nullptr));
         menuCr_ation->setTitle(QCoreApplication::translate("WebediaClass", "Cr\303\251ation", nullptr));
         menuModifier->setTitle(QCoreApplication::translate("WebediaClass", "Modifier", nullptr));
         menuSupprimer->setTitle(QCoreApplication::translate("WebediaClass", "Supprimer", nullptr));

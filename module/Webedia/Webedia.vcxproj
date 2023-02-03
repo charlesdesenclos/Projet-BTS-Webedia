@@ -94,8 +94,12 @@
     <QtRcc Include="Webedia.qrc" />
     <QtUic Include="Webedia.ui" />
     <QtMoc Include="Webedia.h" />
+    <ClCompile Include="DMX.cpp" />
     <ClCompile Include="Webedia.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DMX.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
