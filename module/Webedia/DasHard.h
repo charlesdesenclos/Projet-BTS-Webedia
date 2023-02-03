@@ -1,4 +1,4 @@
-
+/*
 #ifndef DASHARD_H
 #define DASHARD_H
 
@@ -39,7 +39,7 @@
 #define DHC_SIZEMEMORY			23		// COMMAND
 
 
-
+/*
 #define DHE_OK					1		// RETURN NO ERROR
 #define DHE_NOTHINGTODO			2		// RETURN NO ERROR
 
@@ -63,3 +63,5 @@ typedef struct{
 
 
 #endif
+
+*/

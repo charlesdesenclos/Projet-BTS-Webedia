@@ -80,16 +80,16 @@ static const uint qt_meta_data_Webedia[] = {
        3,    0,   50,    2, 0x0a /* Public */,
        5,    6,   51,    2, 0x0a /* Public */,
       12,    1,   64,    2, 0x0a /* Public */,
-      13,    1,   67,    2, 0x0a /* Public */,
-      14,    3,   70,    2, 0x0a /* Public */,
-      17,    0,   77,    2, 0x0a /* Public */,
+      13,    0,   67,    2, 0x0a /* Public */,
+      14,    3,   68,    2, 0x0a /* Public */,
+      17,    0,   75,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     0x80000000 | 4,
     QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    6,    7,    8,    9,   10,   11,
     QMetaType::Void, 0x80000000 | 4,    6,
-    QMetaType::QString, 0x80000000 | 4,    6,
+    QMetaType::Int,
     QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString,    6,   15,   16,
     QMetaType::Void,
 
@@ -107,8 +107,8 @@ void Webedia::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             if (_a[0]) *reinterpret_cast< QSqlDatabase*>(_a[0]) = std::move(_r); }  break;
         case 2: _t->RequeteInsert((*reinterpret_cast< QSqlDatabase(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
         case 3: _t->RequeteSelect((*reinterpret_cast< QSqlDatabase(*)>(_a[1]))); break;
-        case 4: { QString _r = _t->onListWidgetClicked((*reinterpret_cast< QSqlDatabase(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+        case 4: { int _r = _t->onListWidgetClicked();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 5: _t->RequeteInsertEquipement((*reinterpret_cast< QSqlDatabase(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 6: _t->onAjoutEquipementButtonClicked(); break;
         default: ;

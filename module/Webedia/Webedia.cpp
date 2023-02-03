@@ -46,14 +46,14 @@ void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleu
         ui->label_bdd->setText("Database: connection ok");
         QSqlQuery query;
 
-
-        query.prepare("INSERT INTO `module`(`name`, `couleur_rouge`, `couleur_bleu`, `couleur_vert`) VALUES(:name, :couleur_rouge, :couleur_bleu, :couleur_vert, :id_equipement )");
+        
+        query.prepare("INSERT INTO `module`(`id`, `name`, `couleur_rouge`, `couleur_bleu`, `couleur_vert`, `id_equipement`) VALUES(:name, :couleur_rouge, :couleur_bleu, :couleur_vert, :id_equipement)");
 
         query.bindValue(":name", name_module);
         query.bindValue(":couleur_rouge", couleur_rouge);
         query.bindValue(":couleur_bleu", couleur_bleu);
         query.bindValue(":couleur_vert", couleur_vert);
-        query.bindValue("id_equipement", id_equipement);
+        query.bindValue(":id_equipement", id_equipement);
         //query.bindValue("id_equipement", )
         query.exec();
         db.close();
@@ -90,32 +90,28 @@ void Webedia::RequeteSelect(QSqlDatabase db)
         }
 }
 
-QString Webedia::onListWidgetClicked(QSqlDatabase db)
+int Webedia::onListWidgetClicked()
 {
-     QString selectedItem = ui->listWidget_nom_Equipement->currentItem()->text();
+     int selectedRow = ui->listWidget_nom_Equipement->currentRow();
 
-     QSqlQuery query;
+     QListWidgetItem* selectedItem = ui->listWidget_nom_Equipement->item(selectedRow);
 
-     if (db.open())
-     {
-         query.exec("SELECT id FROM Equipement WHERE nom = :nom");
-         query.bindValue(":nom", selectedItem);
-         query.exec();
+     
+     if (selectedItem != nullptr) {
+         int id = selectedItem->data(Qt::UserRole).toInt();
          
-         if (query.next())
-         {
-             QString id = query.value(0).toString();
-             db.close();
-             return id;
-         }
-         db.close();
 
-
+         return id;
+         
      }
+     else
+     {
+         ui->label_afficheresultat->setText("Error : Equipement non sélectionner");
+     }
+
+     
+
 }
-
-
-
 
 void Webedia::onCreationButtonClicked()
 {
@@ -131,9 +127,14 @@ void Webedia::onCreationButtonClicked()
     QString couleur_vert = ui->lineEdit_couleur_vert->text();
     //ui->label_afficheresultat->setText(couleur_vert);
 
+    QString id_equipement;
+
+    id_equipement.setNum(onListWidgetClicked());
+
+    ui->label_afficheresultat->setText(id_equipement);
    
 
-    RequeteInsert(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, onListWidgetClicked(ConnexionBDD()));
+    RequeteInsert(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, id_equipement);
 
 }
 

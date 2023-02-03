@@ -2,7 +2,7 @@
 #include "DasHard.h"
 
 #define DMX_MAXCHANNEL 512
-class DMX
+/*/class DMX
 {
 
 private: 
@@ -20,4 +20,5 @@ public :
 
 
 };
+*/
 

@@ -32,7 +32,7 @@ public slots :
     QSqlDatabase ConnexionBDD();
     void RequeteInsert(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, QString id_equipement);
     void RequeteSelect(QSqlDatabase db);
-    QString onListWidgetClicked(QSqlDatabase db);
+    int onListWidgetClicked();
     void RequeteInsertEquipement(QSqlDatabase db, QString nom_equipement, QString adresse_equipement);
     void onAjoutEquipementButtonClicked();
  
