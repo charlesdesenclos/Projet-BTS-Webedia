@@ -39,7 +39,7 @@ QSqlDatabase Webedia::ConnexionBDD()
     
 }
 
-void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, QString id_equipement)
+void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, int id_equipement)
 {
     if (db.open())
     {
@@ -47,7 +47,7 @@ void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleu
         QSqlQuery query;
 
         
-        query.prepare("INSERT INTO `module`(`id`, `name`, `couleur_rouge`, `couleur_bleu`, `couleur_vert`, `id_equipement`) VALUES(:name, :couleur_rouge, :couleur_bleu, :couleur_vert, :id_equipement)");
+        query.prepare("INSERT INTO `module`(`name`, `couleur_rouge`, `couleur_bleu`, `couleur_vert`, `id_equipement`) VALUES(:name, :couleur_rouge, :couleur_bleu, :couleur_vert, :id_equipement)");
 
         query.bindValue(":name", name_module);
         query.bindValue(":couleur_rouge", couleur_rouge);
@@ -74,14 +74,19 @@ void Webedia::RequeteSelect(QSqlDatabase db)
 
         if (db.open())
         {
-            query.exec("SELECT nom FROM Equipement");
+            query.exec("SELECT id, nom FROM Equipement");
 
             while (query.next())
             {
-                QString id_equipement = query.value(0).toString();
+                QString nom = query.value(1).toString();
+                int id = query.value(0).toInt();
                 //ui->label_afficheresultat->text(id_equipement);
-                ui->listWidget_nom_Equipement->addItem(id_equipement);
+                
                 //ui->label_afficheresultat->text(id_equipement);
+
+                QListWidgetItem* item = new QListWidgetItem(nom);
+                item->setData(Qt::UserRole, id);
+                ui->listWidget_nom_Equipement->addItem(item);
 
             }
             db.close();
@@ -107,6 +112,7 @@ int Webedia::onListWidgetClicked()
      else
      {
          ui->label_afficheresultat->setText("Error : Equipement non sélectionner");
+         return -1;
      }
 
      
@@ -127,11 +133,7 @@ void Webedia::onCreationButtonClicked()
     QString couleur_vert = ui->lineEdit_couleur_vert->text();
     //ui->label_afficheresultat->setText(couleur_vert);
 
-    QString id_equipement;
-
-    id_equipement.setNum(onListWidgetClicked());
-
-    ui->label_afficheresultat->setText(id_equipement);
+    int id_equipement = onListWidgetClicked();
    
 
     RequeteInsert(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, id_equipement);

@@ -87,7 +87,7 @@ static const uint qt_meta_data_Webedia[] = {
  // slots: parameters
     QMetaType::Void,
     0x80000000 | 4,
-    QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,    6,    7,    8,    9,   10,   11,
+    QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::Int,    6,    7,    8,    9,   10,   11,
     QMetaType::Void, 0x80000000 | 4,    6,
     QMetaType::Int,
     QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString,    6,   15,   16,
@@ -105,7 +105,7 @@ void Webedia::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 0: _t->onCreationButtonClicked(); break;
         case 1: { QSqlDatabase _r = _t->ConnexionBDD();
             if (_a[0]) *reinterpret_cast< QSqlDatabase*>(_a[0]) = std::move(_r); }  break;
-        case 2: _t->RequeteInsert((*reinterpret_cast< QSqlDatabase(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< QString(*)>(_a[6]))); break;
+        case 2: _t->RequeteInsert((*reinterpret_cast< QSqlDatabase(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< QString(*)>(_a[4])),(*reinterpret_cast< QString(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6]))); break;
         case 3: _t->RequeteSelect((*reinterpret_cast< QSqlDatabase(*)>(_a[1]))); break;
         case 4: { int _r = _t->onListWidgetClicked();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;

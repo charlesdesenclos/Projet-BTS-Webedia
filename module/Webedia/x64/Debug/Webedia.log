@@ -1,3 +1,1 @@
-﻿  Webedia.cpp
-C:\Users\Formation\Documents\GitHub\Projet-BTS-Webedia\module\Webedia\Webedia.cpp(114): warning C4715: 'Webedia::onListWidgetClicked' : les chemins de contrôle ne retournent pas tous une valeur
-  Webedia.vcxproj -> C:\Users\Formation\Documents\GitHub\Projet-BTS-Webedia\module\x64\Debug\Webedia.exe
+﻿  Webedia.vcxproj -> C:\Users\Formation\Documents\GitHub\Projet-BTS-Webedia\module\x64\Debug\Webedia.exe
