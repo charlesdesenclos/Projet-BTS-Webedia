@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>971</width>
+    <width>974</width>
     <height>403</height>
    </rect>
   </property>
@@ -14,19 +14,6 @@
    <string>Webedia</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label_nom">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>80</y>
-      <width>49</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>    Nom :</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_afficheresultat">
     <property name="geometry">
      <rect>
@@ -51,16 +38,6 @@
     </property>
     <property name="text">
      <string>Création</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_nom_module">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>80</y>
-      <width>113</width>
-      <height>22</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label_bdd">
@@ -124,98 +101,6 @@
      <string>              Création d'un module</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_couleu_rouge">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>140</y>
-      <width>101</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Couleur rouge  :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_couleeur_rouge">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>140</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget_nom_Equipement">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>110</y>
-      <width>111</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_nom_equipement">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>110</y>
-      <width>91</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Nom Equipement :</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_couleur_bleu">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>170</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Couleur bleu :</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_couleur_vert">
-    <property name="geometry">
-     <rect>
-      <x>76</x>
-      <y>200</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Couleur vert :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_couleur_bleu">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>170</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_couleur_vert">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>200</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -266,13 +151,95 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="pushButton_test">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>310</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Test</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>60</y>
+      <width>321</width>
+      <height>204</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_2">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_nom">
+       <property name="text">
+        <string>    Nom :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_nom_module"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_nom_equipement">
+       <property name="text">
+        <string>Nom Equipement :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QListWidget" name="listWidget_nom_Equipement"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_couleu_rouge">
+       <property name="text">
+        <string>Couleur rouge  :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEdit_couleeur_rouge"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_couleur_bleu">
+       <property name="text">
+        <string>Couleur bleu :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEdit_couleur_bleu"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_couleur_vert">
+       <property name="text">
+        <string>Couleur vert :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="lineEdit_couleur_vert"/>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Création d'un module</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>971</width>
+     <width>974</width>
      <height>21</height>
     </rect>
    </property>
@@ -283,6 +250,7 @@
     <addaction name="actionCr_ation_2"/>
     <addaction name="actionModifier_2"/>
     <addaction name="actionSupprimer_2"/>
+    <addaction name="actionAffiche"/>
    </widget>
    <widget class="QMenu" name="menuModifier">
     <property name="title">
@@ -291,6 +259,7 @@
     <addaction name="actionCr_ation"/>
     <addaction name="actionModifier"/>
     <addaction name="actionSupprimer"/>
+    <addaction name="actionAffiche_2"/>
    </widget>
    <addaction name="menuCr_ation"/>
    <addaction name="menuModifier"/>
@@ -332,6 +301,16 @@
   <action name="actionSupprimer_2">
    <property name="text">
     <string>Supprimer</string>
+   </property>
+  </action>
+  <action name="actionAffiche">
+   <property name="text">
+    <string>Affiche</string>
+   </property>
+  </action>
+  <action name="actionAffiche_2">
+   <property name="text">
+    <string>Affiche</string>
    </property>
   </action>
  </widget>
