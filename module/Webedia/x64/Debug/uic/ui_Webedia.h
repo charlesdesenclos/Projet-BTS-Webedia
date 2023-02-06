@@ -30,6 +30,12 @@ QT_BEGIN_NAMESPACE
 class Ui_WebediaClass
 {
 public:
+    QAction *actionCr_ation;
+    QAction *actionModifier;
+    QAction *actionSupprimer;
+    QAction *actionCr_ation_2;
+    QAction *actionModifier_2;
+    QAction *actionSupprimer_2;
     QWidget *centralWidget;
     QLabel *label_nom;
     QLabel *label_afficheresultat;
@@ -57,7 +63,6 @@ public:
     QMenuBar *menuBar;
     QMenu *menuCr_ation;
     QMenu *menuModifier;
-    QMenu *menuSupprimer;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -66,6 +71,18 @@ public:
         if (WebediaClass->objectName().isEmpty())
             WebediaClass->setObjectName(QString::fromUtf8("WebediaClass"));
         WebediaClass->resize(971, 403);
+        actionCr_ation = new QAction(WebediaClass);
+        actionCr_ation->setObjectName(QString::fromUtf8("actionCr_ation"));
+        actionModifier = new QAction(WebediaClass);
+        actionModifier->setObjectName(QString::fromUtf8("actionModifier"));
+        actionSupprimer = new QAction(WebediaClass);
+        actionSupprimer->setObjectName(QString::fromUtf8("actionSupprimer"));
+        actionCr_ation_2 = new QAction(WebediaClass);
+        actionCr_ation_2->setObjectName(QString::fromUtf8("actionCr_ation_2"));
+        actionModifier_2 = new QAction(WebediaClass);
+        actionModifier_2->setObjectName(QString::fromUtf8("actionModifier_2"));
+        actionSupprimer_2 = new QAction(WebediaClass);
+        actionSupprimer_2->setObjectName(QString::fromUtf8("actionSupprimer_2"));
         centralWidget = new QWidget(WebediaClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         label_nom = new QLabel(centralWidget);
@@ -174,8 +191,6 @@ public:
         menuCr_ation->setObjectName(QString::fromUtf8("menuCr_ation"));
         menuModifier = new QMenu(menuBar);
         menuModifier->setObjectName(QString::fromUtf8("menuModifier"));
-        menuSupprimer = new QMenu(menuBar);
-        menuSupprimer->setObjectName(QString::fromUtf8("menuSupprimer"));
         WebediaClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(WebediaClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -186,7 +201,12 @@ public:
 
         menuBar->addAction(menuCr_ation->menuAction());
         menuBar->addAction(menuModifier->menuAction());
-        menuBar->addAction(menuSupprimer->menuAction());
+        menuCr_ation->addAction(actionCr_ation_2);
+        menuCr_ation->addAction(actionModifier_2);
+        menuCr_ation->addAction(actionSupprimer_2);
+        menuModifier->addAction(actionCr_ation);
+        menuModifier->addAction(actionModifier);
+        menuModifier->addAction(actionSupprimer);
 
         retranslateUi(WebediaClass);
         QObject::connect(pushButton_creation, SIGNAL(clicked()), WebediaClass, SLOT(onCreationButtonClicked()));
@@ -199,6 +219,12 @@ public:
     void retranslateUi(QMainWindow *WebediaClass)
     {
         WebediaClass->setWindowTitle(QCoreApplication::translate("WebediaClass", "Webedia", nullptr));
+        actionCr_ation->setText(QCoreApplication::translate("WebediaClass", "Cr\303\251ation", nullptr));
+        actionModifier->setText(QCoreApplication::translate("WebediaClass", "Modifier", nullptr));
+        actionSupprimer->setText(QCoreApplication::translate("WebediaClass", "Supprimer", nullptr));
+        actionCr_ation_2->setText(QCoreApplication::translate("WebediaClass", "Cr\303\251ation", nullptr));
+        actionModifier_2->setText(QCoreApplication::translate("WebediaClass", "Modifier", nullptr));
+        actionSupprimer_2->setText(QCoreApplication::translate("WebediaClass", "Supprimer", nullptr));
         label_nom->setText(QCoreApplication::translate("WebediaClass", "    Nom :", nullptr));
         label_afficheresultat->setText(QString());
         pushButton_creation->setText(QCoreApplication::translate("WebediaClass", "Cr\303\251ation", nullptr));
@@ -212,9 +238,8 @@ public:
         label_nom_equipement_2->setText(QCoreApplication::translate("WebediaClass", "Nom equipement :", nullptr));
         label_adresse_equipement->setText(QCoreApplication::translate("WebediaClass", "Adresse :", nullptr));
         pushButton_ajout_equipement->setText(QCoreApplication::translate("WebediaClass", "Ajout d'un equipement", nullptr));
-        menuCr_ation->setTitle(QCoreApplication::translate("WebediaClass", "Cr\303\251ation", nullptr));
-        menuModifier->setTitle(QCoreApplication::translate("WebediaClass", "Modifier", nullptr));
-        menuSupprimer->setTitle(QCoreApplication::translate("WebediaClass", "Supprimer", nullptr));
+        menuCr_ation->setTitle(QCoreApplication::translate("WebediaClass", "Module", nullptr));
+        menuModifier->setTitle(QCoreApplication::translate("WebediaClass", "Equipement", nullptr));
     } // retranslateUi
 
 };

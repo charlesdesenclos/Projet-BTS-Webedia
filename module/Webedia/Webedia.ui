@@ -278,22 +278,22 @@
    </property>
    <widget class="QMenu" name="menuCr_ation">
     <property name="title">
-     <string>Création</string>
+     <string>Module</string>
     </property>
+    <addaction name="actionCr_ation_2"/>
+    <addaction name="actionModifier_2"/>
+    <addaction name="actionSupprimer_2"/>
    </widget>
    <widget class="QMenu" name="menuModifier">
     <property name="title">
-     <string>Modifier</string>
+     <string>Equipement</string>
     </property>
-   </widget>
-   <widget class="QMenu" name="menuSupprimer">
-    <property name="title">
-     <string>Supprimer</string>
-    </property>
+    <addaction name="actionCr_ation"/>
+    <addaction name="actionModifier"/>
+    <addaction name="actionSupprimer"/>
    </widget>
    <addaction name="menuCr_ation"/>
    <addaction name="menuModifier"/>
-   <addaction name="menuSupprimer"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -304,6 +304,36 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionCr_ation">
+   <property name="text">
+    <string>Création</string>
+   </property>
+  </action>
+  <action name="actionModifier">
+   <property name="text">
+    <string>Modifier</string>
+   </property>
+  </action>
+  <action name="actionSupprimer">
+   <property name="text">
+    <string>Supprimer</string>
+   </property>
+  </action>
+  <action name="actionCr_ation_2">
+   <property name="text">
+    <string>Création</string>
+   </property>
+  </action>
+  <action name="actionModifier_2">
+   <property name="text">
+    <string>Modifier</string>
+   </property>
+  </action>
+  <action name="actionSupprimer_2">
+   <property name="text">
+    <string>Supprimer</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
