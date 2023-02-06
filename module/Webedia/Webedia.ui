@@ -53,66 +53,23 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>10</y>
-      <width>451</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>5</width>
-      <height>5</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="sizeIncrement">
-     <size>
-      <width>5</width>
-      <height>5</height>
-     </size>
-    </property>
-    <property name="baseSize">
-     <size>
-      <width>5</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>              Création d'un module</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>690</x>
       <y>60</y>
-      <width>191</width>
+      <width>214</width>
       <height>151</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_ajout_equipement">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>             Ajout d'un equipement</string>
        </property>
@@ -170,7 +127,7 @@
       <x>200</x>
       <y>60</y>
       <width>321</width>
-      <height>204</height>
+      <height>208</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_2">
@@ -225,7 +182,18 @@
       <widget class="QLineEdit" name="lineEdit_couleur_vert"/>
      </item>
      <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_creation_module">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Création d'un module</string>
        </property>
@@ -275,7 +243,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionCr_ation">
    <property name="text">
-    <string>Création</string>
+    <string>Ajout</string>
    </property>
   </action>
   <action name="actionModifier">
