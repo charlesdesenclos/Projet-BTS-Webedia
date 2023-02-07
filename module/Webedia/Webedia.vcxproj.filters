@@ -48,5 +48,8 @@
     <ClInclude Include="DMX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DasHard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

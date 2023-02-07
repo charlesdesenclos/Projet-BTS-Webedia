@@ -10,8 +10,36 @@ Webedia::Webedia(QWidget *parent)
     ui->setupUi(this);
 
     //connect(ui->listWidget_nom_Equipement, &QListWidget::itemClicked, this, &Webedia::onListWidgetClicked);
-    RequeteSelect(ConnexionBDD());
+    RequeteSelectEquipement(ConnexionBDD());
     
+
+    //test 
+
+    QAction* createAction = new QAction("Création");
+    QAction* modifyAction = new QAction("Modification");
+    QAction* deleteAction = new QAction("Suppression");
+    QAction* displayAction = new QAction("Affichage");
+
+    createAction->setShortcut(QKeySequence::New);
+    connect(createAction, &QAction::triggered, this, &Webedia::createModule);
+
+    modifyAction->setShortcut(QKeySequence::Save);
+    connect(modifyAction, &QAction::triggered, this, &Webedia::modifyModule);
+
+    deleteAction->setShortcut(QKeySequence::Cut);
+    connect(deleteAction, &QAction::triggered, this, &Webedia::deleteModule);
+
+    displayAction->setShortcut(QKeySequence::Open);
+    connect(displayAction, &QAction::triggered, this, &Webedia::displayModule);
+
+    QMenu* moduleMenu = menuBar()->addMenu("Module");
+
+    moduleMenu->addAction(createAction);
+    moduleMenu->addAction(modifyAction);
+    moduleMenu->addAction(deleteAction);
+    moduleMenu->addAction(displayAction);
+
+    menuBar()->show();
 }
 
 Webedia::~Webedia()
@@ -39,7 +67,7 @@ QSqlDatabase Webedia::ConnexionBDD()
     
 }
 
-void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, int id_equipement)
+void Webedia::RequeteInsertModule(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, int id_equipement)
 {
     if (db.open())
     {
@@ -54,7 +82,7 @@ void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleu
         query.bindValue(":couleur_bleu", couleur_bleu);
         query.bindValue(":couleur_vert", couleur_vert);
         query.bindValue(":id_equipement", id_equipement);
-        //query.bindValue("id_equipement", )
+      
         query.exec();
         db.close();
 
@@ -62,12 +90,12 @@ void Webedia::RequeteInsert(QSqlDatabase db, QString name_module, QString couleu
     }
     else
     {
-        ui->label_bdd->setText("Error: connection with database fail");
+        ui->label_bdd->setText("Error INSERT MODULE: connection with database fail");
 
     }
 }
 
-void Webedia::RequeteSelect(QSqlDatabase db)
+void Webedia::RequeteSelectEquipement(QSqlDatabase db)
 {
     
         QSqlQuery query;
@@ -91,6 +119,11 @@ void Webedia::RequeteSelect(QSqlDatabase db)
             }
             db.close();
 
+
+        }
+        else
+        {
+            ui->label_bdd->setText("Error SELECT EQUIPEMENT: connection with database fail");
 
         }
 }
@@ -136,7 +169,7 @@ void Webedia::onCreationButtonClicked()
     int id_equipement = onListWidgetClicked();
    
 
-    RequeteInsert(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, id_equipement);
+    RequeteInsertModule(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, id_equipement);
 
 }
 
@@ -158,6 +191,12 @@ void Webedia::RequeteInsertEquipement(QSqlDatabase db, QString nom_equipement, Q
 
 
     }
+    else
+    {
+        ui->label_bdd->setText("Error INSERT EQUIPEMENT: connection with database fail");
+
+
+    }
     
 }
 
@@ -169,6 +208,51 @@ void Webedia::onAjoutEquipementButtonClicked()
 
     RequeteInsertEquipement(ConnexionBDD(), nom_equipement, adresse_equipement);
 
+}
+
+void Webedia::createModule()
+{
+    QLineEdit* lineedit = new QLineEdit();
+
+   
+    
+
+
+    // Définir la taille du QTextEdit
+    lineedit->move(300, 900);
+    lineedit->setFixedSize(100, 50);
+
+    // Créer un QWidget pour être utilisé comme centralWidget
+    QWidget* centralWidget = new QWidget();
+
+    // Créer un QVBoxLayout et ajouter le QTextEdit à celui-ci
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(lineedit);
+
+
+    
+
+    // Définir le layout pour le centralWidget
+    centralWidget->setLayout(layout);
+
+    // Définir le centralWidget pour la fenêtre principale
+    setCentralWidget(centralWidget);
+}
+
+void Webedia::modifyModule()
+{
+}
+
+void Webedia::deleteModule()
+{
+}
+
+void Webedia::displayModule()
+{
+}
+
+void Webedia::testCreationModule()
+{
 }
 
 
