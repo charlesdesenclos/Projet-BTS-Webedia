@@ -42,10 +42,20 @@ public slots :
     void RequeteInsertEquipement(QSqlDatabase db, QString nom_equipement, QString adresse_equipement);
     void onAjoutEquipementButtonClicked();
 
-    void createModule();
-    void modifyModule();
-    void deleteModule();
-    void displayModule();
+    //Gestion affichage
+
+    void menuModule();
+    void menuEquipement();
+    void creationModule();
+    void modificationModule();
+    void suppressionModule();
+    void afficheModule();
+    void creationEquipement();
+    void modificationEquipement();
+    void suppressionEquipement();
+    void afficheEquipement();
+
+    //Test DMX
 
     void testCreationModule();
  

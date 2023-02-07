@@ -17,7 +17,6 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -66,8 +65,6 @@ public:
     QLineEdit *lineEdit_couleur_vert;
     QLabel *label_creation_module;
     QMenuBar *menuBar;
-    QMenu *menuCr_ation;
-    QMenu *menuModifier;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -96,13 +93,13 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         label_afficheresultat = new QLabel(centralWidget);
         label_afficheresultat->setObjectName(QString::fromUtf8("label_afficheresultat"));
-        label_afficheresultat->setGeometry(QRect(570, 240, 381, 21));
+        label_afficheresultat->setGeometry(QRect(480, 240, 471, 21));
         pushButton_creation = new QPushButton(centralWidget);
         pushButton_creation->setObjectName(QString::fromUtf8("pushButton_creation"));
         pushButton_creation->setGeometry(QRect(160, 310, 75, 24));
         label_bdd = new QLabel(centralWidget);
         label_bdd->setObjectName(QString::fromUtf8("label_bdd"));
-        label_bdd->setGeometry(QRect(650, 300, 221, 41));
+        label_bdd->setGeometry(QRect(470, 300, 491, 41));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(690, 60, 214, 151));
@@ -228,10 +225,6 @@ public:
         menuBar = new QMenuBar(WebediaClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 974, 21));
-        menuCr_ation = new QMenu(menuBar);
-        menuCr_ation->setObjectName(QString::fromUtf8("menuCr_ation"));
-        menuModifier = new QMenu(menuBar);
-        menuModifier->setObjectName(QString::fromUtf8("menuModifier"));
         WebediaClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(WebediaClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -239,17 +232,6 @@ public:
         statusBar = new QStatusBar(WebediaClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         WebediaClass->setStatusBar(statusBar);
-
-        menuBar->addAction(menuCr_ation->menuAction());
-        menuBar->addAction(menuModifier->menuAction());
-        menuCr_ation->addAction(actionCr_ation_2);
-        menuCr_ation->addAction(actionModifier_2);
-        menuCr_ation->addAction(actionSupprimer_2);
-        menuCr_ation->addAction(actionAffiche);
-        menuModifier->addAction(actionCr_ation);
-        menuModifier->addAction(actionModifier);
-        menuModifier->addAction(actionSupprimer);
-        menuModifier->addAction(actionAffiche_2);
 
         retranslateUi(WebediaClass);
         QObject::connect(pushButton_creation, SIGNAL(clicked()), WebediaClass, SLOT(onCreationButtonClicked()));
@@ -284,8 +266,6 @@ public:
         label_couleur_bleu->setText(QCoreApplication::translate("WebediaClass", "Couleur bleu :", nullptr));
         label_couleur_vert->setText(QCoreApplication::translate("WebediaClass", "Couleur vert :", nullptr));
         label_creation_module->setText(QCoreApplication::translate("WebediaClass", "Cr\303\251ation d'un module", nullptr));
-        menuCr_ation->setTitle(QCoreApplication::translate("WebediaClass", "Module", nullptr));
-        menuModifier->setTitle(QCoreApplication::translate("WebediaClass", "Equipement", nullptr));
     } // retranslateUi
 
 };

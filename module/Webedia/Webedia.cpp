@@ -13,33 +13,13 @@ Webedia::Webedia(QWidget *parent)
     RequeteSelectEquipement(ConnexionBDD());
     
 
-    //test 
+    //Affiche module et equipement choix
 
-    QAction* createAction = new QAction("Création");
-    QAction* modifyAction = new QAction("Modification");
-    QAction* deleteAction = new QAction("Suppression");
-    QAction* displayAction = new QAction("Affichage");
+    menuModule();
 
-    createAction->setShortcut(QKeySequence::New);
-    connect(createAction, &QAction::triggered, this, &Webedia::createModule);
+    menuEquipement();
 
-    modifyAction->setShortcut(QKeySequence::Save);
-    connect(modifyAction, &QAction::triggered, this, &Webedia::modifyModule);
-
-    deleteAction->setShortcut(QKeySequence::Cut);
-    connect(deleteAction, &QAction::triggered, this, &Webedia::deleteModule);
-
-    displayAction->setShortcut(QKeySequence::Open);
-    connect(displayAction, &QAction::triggered, this, &Webedia::displayModule);
-
-    QMenu* moduleMenu = menuBar()->addMenu("Module");
-
-    moduleMenu->addAction(createAction);
-    moduleMenu->addAction(modifyAction);
-    moduleMenu->addAction(deleteAction);
-    moduleMenu->addAction(displayAction);
-
-    menuBar()->show();
+    
 }
 
 Webedia::~Webedia()
@@ -210,7 +190,65 @@ void Webedia::onAjoutEquipementButtonClicked()
 
 }
 
-void Webedia::createModule()
+void Webedia::menuModule()
+{
+    QAction* creationAction = new QAction("Creation");
+    QAction* modificationAction = new QAction("Modification");
+    QAction* suppressionAction = new QAction("Suppression");
+    QAction* afficheAction = new QAction("Affichage");
+
+    creationAction->setShortcut(QKeySequence::New);
+    connect(creationAction, &QAction::triggered, this, &Webedia::creationModule);
+
+    modificationAction->setShortcut(QKeySequence::Save);
+    connect(modificationAction, &QAction::triggered, this, &Webedia::modificationModule);
+
+    suppressionAction->setShortcut(QKeySequence::Cut);
+    connect(suppressionAction, &QAction::triggered, this, &Webedia::suppressionModule);
+
+    afficheAction->setShortcut(QKeySequence::Open);
+    connect(afficheAction, &QAction::triggered, this, &Webedia::afficheModule);
+
+    QMenu* moduleMenu = menuBar()->addMenu("Module");
+
+    moduleMenu->addAction(creationAction);
+    moduleMenu->addAction(modificationAction);
+    moduleMenu->addAction(suppressionAction);
+    moduleMenu->addAction(afficheAction);
+
+    menuBar()->show();
+}
+
+void Webedia::menuEquipement()
+{
+    QAction* creationAction = new QAction("Creation");
+    QAction* modificationAction = new QAction("Modification");
+    QAction* suppressionAction = new QAction("Suppression");
+    QAction* afficheAction = new QAction("Affichage");
+
+    creationAction->setShortcut(QKeySequence::New);
+    connect(creationAction, &QAction::triggered, this, &Webedia::creationEquipement);
+
+    modificationAction->setShortcut(QKeySequence::Save);
+    connect(modificationAction, &QAction::triggered, this, &Webedia::modificationEquipement);
+
+    suppressionAction->setShortcut(QKeySequence::Cut);
+    connect(suppressionAction, &QAction::triggered, this, &Webedia::suppressionEquipement);
+
+    afficheAction->setShortcut(QKeySequence::Open);
+    connect(afficheAction, &QAction::triggered, this, &Webedia::afficheEquipement);
+
+    QMenu* moduleEquipement = menuBar()->addMenu("Equipement");
+
+    moduleEquipement->addAction(creationAction);
+    moduleEquipement->addAction(modificationAction);
+    moduleEquipement->addAction(suppressionAction);
+    moduleEquipement->addAction(afficheAction);
+
+    menuBar()->show();
+}
+
+void Webedia::creationModule()
 {
     QLineEdit* lineedit = new QLineEdit();
 
@@ -218,7 +256,7 @@ void Webedia::createModule()
     
 
 
-    // Définir la taille du QTextEdit
+    // Définir la taille du QlineEdit
     lineedit->move(300, 900);
     lineedit->setFixedSize(100, 50);
 
@@ -239,16 +277,36 @@ void Webedia::createModule()
     setCentralWidget(centralWidget);
 }
 
-void Webedia::modifyModule()
+void Webedia::modificationModule()
 {
 }
 
-void Webedia::deleteModule()
+void Webedia::suppressionModule()
 {
 }
 
-void Webedia::displayModule()
+void Webedia::afficheModule()
 {
+}
+
+void Webedia::creationEquipement()
+{
+
+}
+
+void Webedia::modificationEquipement()
+{
+
+}
+
+void Webedia::suppressionEquipement()
+{
+
+}
+
+void Webedia::afficheEquipement()
+{
+
 }
 
 void Webedia::testCreationModule()

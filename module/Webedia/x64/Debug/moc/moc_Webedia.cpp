@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Webedia_t {
-    QByteArrayData data[23];
-    char stringdata0[353];
+    QByteArrayData data[29];
+    char stringdata0[474];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,11 +50,17 @@ QT_MOC_LITERAL(14, 192, 23), // "RequeteInsertEquipement"
 QT_MOC_LITERAL(15, 216, 14), // "nom_equipement"
 QT_MOC_LITERAL(16, 231, 18), // "adresse_equipement"
 QT_MOC_LITERAL(17, 250, 30), // "onAjoutEquipementButtonClicked"
-QT_MOC_LITERAL(18, 281, 12), // "createModule"
-QT_MOC_LITERAL(19, 294, 12), // "modifyModule"
-QT_MOC_LITERAL(20, 307, 12), // "deleteModule"
-QT_MOC_LITERAL(21, 320, 13), // "displayModule"
-QT_MOC_LITERAL(22, 334, 18) // "testCreationModule"
+QT_MOC_LITERAL(18, 281, 10), // "menuModule"
+QT_MOC_LITERAL(19, 292, 14), // "menuEquipement"
+QT_MOC_LITERAL(20, 307, 14), // "creationModule"
+QT_MOC_LITERAL(21, 322, 18), // "modificationModule"
+QT_MOC_LITERAL(22, 341, 17), // "suppressionModule"
+QT_MOC_LITERAL(23, 359, 13), // "afficheModule"
+QT_MOC_LITERAL(24, 373, 18), // "creationEquipement"
+QT_MOC_LITERAL(25, 392, 22), // "modificationEquipement"
+QT_MOC_LITERAL(26, 415, 21), // "suppressionEquipement"
+QT_MOC_LITERAL(27, 437, 17), // "afficheEquipement"
+QT_MOC_LITERAL(28, 455, 18) // "testCreationModule"
 
     },
     "Webedia\0onCreationButtonClicked\0\0"
@@ -64,8 +70,11 @@ QT_MOC_LITERAL(22, 334, 18) // "testCreationModule"
     "RequeteSelectEquipement\0onListWidgetClicked\0"
     "RequeteInsertEquipement\0nom_equipement\0"
     "adresse_equipement\0onAjoutEquipementButtonClicked\0"
-    "createModule\0modifyModule\0deleteModule\0"
-    "displayModule\0testCreationModule"
+    "menuModule\0menuEquipement\0creationModule\0"
+    "modificationModule\0suppressionModule\0"
+    "afficheModule\0creationEquipement\0"
+    "modificationEquipement\0suppressionEquipement\0"
+    "afficheEquipement\0testCreationModule"
 };
 #undef QT_MOC_LITERAL
 
@@ -75,7 +84,7 @@ static const uint qt_meta_data_Webedia[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,18 +92,24 @@ static const uint qt_meta_data_Webedia[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x0a /* Public */,
-       3,    0,   75,    2, 0x0a /* Public */,
-       5,    6,   76,    2, 0x0a /* Public */,
-      12,    1,   89,    2, 0x0a /* Public */,
-      13,    0,   92,    2, 0x0a /* Public */,
-      14,    3,   93,    2, 0x0a /* Public */,
-      17,    0,  100,    2, 0x0a /* Public */,
-      18,    0,  101,    2, 0x0a /* Public */,
-      19,    0,  102,    2, 0x0a /* Public */,
-      20,    0,  103,    2, 0x0a /* Public */,
-      21,    0,  104,    2, 0x0a /* Public */,
-      22,    0,  105,    2, 0x0a /* Public */,
+       1,    0,  104,    2, 0x0a /* Public */,
+       3,    0,  105,    2, 0x0a /* Public */,
+       5,    6,  106,    2, 0x0a /* Public */,
+      12,    1,  119,    2, 0x0a /* Public */,
+      13,    0,  122,    2, 0x0a /* Public */,
+      14,    3,  123,    2, 0x0a /* Public */,
+      17,    0,  130,    2, 0x0a /* Public */,
+      18,    0,  131,    2, 0x0a /* Public */,
+      19,    0,  132,    2, 0x0a /* Public */,
+      20,    0,  133,    2, 0x0a /* Public */,
+      21,    0,  134,    2, 0x0a /* Public */,
+      22,    0,  135,    2, 0x0a /* Public */,
+      23,    0,  136,    2, 0x0a /* Public */,
+      24,    0,  137,    2, 0x0a /* Public */,
+      25,    0,  138,    2, 0x0a /* Public */,
+      26,    0,  139,    2, 0x0a /* Public */,
+      27,    0,  140,    2, 0x0a /* Public */,
+      28,    0,  141,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -103,6 +118,12 @@ static const uint qt_meta_data_Webedia[] = {
     QMetaType::Void, 0x80000000 | 4,    6,
     QMetaType::Int,
     QMetaType::Void, 0x80000000 | 4, QMetaType::QString, QMetaType::QString,    6,   15,   16,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -128,11 +149,17 @@ void Webedia::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 5: _t->RequeteInsertEquipement((*reinterpret_cast< QSqlDatabase(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 6: _t->onAjoutEquipementButtonClicked(); break;
-        case 7: _t->createModule(); break;
-        case 8: _t->modifyModule(); break;
-        case 9: _t->deleteModule(); break;
-        case 10: _t->displayModule(); break;
-        case 11: _t->testCreationModule(); break;
+        case 7: _t->menuModule(); break;
+        case 8: _t->menuEquipement(); break;
+        case 9: _t->creationModule(); break;
+        case 10: _t->modificationModule(); break;
+        case 11: _t->suppressionModule(); break;
+        case 12: _t->afficheModule(); break;
+        case 13: _t->creationEquipement(); break;
+        case 14: _t->modificationEquipement(); break;
+        case 15: _t->suppressionEquipement(); break;
+        case 16: _t->afficheEquipement(); break;
+        case 17: _t->testCreationModule(); break;
         default: ;
         }
     }
@@ -167,13 +194,13 @@ int Webedia::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 18;
     }
     return _id;
 }
