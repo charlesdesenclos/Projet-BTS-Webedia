@@ -19,6 +19,21 @@ Webedia::Webedia(QWidget *parent)
 
     menuEquipement();
 
+    creationModule();
+
+    
+
+
+    //QLineEdit* lineEdit1 = new QLineEdit(this);
+
+    //Définissez la taille et la position du QLineEdit
+    //lineEdit1->setGeometry(QRect(QPoint(100, 100), QSize(200, 30)));
+
+
+    //QPushButton* pushbutton_creation = new QPushButton;
+
+    //pushbutton_creation->setGeometry(QRect(QPoint(400, 587), QSize(200, 30)));
+    
     
 }
 
@@ -108,11 +123,11 @@ void Webedia::RequeteSelectEquipement(QSqlDatabase db)
         }
 }
 
-int Webedia::onListWidgetClicked()
+int Webedia::onListWidgetClicked(QListWidget* listWidget_equipement)
 {
-     int selectedRow = ui->listWidget_nom_Equipement->currentRow();
+     int selectedRow = listWidget_equipement->currentRow();
 
-     QListWidgetItem* selectedItem = ui->listWidget_nom_Equipement->item(selectedRow);
+     QListWidgetItem* selectedItem = listWidget_equipement->item(selectedRow);
 
      
      if (selectedItem != nullptr) {
@@ -132,9 +147,11 @@ int Webedia::onListWidgetClicked()
 
 }
 
-void Webedia::onCreationButtonClicked()
+void Webedia::onCreationButtonClicked(QLineEdit* lineEdit_nom, QListWidget* listWidget_equipement)
 {
-    QString name_module = ui->lineEdit_nom_module->text();
+    
+
+    QString name_module = lineEdit_nom->text();
    // ui->label_afficheresultat->setText(name_module);
 
     QString couleur_rouge = ui->lineEdit_couleeur_rouge->text();
@@ -146,7 +163,7 @@ void Webedia::onCreationButtonClicked()
     QString couleur_vert = ui->lineEdit_couleur_vert->text();
     //ui->label_afficheresultat->setText(couleur_vert);
 
-    int id_equipement = onListWidgetClicked();
+    int id_equipement = onListWidgetClicked(listWidget_equipement);
    
 
     RequeteInsertModule(ConnexionBDD(), name_module, couleur_rouge, couleur_bleu, couleur_vert, id_equipement);
@@ -192,89 +209,67 @@ void Webedia::onAjoutEquipementButtonClicked()
 
 void Webedia::menuModule()
 {
-    QAction* creationAction = new QAction("Creation");
-    QAction* modificationAction = new QAction("Modification");
-    QAction* suppressionAction = new QAction("Suppression");
-    QAction* afficheAction = new QAction("Affichage");
+    QPushButton* pushbutton_creation = new QPushButton;
 
-    creationAction->setShortcut(QKeySequence::New);
-    connect(creationAction, &QAction::triggered, this, &Webedia::creationModule);
-
-    modificationAction->setShortcut(QKeySequence::Save);
-    connect(modificationAction, &QAction::triggered, this, &Webedia::modificationModule);
-
-    suppressionAction->setShortcut(QKeySequence::Cut);
-    connect(suppressionAction, &QAction::triggered, this, &Webedia::suppressionModule);
-
-    afficheAction->setShortcut(QKeySequence::Open);
-    connect(afficheAction, &QAction::triggered, this, &Webedia::afficheModule);
-
-    QMenu* moduleMenu = menuBar()->addMenu("Module");
-
-    moduleMenu->addAction(creationAction);
-    moduleMenu->addAction(modificationAction);
-    moduleMenu->addAction(suppressionAction);
-    moduleMenu->addAction(afficheAction);
-
-    menuBar()->show();
+    pushbutton_creation->setGeometry(QRect(QPoint(200, 120), QSize(200, 30)));
 }
 
 void Webedia::menuEquipement()
 {
-    QAction* creationAction = new QAction("Creation");
-    QAction* modificationAction = new QAction("Modification");
-    QAction* suppressionAction = new QAction("Suppression");
-    QAction* afficheAction = new QAction("Affichage");
+    
 
-    creationAction->setShortcut(QKeySequence::New);
-    connect(creationAction, &QAction::triggered, this, &Webedia::creationEquipement);
-
-    modificationAction->setShortcut(QKeySequence::Save);
-    connect(modificationAction, &QAction::triggered, this, &Webedia::modificationEquipement);
-
-    suppressionAction->setShortcut(QKeySequence::Cut);
-    connect(suppressionAction, &QAction::triggered, this, &Webedia::suppressionEquipement);
-
-    afficheAction->setShortcut(QKeySequence::Open);
-    connect(afficheAction, &QAction::triggered, this, &Webedia::afficheEquipement);
-
-    QMenu* moduleEquipement = menuBar()->addMenu("Equipement");
-
-    moduleEquipement->addAction(creationAction);
-    moduleEquipement->addAction(modificationAction);
-    moduleEquipement->addAction(suppressionAction);
-    moduleEquipement->addAction(afficheAction);
-
-    menuBar()->show();
+    
 }
 
 void Webedia::creationModule()
 {
-    QLineEdit* lineedit = new QLineEdit();
+    // Affichage Label
 
+    QLabel* label_nom = new QLabel(this);
+
+    label_nom->setGeometry(QRect(QPoint(120, 70), QSize(226, 20)));
+    label_nom->setText("Nom :");
+
+    QLabel* label_nom_equipement = new QLabel(this);
+
+    label_nom_equipement->setGeometry(QRect(QPoint(110, 100), QSize(226, 20)));
+    label_nom_equipement->setText("Nom Equipement :");
+
+    QLabel* label_couleur_rouge = new QLabel(this);
+
+    label_couleur_rouge->setGeometry(QRect(QPoint(110, 185), QSize(226, 20)));
+    label_couleur_rouge->setText("Couleur Rouge :");
+
+    QLabel* label_couleur_bleu = new QLabel(this);
+
+    label_couleur_bleu->setGeometry(QRect(QPoint(110, 210), QSize(226, 20)));
+    label_couleur_bleu->setText("Couleur Bleu :");
+
+    QLabel* label_couleur_vert = new QLabel(this);
+
+    label_couleur_vert->setGeometry(QRect(QPoint(110, 235), QSize(226, 20)));
+    label_couleur_vert->setText("Couleur Vert :");
+
+    // Affichage LineEdit
+
+    QLineEdit* lineEdit_nom = new QLineEdit(this);
+
+    lineEdit_nom->setGeometry(QRect(QPoint(204, 71), QSize(226, 20)));
+
+    
+
+    //Affichage ListWidget
+
+    QListWidget* listWidget_equipement = new QListWidget(this);
+
+    listWidget_equipement->setGeometry(QRect(QPoint(204, 100), QSize(226, 74)));
+
+
+
+
+
+    onCreationButtonClicked(lineEdit_nom,listWidget_equipement);
    
-    
-
-
-    // Définir la taille du QlineEdit
-    lineedit->move(300, 900);
-    lineedit->setFixedSize(100, 50);
-
-    // Créer un QWidget pour être utilisé comme centralWidget
-    QWidget* centralWidget = new QWidget();
-
-    // Créer un QVBoxLayout et ajouter le QTextEdit à celui-ci
-    QVBoxLayout* layout = new QVBoxLayout;
-    layout->addWidget(lineedit);
-
-
-    
-
-    // Définir le layout pour le centralWidget
-    centralWidget->setLayout(layout);
-
-    // Définir le centralWidget pour la fenêtre principale
-    setCentralWidget(centralWidget);
 }
 
 void Webedia::modificationModule()

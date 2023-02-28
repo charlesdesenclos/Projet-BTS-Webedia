@@ -17,6 +17,10 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QMainWindow>
+#include <QWidget>
+#include <QPushButton>
+#include <QListWidget>
 
 class Webedia : public QMainWindow
 {
@@ -34,11 +38,11 @@ private:
 
 public slots : 
 
-    void onCreationButtonClicked();
+    void onCreationButtonClicked(QLineEdit* lineEdit_nom, QListWidget* listWidget_equipement);
     QSqlDatabase ConnexionBDD();
     void RequeteInsertModule(QSqlDatabase db, QString name_module, QString couleur_rouge, QString couleur_bleu, QString couleur_vert, int id_equipement);
     void RequeteSelectEquipement(QSqlDatabase db);
-    int onListWidgetClicked();
+    int onListWidgetClicked(QListWidget* listWidget_equipement);
     void RequeteInsertEquipement(QSqlDatabase db, QString nom_equipement, QString adresse_equipement);
     void onAjoutEquipementButtonClicked();
 

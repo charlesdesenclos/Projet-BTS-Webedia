@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>974</width>
-    <height>403</height>
+    <width>976</width>
+    <height>526</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -131,56 +131,6 @@
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_creation">
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_nom">
-       <property name="text">
-        <string>    Nom :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_nom_module"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_nom_equipement">
-       <property name="text">
-        <string>Nom Equipement :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QListWidget" name="listWidget_nom_Equipement"/>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_couleu_rouge">
-       <property name="text">
-        <string>Couleur rouge  :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_couleeur_rouge"/>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_couleur_bleu">
-       <property name="text">
-        <string>Couleur bleu :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_couleur_bleu"/>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_couleur_vert">
-       <property name="text">
-        <string>Couleur vert :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="lineEdit_couleur_vert"/>
-     </item>
      <item row="1" column="1">
       <widget class="QLabel" name="label_creation_module">
        <property name="sizePolicy">
@@ -199,7 +149,185 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="1">
+      <widget class="QListWidget" name="listWidget_nom_Equipement"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEdit_couleeur_rouge"/>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="lineEdit_couleur_bleu"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="lineEdit_couleur_vert"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_nom_module"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_couleur_vert">
+       <property name="text">
+        <string>Couleur vert :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_couleur_bleu">
+       <property name="text">
+        <string>Couleur bleu :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_couleu_rouge">
+       <property name="text">
+        <string>Couleur rouge  :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_nom_equipement">
+       <property name="text">
+        <string>Nom Equipement :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_nom">
+       <property name="text">
+        <string>    Nom :</string>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>40</y>
+      <width>201</width>
+      <height>155</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_equipement">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Equipement :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_affiche_creation_equipement">
+       <property name="text">
+        <string>Creation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="pushButton_affiche_supprimer_equipement">
+       <property name="text">
+        <string>Supprimer</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QPushButton" name="pushButton_affiche_equipement">
+       <property name="text">
+        <string>Affiche</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_module">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Module :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="pushButton_affiche_modifier_module">
+       <property name="text">
+        <string>Modifier</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="pushButton_affiche_module">
+       <property name="text">
+        <string>Affiche</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="pushButton_affiche_creation_module">
+       <property name="text">
+        <string>Creation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="pushButton_affiche_modifier_equipement">
+       <property name="text">
+        <string>Modifier</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="pushButton_affiche_supprimer_module">
+       <property name="text">
+        <string>Supprimer</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>390</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Couleur Blanche :</string>
+    </property>
+   </widget>
+   <widget class="QScrollBar" name="horizontalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>390</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -207,7 +335,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>974</width>
+     <width>976</width>
      <height>21</height>
     </rect>
    </property>
@@ -315,10 +443,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_affiche_creation_module</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>creationModule()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>509</x>
+     <y>128</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>487</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onCreationButtonClicked()</slot>
   <slot>onListWidgetClicked()</slot>
   <slot>onAjoutEquipementButtonClicked()</slot>
+  <slot>creationModule()</slot>
  </slots>
 </ui>
