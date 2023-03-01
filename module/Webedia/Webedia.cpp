@@ -10,16 +10,20 @@ Webedia::Webedia(QWidget *parent)
     ui->setupUi(this);
 
     //connect(ui->listWidget_nom_Equipement, &QListWidget::itemClicked, this, &Webedia::onListWidgetClicked);
-    RequeteSelectEquipement(ConnexionBDD());
+    
     
 
     //Affiche module et equipement choix
+    connect(ui->pushButton_affiche_creation_module, &QPushButton::clicked, this, &Webedia::creationModule);
+
 
     menuModule();
 
     menuEquipement();
 
-    creationModule();
+    //creationModule();
+
+    
 
     
 
@@ -90,7 +94,7 @@ void Webedia::RequeteInsertModule(QSqlDatabase db, QString name_module, QString 
     }
 }
 
-void Webedia::RequeteSelectEquipement(QSqlDatabase db)
+void Webedia::RequeteSelectEquipement(QSqlDatabase db, QListWidget* listWidget_equipement)
 {
     
         QSqlQuery query;
@@ -109,7 +113,7 @@ void Webedia::RequeteSelectEquipement(QSqlDatabase db)
 
                 QListWidgetItem* item = new QListWidgetItem(nom);
                 item->setData(Qt::UserRole, id);
-                ui->listWidget_nom_Equipement->addItem(item);
+                listWidget_equipement->addItem(item);
 
             }
             db.close();
@@ -123,45 +127,38 @@ void Webedia::RequeteSelectEquipement(QSqlDatabase db)
         }
 }
 
-int Webedia::onListWidgetClicked(QListWidget* listWidget_equipement)
+int Webedia::onListWidgetClicked(QListWidgetItem* listWidget_equipement)
 {
-     int selectedRow = listWidget_equipement->currentRow();
-
-     QListWidgetItem* selectedItem = listWidget_equipement->item(selectedRow);
+     
 
      
-     if (selectedItem != nullptr) {
-         int id = selectedItem->data(Qt::UserRole).toInt();
+     
+    int id = listWidget_equipement->data(Qt::UserRole).toInt();
          
 
-         return id;
+    return id;
          
-     }
-     else
-     {
-         ui->label_afficheresultat->setText("Error : Equipement non sélectionner");
-         return -1;
-     }
-
+     
+     
      
 
 }
 
-void Webedia::onCreationButtonClicked(QLineEdit* lineEdit_nom, QListWidget* listWidget_equipement)
+void Webedia::onCreationButtonClicked(QLineEdit* lineEdit_nom, QListWidgetItem* listWidget_equipement, QScrollBar* scrollbar_couleur_rouge, QScrollBar* scrollbar_couleur_bleu, QScrollBar* scrollbar_couleur_vert)
 {
     
 
     QString name_module = lineEdit_nom->text();
    // ui->label_afficheresultat->setText(name_module);
 
-    QString couleur_rouge = ui->lineEdit_couleeur_rouge->text();
+    QString couleur_rouge = scrollbar_couleur_rouge->value();
     //ui->label_afficheresultat->setText(couleur_rouge);
 
-    QString couleur_bleu = ui->lineEdit_couleur_bleu->text();
+    QString couleur_bleu = scrollbar_couleur_bleu->value();
     //ui->label_afficheresultat->setText(couleur_bleu);
 
-    QString couleur_vert = ui->lineEdit_couleur_vert->text();
-    //ui->label_afficheresultat->setText(couleur_vert);
+    QString couleur_vert = scrollbar_couleur_vert->value();
+    ui->label_afficheresultat->setText(couleur_vert);
 
     int id_equipement = onListWidgetClicked(listWidget_equipement);
    
@@ -225,6 +222,16 @@ void Webedia::creationModule()
 {
     // Affichage Label
 
+    QLabel* label_creation_module = new QLabel(this);
+
+    label_creation_module->setGeometry(QRect(QPoint(230, 45), QSize(226, 20)));
+    label_creation_module->setText("Creation Module :");
+
+    QFont font = label_creation_module->font();
+    font.setPointSize(font.pointSize() + 5);
+    font.setBold(true);
+    label_creation_module->setFont(font);
+
     QLabel* label_nom = new QLabel(this);
 
     label_nom->setGeometry(QRect(QPoint(120, 70), QSize(226, 20)));
@@ -256,6 +263,8 @@ void Webedia::creationModule()
 
     lineEdit_nom->setGeometry(QRect(QPoint(204, 71), QSize(226, 20)));
 
+
+
     
 
     //Affichage ListWidget
@@ -264,11 +273,48 @@ void Webedia::creationModule()
 
     listWidget_equipement->setGeometry(QRect(QPoint(204, 100), QSize(226, 74)));
 
+    
+    connect(listWidget_equipement, &QListWidget::itemClicked, this, &Webedia::onListWidgetClicked);
+
+    RequeteSelectEquipement(ConnexionBDD(), listWidget_equipement);
+
+    // Scroll bar 
+
+    QScrollBar* scrollbar_couleur_rouge = new QScrollBar(Qt::Horizontal,this);
+
+    scrollbar_couleur_rouge->setGeometry(QRect(QPoint(204, 185), QSize(226, 16)));
+    scrollbar_couleur_rouge->setMinimum(0);
+    scrollbar_couleur_rouge->setMaximum(255);
+
+    QScrollBar* scrollbar_couleur_bleu = new QScrollBar(Qt::Horizontal, this);
+
+    scrollbar_couleur_bleu->setGeometry(QRect(QPoint(204, 210), QSize(226, 16)));
+    scrollbar_couleur_bleu->setMinimum(0);
+    scrollbar_couleur_bleu->setMaximum(255);
+
+    QScrollBar* scrollbar_couleur_vert = new QScrollBar(Qt::Horizontal, this);
+
+    scrollbar_couleur_vert->setGeometry(QRect(QPoint(204, 235), QSize(226, 16)));
+    scrollbar_couleur_vert->setMinimum(0);
+    scrollbar_couleur_vert->setMaximum(255);
+
+    // Affichage Button
+
+    QPushButton* pushbutton_creation = new QPushButton(this);
+    pushbutton_creation->setGeometry(QRect(QPoint(160, 320), QSize(75, 24)));
+    pushbutton_creation->setText("Creation");
+
+    //connect(pushbutton_creation, &QPushButton::clicked, this, &Webedia::onCreationButtonClicked);
+
+
+    QPushButton* pushbutton_test = new QPushButton(this);
+    pushbutton_test->setGeometry(QRect(QPoint(300, 320), QSize(75, 24)));
+    pushbutton_test->setText("Test");
 
 
 
 
-    onCreationButtonClicked(lineEdit_nom,listWidget_equipement);
+    //onCreationButtonClicked(lineEdit_nom,listWidget_equipement);
    
 }
 

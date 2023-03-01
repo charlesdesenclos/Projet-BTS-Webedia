@@ -16,11 +16,9 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QScrollBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -41,7 +39,6 @@ public:
     QAction *actionAffiche_2;
     QWidget *centralWidget;
     QLabel *label_afficheresultat;
-    QPushButton *pushButton_creation;
     QLabel *label_bdd;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_equipement;
@@ -52,20 +49,6 @@ public:
     QLineEdit *lineEdit_nom_equipement;
     QLineEdit *lineEdit_adresse_equipement;
     QPushButton *pushButton_ajout_equipement;
-    QPushButton *pushButton_test;
-    QWidget *formLayoutWidget;
-    QFormLayout *formLayout_creation;
-    QLabel *label_creation_module;
-    QListWidget *listWidget_nom_Equipement;
-    QLineEdit *lineEdit_couleeur_rouge;
-    QLineEdit *lineEdit_couleur_bleu;
-    QLineEdit *lineEdit_couleur_vert;
-    QLineEdit *lineEdit_nom_module;
-    QLabel *label_couleur_vert;
-    QLabel *label_couleur_bleu;
-    QLabel *label_couleu_rouge;
-    QLabel *label_nom_equipement;
-    QLabel *label_nom;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
     QLabel *label_equipement;
@@ -78,8 +61,6 @@ public:
     QPushButton *pushButton_affiche_creation_module;
     QPushButton *pushButton_affiche_modifier_equipement;
     QPushButton *pushButton_affiche_supprimer_module;
-    QLabel *label;
-    QScrollBar *horizontalScrollBar;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -88,7 +69,7 @@ public:
     {
         if (WebediaClass->objectName().isEmpty())
             WebediaClass->setObjectName(QString::fromUtf8("WebediaClass"));
-        WebediaClass->resize(976, 526);
+        WebediaClass->resize(978, 526);
         actionCr_ation = new QAction(WebediaClass);
         actionCr_ation->setObjectName(QString::fromUtf8("actionCr_ation"));
         actionModifier = new QAction(WebediaClass);
@@ -110,9 +91,6 @@ public:
         label_afficheresultat = new QLabel(centralWidget);
         label_afficheresultat->setObjectName(QString::fromUtf8("label_afficheresultat"));
         label_afficheresultat->setGeometry(QRect(480, 240, 471, 21));
-        pushButton_creation = new QPushButton(centralWidget);
-        pushButton_creation->setObjectName(QString::fromUtf8("pushButton_creation"));
-        pushButton_creation->setGeometry(QRect(160, 310, 75, 24));
         label_bdd = new QLabel(centralWidget);
         label_bdd->setObjectName(QString::fromUtf8("label_bdd"));
         label_bdd->setGeometry(QRect(470, 300, 491, 41));
@@ -163,80 +141,6 @@ public:
 
         verticalLayout_equipement->addWidget(pushButton_ajout_equipement);
 
-        pushButton_test = new QPushButton(centralWidget);
-        pushButton_test->setObjectName(QString::fromUtf8("pushButton_test"));
-        pushButton_test->setGeometry(QRect(300, 310, 75, 23));
-        formLayoutWidget = new QWidget(centralWidget);
-        formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(110, 30, 321, 214));
-        formLayout_creation = new QFormLayout(formLayoutWidget);
-        formLayout_creation->setSpacing(6);
-        formLayout_creation->setContentsMargins(11, 11, 11, 11);
-        formLayout_creation->setObjectName(QString::fromUtf8("formLayout_creation"));
-        formLayout_creation->setContentsMargins(0, 0, 0, 0);
-        label_creation_module = new QLabel(formLayoutWidget);
-        label_creation_module->setObjectName(QString::fromUtf8("label_creation_module"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label_creation_module->sizePolicy().hasHeightForWidth());
-        label_creation_module->setSizePolicy(sizePolicy);
-        QFont font1;
-        font1.setPointSize(14);
-        label_creation_module->setFont(font1);
-
-        formLayout_creation->setWidget(1, QFormLayout::FieldRole, label_creation_module);
-
-        listWidget_nom_Equipement = new QListWidget(formLayoutWidget);
-        listWidget_nom_Equipement->setObjectName(QString::fromUtf8("listWidget_nom_Equipement"));
-
-        formLayout_creation->setWidget(3, QFormLayout::FieldRole, listWidget_nom_Equipement);
-
-        lineEdit_couleeur_rouge = new QLineEdit(formLayoutWidget);
-        lineEdit_couleeur_rouge->setObjectName(QString::fromUtf8("lineEdit_couleeur_rouge"));
-
-        formLayout_creation->setWidget(4, QFormLayout::FieldRole, lineEdit_couleeur_rouge);
-
-        lineEdit_couleur_bleu = new QLineEdit(formLayoutWidget);
-        lineEdit_couleur_bleu->setObjectName(QString::fromUtf8("lineEdit_couleur_bleu"));
-
-        formLayout_creation->setWidget(5, QFormLayout::FieldRole, lineEdit_couleur_bleu);
-
-        lineEdit_couleur_vert = new QLineEdit(formLayoutWidget);
-        lineEdit_couleur_vert->setObjectName(QString::fromUtf8("lineEdit_couleur_vert"));
-
-        formLayout_creation->setWidget(6, QFormLayout::FieldRole, lineEdit_couleur_vert);
-
-        lineEdit_nom_module = new QLineEdit(formLayoutWidget);
-        lineEdit_nom_module->setObjectName(QString::fromUtf8("lineEdit_nom_module"));
-
-        formLayout_creation->setWidget(2, QFormLayout::FieldRole, lineEdit_nom_module);
-
-        label_couleur_vert = new QLabel(formLayoutWidget);
-        label_couleur_vert->setObjectName(QString::fromUtf8("label_couleur_vert"));
-
-        formLayout_creation->setWidget(6, QFormLayout::LabelRole, label_couleur_vert);
-
-        label_couleur_bleu = new QLabel(formLayoutWidget);
-        label_couleur_bleu->setObjectName(QString::fromUtf8("label_couleur_bleu"));
-
-        formLayout_creation->setWidget(5, QFormLayout::LabelRole, label_couleur_bleu);
-
-        label_couleu_rouge = new QLabel(formLayoutWidget);
-        label_couleu_rouge->setObjectName(QString::fromUtf8("label_couleu_rouge"));
-
-        formLayout_creation->setWidget(4, QFormLayout::LabelRole, label_couleu_rouge);
-
-        label_nom_equipement = new QLabel(formLayoutWidget);
-        label_nom_equipement->setObjectName(QString::fromUtf8("label_nom_equipement"));
-
-        formLayout_creation->setWidget(3, QFormLayout::LabelRole, label_nom_equipement);
-
-        label_nom = new QLabel(formLayoutWidget);
-        label_nom->setObjectName(QString::fromUtf8("label_nom"));
-
-        formLayout_creation->setWidget(2, QFormLayout::LabelRole, label_nom);
-
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
         gridLayoutWidget->setGeometry(QRect(460, 40, 201, 155));
@@ -247,11 +151,11 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         label_equipement = new QLabel(gridLayoutWidget);
         label_equipement->setObjectName(QString::fromUtf8("label_equipement"));
-        QFont font2;
-        font2.setPointSize(11);
-        font2.setBold(true);
-        font2.setWeight(75);
-        label_equipement->setFont(font2);
+        QFont font1;
+        font1.setPointSize(11);
+        font1.setBold(true);
+        font1.setWeight(75);
+        label_equipement->setFont(font1);
 
         gridLayout->addWidget(label_equipement, 0, 1, 1, 1);
 
@@ -272,14 +176,14 @@ public:
 
         label_module = new QLabel(gridLayoutWidget);
         label_module->setObjectName(QString::fromUtf8("label_module"));
-        QFont font3;
-        font3.setPointSize(11);
-        font3.setBold(true);
-        font3.setItalic(false);
-        font3.setUnderline(false);
-        font3.setWeight(75);
-        font3.setStrikeOut(false);
-        label_module->setFont(font3);
+        QFont font2;
+        font2.setPointSize(11);
+        font2.setBold(true);
+        font2.setItalic(false);
+        font2.setUnderline(false);
+        font2.setWeight(75);
+        font2.setStrikeOut(false);
+        label_module->setFont(font2);
         label_module->setMouseTracking(false);
 
         gridLayout->addWidget(label_module, 0, 0, 1, 1);
@@ -309,17 +213,10 @@ public:
 
         gridLayout->addWidget(pushButton_affiche_supprimer_module, 3, 0, 1, 1);
 
-        label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(80, 390, 101, 16));
-        horizontalScrollBar = new QScrollBar(centralWidget);
-        horizontalScrollBar->setObjectName(QString::fromUtf8("horizontalScrollBar"));
-        horizontalScrollBar->setGeometry(QRect(200, 390, 160, 16));
-        horizontalScrollBar->setOrientation(Qt::Horizontal);
         WebediaClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(WebediaClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 976, 21));
+        menuBar->setGeometry(QRect(0, 0, 978, 21));
         WebediaClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(WebediaClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -329,10 +226,7 @@ public:
         WebediaClass->setStatusBar(statusBar);
 
         retranslateUi(WebediaClass);
-        QObject::connect(pushButton_creation, SIGNAL(clicked()), WebediaClass, SLOT(onCreationButtonClicked()));
-        QObject::connect(listWidget_nom_Equipement, SIGNAL(itemClicked(QListWidgetItem*)), WebediaClass, SLOT(onListWidgetClicked()));
         QObject::connect(pushButton_ajout_equipement, SIGNAL(clicked()), WebediaClass, SLOT(onAjoutEquipementButtonClicked()));
-        QObject::connect(pushButton_affiche_creation_module, SIGNAL(clicked()), WebediaClass, SLOT(creationModule()));
 
         QMetaObject::connectSlotsByName(WebediaClass);
     } // setupUi
@@ -349,19 +243,11 @@ public:
         actionAffiche->setText(QCoreApplication::translate("WebediaClass", "Affiche", nullptr));
         actionAffiche_2->setText(QCoreApplication::translate("WebediaClass", "Affiche", nullptr));
         label_afficheresultat->setText(QString());
-        pushButton_creation->setText(QCoreApplication::translate("WebediaClass", "Cr\303\251ation", nullptr));
         label_bdd->setText(QString());
         label_ajout_equipement->setText(QCoreApplication::translate("WebediaClass", "             Ajout d'un equipement", nullptr));
         label_nom_equipement_2->setText(QCoreApplication::translate("WebediaClass", "Nom equipement :", nullptr));
         label_adresse_equipement->setText(QCoreApplication::translate("WebediaClass", "Adresse :", nullptr));
         pushButton_ajout_equipement->setText(QCoreApplication::translate("WebediaClass", "Ajout d'un equipement", nullptr));
-        pushButton_test->setText(QCoreApplication::translate("WebediaClass", "Test", nullptr));
-        label_creation_module->setText(QCoreApplication::translate("WebediaClass", "Cr\303\251ation d'un module", nullptr));
-        label_couleur_vert->setText(QCoreApplication::translate("WebediaClass", "Couleur vert :", nullptr));
-        label_couleur_bleu->setText(QCoreApplication::translate("WebediaClass", "Couleur bleu :", nullptr));
-        label_couleu_rouge->setText(QCoreApplication::translate("WebediaClass", "Couleur rouge  :", nullptr));
-        label_nom_equipement->setText(QCoreApplication::translate("WebediaClass", "Nom Equipement :", nullptr));
-        label_nom->setText(QCoreApplication::translate("WebediaClass", "    Nom :", nullptr));
         label_equipement->setText(QCoreApplication::translate("WebediaClass", "Equipement :", nullptr));
         pushButton_affiche_creation_equipement->setText(QCoreApplication::translate("WebediaClass", "Creation", nullptr));
         pushButton_affiche_supprimer_equipement->setText(QCoreApplication::translate("WebediaClass", "Supprimer", nullptr));
@@ -372,7 +258,6 @@ public:
         pushButton_affiche_creation_module->setText(QCoreApplication::translate("WebediaClass", "Creation", nullptr));
         pushButton_affiche_modifier_equipement->setText(QCoreApplication::translate("WebediaClass", "Modifier", nullptr));
         pushButton_affiche_supprimer_module->setText(QCoreApplication::translate("WebediaClass", "Supprimer", nullptr));
-        label->setText(QCoreApplication::translate("WebediaClass", "Couleur Blanche :", nullptr));
     } // retranslateUi
 
 };

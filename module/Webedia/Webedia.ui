@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>976</width>
+    <width>978</width>
     <height>526</height>
    </rect>
   </property>
@@ -25,19 +25,6 @@
     </property>
     <property name="text">
      <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_creation">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>310</y>
-      <width>75</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Création</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_bdd">
@@ -103,99 +90,6 @@
       <widget class="QPushButton" name="pushButton_ajout_equipement">
        <property name="text">
         <string>Ajout d'un equipement</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_test">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>310</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="formLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>30</y>
-      <width>321</width>
-      <height>214</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout_creation">
-     <item row="1" column="1">
-      <widget class="QLabel" name="label_creation_module">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Création d'un module</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QListWidget" name="listWidget_nom_Equipement"/>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_couleeur_rouge"/>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_couleur_bleu"/>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="lineEdit_couleur_vert"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_nom_module"/>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_couleur_vert">
-       <property name="text">
-        <string>Couleur vert :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_couleur_bleu">
-       <property name="text">
-        <string>Couleur bleu :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_couleu_rouge">
-       <property name="text">
-        <string>Couleur rouge  :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_nom_equipement">
-       <property name="text">
-        <string>Nom Equipement :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_nom">
-       <property name="text">
-        <string>    Nom :</string>
        </property>
       </widget>
      </item>
@@ -303,39 +197,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>390</y>
-      <width>101</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Couleur Blanche :</string>
-    </property>
-   </widget>
-   <widget class="QScrollBar" name="horizontalScrollBar">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>390</y>
-      <width>160</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>976</width>
+     <width>978</width>
      <height>21</height>
     </rect>
    </property>
@@ -396,38 +264,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_creation</sender>
-   <signal>clicked()</signal>
-   <receiver>WebediaClass</receiver>
-   <slot>onCreationButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>187</x>
-     <y>195</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>199</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>listWidget_nom_Equipement</sender>
-   <signal>itemClicked(QListWidgetItem*)</signal>
-   <receiver>WebediaClass</receiver>
-   <slot>onListWidgetClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>215</x>
-     <y>153</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>201</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_ajout_equipement</sender>
    <signal>clicked()</signal>
    <receiver>WebediaClass</receiver>
@@ -440,22 +276,6 @@
     <hint type="destinationlabel">
      <x>485</x>
      <y>201</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_affiche_creation_module</sender>
-   <signal>clicked()</signal>
-   <receiver>WebediaClass</receiver>
-   <slot>creationModule()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>509</x>
-     <y>128</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>487</x>
-     <y>262</y>
     </hint>
    </hints>
   </connection>
