@@ -262,24 +262,7 @@
  <resources>
   <include location="Webedia.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>pushButton_ajout_equipement</sender>
-   <signal>clicked()</signal>
-   <receiver>WebediaClass</receiver>
-   <slot>onAjoutEquipementButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>785</x>
-     <y>231</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>485</x>
-     <y>201</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>onCreationButtonClicked()</slot>
   <slot>onListWidgetClicked()</slot>

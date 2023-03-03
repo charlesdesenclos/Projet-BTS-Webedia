@@ -12,14 +12,14 @@ Webedia::Webedia(QWidget *parent)
     //connect(ui->listWidget_nom_Equipement, &QListWidget::itemClicked, this, &Webedia::onListWidgetClicked);
     
     
-
+    //QPushButton* button = new QPushButton("Afficher QLineEdit", this);
     //Affiche module et equipement choix
     connect(ui->pushButton_affiche_creation_module, &QPushButton::clicked, this, &Webedia::creationModule);
 
 
     menuModule();
 
-    menuEquipement();
+    //menuEquipement();
 
     //creationModule();
 
@@ -214,8 +214,16 @@ void Webedia::menuModule()
 void Webedia::menuEquipement()
 {
     
+    QLabel* label_creation_module = new QLabel(this);
 
+    label_creation_module->setGeometry(QRect(QPoint(230, 45), QSize(226, 20)));
+    label_creation_module->setText("Creation Module :");
     
+    QWidget* window = new QWidget;
+    QVBoxLayout* layout = new QVBoxLayout(window);
+    layout->addWidget(label_creation_module);
+
+    window->show();
 }
 
 void Webedia::creationModule()
@@ -311,8 +319,22 @@ void Webedia::creationModule()
     pushbutton_test->setGeometry(QRect(QPoint(300, 320), QSize(75, 24)));
     pushbutton_test->setText("Test");
 
-
-
+    QWidget* window = new QWidget;
+    QVBoxLayout* layout = new QVBoxLayout(window);
+    layout->addWidget(label_creation_module);
+    layout->addWidget(label_nom);
+    layout->addWidget(label_nom_equipement);
+    layout->addWidget(label_couleur_rouge);
+    layout->addWidget(label_couleur_bleu);
+    layout->addWidget(label_couleur_vert);
+    layout->addWidget(listWidget_equipement);
+    layout->addWidget(scrollbar_couleur_rouge);
+    layout->addWidget(scrollbar_couleur_bleu);
+    layout->addWidget(scrollbar_couleur_vert);
+    layout->addWidget(pushbutton_creation);
+    layout->addWidget(pushbutton_test);
+    
+    window->show();
 
     //onCreationButtonClicked(lineEdit_nom,listWidget_equipement);
    

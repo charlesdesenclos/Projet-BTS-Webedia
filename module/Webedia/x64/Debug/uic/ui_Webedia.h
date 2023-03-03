@@ -226,7 +226,6 @@ public:
         WebediaClass->setStatusBar(statusBar);
 
         retranslateUi(WebediaClass);
-        QObject::connect(pushButton_ajout_equipement, SIGNAL(clicked()), WebediaClass, SLOT(onAjoutEquipementButtonClicked()));
 
         QMetaObject::connectSlotsByName(WebediaClass);
     } // setupUi
