@@ -211,7 +211,7 @@ void Webedia::menuModule()
     pushbutton_creation->setGeometry(QRect(QPoint(200, 120), QSize(200, 30)));
 }
 
-void Webedia::menuEquipement()
+void Webedia::menuCanaux()
 {
     
     QLabel* label_creation_module = new QLabel(this);
@@ -352,28 +352,23 @@ void Webedia::afficheModule()
 {
 }
 
-void Webedia::creationEquipement()
+void Webedia::creationCanaux()
 {
 
 }
 
-void Webedia::modificationEquipement()
+void Webedia::modificationCanaux()
 {
 
 }
 
-void Webedia::suppressionEquipement()
+void Webedia::suppressionCanaux()
 {
 
 }
 
-void Webedia::afficheEquipement()
+void Webedia::afficheCanaux()
 {
 
 }
-
-void Webedia::testCreationModule()
-{
-}
-
 

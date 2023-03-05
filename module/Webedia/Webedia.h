@@ -50,18 +50,16 @@ public slots :
     //Gestion affichage
 
     void menuModule();
-    void menuEquipement();
+    void menuCanaux();
     void creationModule();
     void modificationModule();
     void suppressionModule();
     void afficheModule();
-    void creationEquipement();
-    void modificationEquipement();
-    void suppressionEquipement();
-    void afficheEquipement();
+    void creationCanaux();
+    void modificationCanaux();
+    void suppressionCanaux();
+    void afficheCanaux();
 
-    //Test DMX
-
-    void testCreationModule();
+    
  
 };
