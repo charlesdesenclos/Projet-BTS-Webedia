@@ -35,4 +35,9 @@
             session_unset();
             session_destroy();
         }
+
+        public function inscription($login, $password) {
+            $stmt = $GLOBALS["PDO"]->prepare("INSERT INTO user (login, password) VALUES (?, ?)");
+            $stmt->execute([$login, $password]);
+        }
     }
