@@ -3,14 +3,14 @@
 class Champs{
     private $id_;
     private $idCanaux_;
-    private $valeur_;
+    private $nomChamps_;
     private $adresse_;
 
-    public function __construct($Newid, $NewidCanaux, $Newvaleur, $Newadresse)
+    public function __construct($Newid, $NewidCanaux, $NewnomChamps, $Newadresse)
     {
         $this-> id_ = $Newid;
         $this-> idCanaux_ = $NewidCanaux;
-        $this-> valeur_ = $Newvaleur;
+        $this-> nomChamps_ = $NewnomChamps;
         $this-> adresse_ = $Newadresse;
     }
 
