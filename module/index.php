@@ -46,8 +46,10 @@
 
         
     }
-    if(isset($_SESSION['ModuleValider']) && $_SESSION['ModuleValider'] == false)
-    {
+
+
+    //if(isset($_SESSION['ModuleValider']) && $_SESSION['ModuleValider'] == false)
+    //{
         ?>
         <div class="form-body">
         <div class="row">
@@ -95,7 +97,7 @@
 
         <?php
 
-    }
+    //}
   ?>
   
     <?php
