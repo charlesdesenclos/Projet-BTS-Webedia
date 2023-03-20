@@ -15,6 +15,7 @@ class Module{
 
    public function creation($nomEquipement, $adresse)
    {
+      
       $check = $GLOBALS['bdd']->prepare('SELECT nomEquipement FROM `module` WHERE nomEquipement = ?');
       $check->execute(array($nomEquipement));
       $data = $check->fetch();
@@ -33,6 +34,22 @@ class Module{
          $_SESSION['ModulExisteDeja'] = true;
       }   
    }
+   public function getID()
+   {
+      $sqlSelectIDModule = "SELECT id FROM module";
+      $IDModule = $GLOBALS['bdd']->query($sqlSelectIDModule);
+      $result = $IDModule->fetchAll();
+      return $result;
+   }
+
+   public function getnomEquipement()
+   {
+      $sqlSelectnomEquipement = "SELECT nomEquipement FROM module";
+      $nomEquipement = $GLOBALS['bdd']->query($sqlSelectnomEquipement);
+      $result = $nomEquipement->fetchAll();
+      return $result;
+   }
+
 }
 
 
