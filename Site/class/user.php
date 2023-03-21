@@ -17,7 +17,7 @@
         }
 
         public function seConnecter($login, $password) {
-            $Request = "SELECT * FROM `user` WHERE `login` = '".$login."' and `password` = '".$password."';";
+            $Request = "SELECT * FROM `user` WHERE `identifiant` = '".$login."' and `password` = '".$password."';";
 
             $result = $GLOBALS["PDO"]->query($Request);
 

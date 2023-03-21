@@ -52,13 +52,6 @@ $TheUser = new user(null, null, null, null);
         <input type = "submit" name = "deconnexion" value = "Deconnexion"/>
     </form>
 
-    <form action="" method="POST">
-      <label for="nom_scene">Nom de la scène :</label>
-      <input type="text" name="nom_scene" required>
-
-      <input type="submit" name="creer_scene" id="creer_scene" value="Créer">
-    </form>
-
     <?php
 
 } else {
@@ -92,7 +85,7 @@ $TheUser = new user(null, null, null, null);
 
                 <div class="form-group">
                   <button type="submit" class="form-control btn btn-primary submit px-3" name="connexion" id="connexion-btn">Se connecter</button>
-                </div>;
+                </div>
 
 				<div class="form-group">
 					<button type="button" class="form-control btn btn-primary submit px-3" name="inscription" id="inscription-btn">S'inscrire</button>
