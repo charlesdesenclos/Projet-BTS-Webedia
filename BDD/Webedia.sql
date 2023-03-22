@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 01 fév. 2023 à 12:27
+-- Généré le : mer. 22 mars 2023 à 10:41
 -- Version du serveur :  10.5.18-MariaDB-0+deb11u1
 -- Version de PHP : 7.4.33
 
@@ -24,24 +24,59 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Equipement`
+-- Structure de la table `canaux`
 --
 
-CREATE TABLE `Equipement` (
+CREATE TABLE `canaux` (
   `id` int(11) NOT NULL,
-  `nom` text NOT NULL,
-  `adresse` int(11) NOT NULL
+  `valeur` int(255) NOT NULL,
+  `idmodule` int(11) NOT NULL,
+  `idscene` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `Equipement`
+-- Déchargement des données de la table `canaux`
 --
 
-INSERT INTO `Equipement` (`id`, `nom`, `adresse`) VALUES
-(1, 'Lampe 1', 1),
-(2, 'lampe2', 2),
-(3, 'lampe3', 3),
-(4, 'lampe4', 4);
+INSERT INTO `canaux` (`id`, `valeur`, `idmodule`, `idscene`) VALUES
+(7, 16, 21, 2),
+(8, 16, 21, 2),
+(9, 19, 23, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `champs`
+--
+
+CREATE TABLE `champs` (
+  `id` int(11) NOT NULL,
+  `nomChamps` text NOT NULL,
+  `adress` int(11) NOT NULL,
+  `idCanaux` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `champs`
+--
+
+INSERT INTO `champs` (`id`, `nomChamps`, `adress`, `idCanaux`) VALUES
+(3, 'Champs rouge Lampe 1', 66, 7),
+(4, 'Champs vert Lampe 1', 18, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `favoris`
+--
+
+CREATE TABLE `favoris` (
+  `id` int(11) NOT NULL,
+  `positionX` int(11) NOT NULL,
+  `positionY` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `idScene` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -51,32 +86,42 @@ INSERT INTO `Equipement` (`id`, `nom`, `adresse`) VALUES
 
 CREATE TABLE `module` (
   `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `couleur_rouge` int(11) NOT NULL,
-  `couleur_bleu` int(11) NOT NULL,
-  `couleur_vert` int(11) NOT NULL,
-  `id_equipement` int(11) NOT NULL
+  `nomEquipement` text NOT NULL,
+  `adress` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `module`
 --
 
-INSERT INTO `module` (`id`, `name`, `couleur_rouge`, `couleur_bleu`, `couleur_vert`, `id_equipement`) VALUES
-(1, 'mo', 25, 185, 0, 1),
-(2, 'module', 14, 2, 147, 2);
+INSERT INTO `module` (`id`, `nomEquipement`, `adress`) VALUES
+(14, 'Lampe 2', 67),
+(19, 'Lampe 3', 14),
+(20, 'Lampe 4', 250),
+(21, 'Lampe 5', 450),
+(22, 'Lampe 6', 1),
+(23, 'LAmpe 7', 11),
+(24, 'Lampe 8', 512);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `scène`
+-- Structure de la table `scene`
 --
 
-CREATE TABLE `scène` (
+CREATE TABLE `scene` (
   `id` int(11) NOT NULL,
-  `nom` int(11) NOT NULL,
-  `module` int(11) NOT NULL
+  `nom` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `scene`
+--
+
+INSERT INTO `scene` (`id`, `nom`) VALUES
+(1, 'Scène Webedia'),
+(2, 'Scène 1'),
+(3, 'Scène 2');
 
 -- --------------------------------------------------------
 
@@ -86,8 +131,8 @@ CREATE TABLE `scène` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `identifiant` text NOT NULL,
+  `password` text NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -95,7 +140,7 @@ CREATE TABLE `user` (
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `login`, `password`, `isAdmin`) VALUES
+INSERT INTO `user` (`id`, `identifiant`, `password`, `isAdmin`) VALUES
 (1, 'Alexis', 'Alexis', 1);
 
 --
@@ -103,22 +148,38 @@ INSERT INTO `user` (`id`, `login`, `password`, `isAdmin`) VALUES
 --
 
 --
--- Index pour la table `Equipement`
+-- Index pour la table `canaux`
 --
-ALTER TABLE `Equipement`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `canaux`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idmodule` (`idmodule`,`idscene`),
+  ADD KEY `idscene` (`idscene`);
+
+--
+-- Index pour la table `champs`
+--
+ALTER TABLE `champs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCanaux` (`idCanaux`);
+
+--
+-- Index pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idScene` (`idScene`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Index pour la table `module`
 --
 ALTER TABLE `module`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_equipement` (`id_equipement`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `scène`
+-- Index pour la table `scene`
 --
-ALTER TABLE `scène`
+ALTER TABLE `scene`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -132,16 +193,28 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT pour la table `Equipement`
+-- AUTO_INCREMENT pour la table `canaux`
 --
-ALTER TABLE `Equipement`
+ALTER TABLE `canaux`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT pour la table `champs`
+--
+ALTER TABLE `champs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `module`
 --
 ALTER TABLE `module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -154,10 +227,24 @@ ALTER TABLE `user`
 --
 
 --
--- Contraintes pour la table `module`
+-- Contraintes pour la table `canaux`
 --
-ALTER TABLE `module`
-  ADD CONSTRAINT `module_ibfk_1` FOREIGN KEY (`id_equipement`) REFERENCES `Equipement` (`id`);
+ALTER TABLE `canaux`
+  ADD CONSTRAINT `canaux_ibfk_1` FOREIGN KEY (`idmodule`) REFERENCES `module` (`id`),
+  ADD CONSTRAINT `canaux_ibfk_2` FOREIGN KEY (`idscene`) REFERENCES `scene` (`id`);
+
+--
+-- Contraintes pour la table `champs`
+--
+ALTER TABLE `champs`
+  ADD CONSTRAINT `champs_ibfk_1` FOREIGN KEY (`idCanaux`) REFERENCES `canaux` (`id`);
+
+--
+-- Contraintes pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  ADD CONSTRAINT `favoris_ibfk_1` FOREIGN KEY (`idScene`) REFERENCES `scene` (`id`),
+  ADD CONSTRAINT `favoris_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
