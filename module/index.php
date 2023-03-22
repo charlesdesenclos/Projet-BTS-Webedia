@@ -31,43 +31,62 @@
     $IDModule = $TheModule->getID();
     
 
-    foreach ($IDModule as $id) {
-        echo $id['id'] . "<br>";
-    }
+    
 
-    $nom =$TheModule->getnomEquipement();
+    $nom = $TheModule->getnomEquipement();
 
-    foreach ($nom as $nomEquipement) {
-        echo $nomEquipement['nomEquipement'] . "<br>";
-    }
+    
 
+    $RequetSQL = "SELECT id, nomEquipement FROM module";
+    $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
+
+    $RequetSQL2 = "SELECT id, nom FROM scene";
+    $resultatScene = $GLOBALS['bdd'] -> query($RequetSQL2);
 
 
 
     if(isset($_POST['submit-creation']))
     {
 
-        
         $TheModule->creation($_POST['nomEquipement'],$_POST['adresse']);
         
-        
+    }
 
+    include("./Class/Canaux.php");
+    $TheCanaux = new Canaux(null,null,null,null);
+
+    
+
+    if(isset($_POST['submit-creation-canaux']))
+    {
+
+        $TheCanaux->creationCanaux($_POST['Valeur'],$_POST['idModule'],$_POST['idScene']);
+    }
+
+    include("./Class/Champs.php");
+    $TheChamps = new Champs(null,null,null,null);
+
+    $RequetSQL3 = "SELECT id FROM canaux";
+    $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
+    
+    if(isset($_POST['submit-creation-champs']))
+    {
+        $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
 
     }
 
-    
     ?>
     
 
     <!-- Page Wrapper -->
     <div id="wrapper">
         
-
+        <!--------------------------------- NAV BAR ------------------------------------------->
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -79,7 +98,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -138,16 +157,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Chanels</span>
+                    <span>Champs</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion :</h6>
                         <form action="" method="POST">
-                            <input class="collapse-item" type="submit" value="Creation" name="CreationChannels" >
-                            <input class="collapse-item" type="submit" value="Modifier" name="ModifierChannels" >
-                            <input class="collapse-item" type="submit" value="Supprimer" name="SupprimerChannels" >
-                            <input class="collapse-item" type="submit" value="Affichage" name="AffichageChannels" >
+                            <input class="collapse-item" type="submit" value="Creation" name="CreationChamps" >
+                            <input class="collapse-item" type="submit" value="Modifier" name="ModifierChamps" >
+                            <input class="collapse-item" type="submit" value="Supprimer" name="SupprimerChamps" >
+                            <input class="collapse-item" type="submit" value="Affichage" name="AffichageChamps" >
                         </form>
                   
                     </div>
@@ -167,7 +186,8 @@
             
 
         </ul>
-        <!-- End of Sidebar -->
+        <!-- End of Sidebar --> 
+        <!--------------------------------- Affichage IHM Création Module ------------------------------------------->
         <?php
         if(isset($_POST['CreationModule']))
     {
@@ -185,10 +205,30 @@
                                
                         </div>
 
-                        <div class="col-md-12">
-                            <input class="form-control" type="email" name="adresse" placeholder="Adresse" required>
-                                 
-                         </div>
+                        <select name="adresse">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
 
                         <div class="form-button mt-3">
                             <button id="submit" type="submit" class="btn btn-primary" name="submit-creation">Enregistrer</button>
@@ -210,7 +250,57 @@
     </div>
     <?php
     }
+    
+    $reqAffichageTotal ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress, canaux.valeur  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
+    $resultatSelectTotal = $GLOBALS['bdd'] -> query($reqAffichageTotal);
 
+    //--------------------------------- Affichage Total -----------------------------------------------------------
+
+    if(!isset($_POST['CreationModule']) && !isset($_POST['CreationCanaux']) && !isset($_POST['CreationChamps']) && !isset($_POST['AffichageModule']) && !isset($_POST['AffichageCanaux']) && !isset($_POST['AffichageChamps']) && !isset($_POST['ModifierModule']) && !isset($_POST['ModifierCanaux']) && !isset($_POST['ModifierChamps']) && !isset($_POST['SupprimerModule']) && !isset($_POST['SupprimerCanaux']) && !isset($_POST['SupprimerChamps']))
+    {?>
+        <div class="container">
+      <h1>Equipements : </h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nom d'Equipement</th>
+            <th>Nom de la sène</th>
+            <th>Nom du champs</th>
+            <th>Adresse</th>
+            <th>Valeur</th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php
+            $i3 = 0;
+            while($AffichageTotal = $resultatSelectTotal->fetch())
+            {    
+                                    
+                                    
+                ?>
+                <tr>                      
+                <?php
+                    echo '<td>';echo ''.$AffichageTotal["nomEquipement"].'</td>';
+                    echo '<td>';echo ''.$AffichageTotal["nom"].'</td>';
+                    echo '<td>';echo ''.$AffichageTotal["nomChamps"].'</td>';
+                    echo '<td>';echo ''.$AffichageTotal["adress"].'</td>';
+                    echo '<td>';echo ''.$AffichageTotal["valeur"].'</td>';
+
+                ?>
+                </tr>                   
+                <?php
+                $i3 = $i3 +1;
+                                            
+                                        
+            }
+            ?>
+        </tbody>
+      </table>
+    </div>
+    <?php
+    }
+
+    //--------------------------------- Affichage IHM Création Canaux ---------------------------------------------
 
     if(isset($_POST['CreationCanaux']))
     {
@@ -226,24 +316,45 @@
                         <div class="col-md-12">
                             <select name="idModule">
                                 <option value=""> Choisissez un Module</option>
-                                <option valuer=""></option>
+                                <?php 
+                                // affiche les commandes déja faites par l'utilisateur
+                                $n =1;
+                                $n2=1;
+                                while($tab1 = $resultatModule->fetch())
+                                {    
+                                    
+                                    
+                                    ?>
+                                    
+                                    <?php
+                                        echo '<option value="'.$tab1["id"].'">';echo $n ;echo " : ";echo ''.$tab1["nomEquipement"].'</option>';
+                                    ?>
+                                    
+                                    <?php
+                                    $n = $n +1;
+                                            
+                                        
+                                }
+                                
+
+                                ?>
                             
                             </select>
                             <select name="idScene">
                                 <option value=""> Choisissez une Scène</option>
                                 <?php 
                                 // affiche les commandes déja faites par l'utilisateur
-                                while($tab = $resultat->fetch()){    
+                                while($tab = $resultatScene->fetch()){    
                                     
                                     
                                     ?>
                                     
                                     <?php
-                                        echo '<option value="'.$tab["id"].'">';echo $n ;echo " : ";echo ''.$tab["nomModule"].'</option>';
+                                        echo '<option value="'.$tab["id"].'">';echo $n2 ;echo " : ";echo ''.$tab["nom"].'</option>';
                                     ?>
                                     
                                     <?php
-                                    $n = $n +1;
+                                    $n2 = $n2 +1;
                                             
                                         
                                 }
@@ -280,6 +391,242 @@
     </div>
     <?php
     }
+
+
+    //--------------------------------- Affichage IHM Création Channels --------------------------------------------
+
+
+    if(isset($_POST['CreationChamps']))
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Création de Champs</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        <div class="col-md-12">
+                            
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nomChamps" placeholder="Nom" required>         
+                        </div>
+
+                        <select name="adress">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <?php $n3 = 1; ?>
+                        <select name="idCanaux">
+                            <option value=""> Choisissez une Canaux</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            while($tab = $resultatCanaux->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo $n3 ;echo " : ";echo ''.$tab["id"].'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n3 = $n3 +1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+                               
+                        </div>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation-champs">Enregistrer</button>
+                            <?php
+                                if(isset($_SESSION['ModulExisteDeja']) && $_SESSION['ModulExisteDeja'] == true)
+                                {?>
+                                    <div class="invalid-feedback">Module existe déja</div>
+                                    <?php
+
+                                        
+                                }
+
+                            ?>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+
+    }
+
+    //--------------------------------- Affichage IHM Affichage Module ----------------------------------------------
+
+    $reqAffichageModule ="SELECT nomEquipement, adress FROM module";
+    $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
+
+    if(isset($_POST['AffichageModule']))
+    {?>
+        <div class="container">
+      <h1>Les Modules</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nom d'Equipement</th>
+            <th>Adresse</th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php
+            $i = 0;
+            while($AffichageModule = $resultatSelectModule->fetch())
+            {    
+                                    
+                                    
+                ?>
+                <tr>                      
+                <?php
+                    echo '<td>';echo ''.$AffichageModule["nomEquipement"].'</td>';
+                    echo '<td>';echo ''.$AffichageModule["adress"].'</td>';
+
+                ?>
+                </tr>                   
+                <?php
+                $i = $i +1;
+                                            
+                                        
+            }
+            ?>
+        </tbody>
+      </table>
+    </div>
+    <?php
+    }
+
+    //--------------------------------- Affichage IHM Affichage Canaux -----------------------------------------------
+
+    $reqAffichageCanaux ="SELECT module.nomEquipement AS nomEquipement, canaux.valeur AS valeur, scene.nom AS nom FROM module, canaux, scene WHERE canaux.idmodule = module.id AND canaux.idscene = scene.id";
+    $resultatSelectCanaux = $GLOBALS['bdd'] -> query($reqAffichageCanaux);
+
+    if(isset($_POST['AffichageCanaux']))
+    {?>
+            <div class="container">
+          <h1>Les Canaux</h1>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nom d'Equipement</th>
+                <th>Nom de la sène</th>
+                <th>Valeur</th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i2 = 0;
+                while($AffichageCanaux = $resultatSelectCanaux->fetch())
+                {    
+                                        
+                                        
+                    ?>
+                    <tr>                      
+                    <?php
+                        echo '<td>';echo ''.$AffichageCanaux["nomEquipement"].'</td>';
+                        echo '<td>';echo ''.$AffichageCanaux["nom"].'</td>';
+                        echo '<td>';echo ''.$AffichageCanaux["valeur"].'</td>';
+    
+                    ?>
+                    </tr>                   
+                    <?php
+                    $i2 = $i2 +1;
+                                                
+                                            
+                }
+                ?>
+            </tbody>
+          </table>
+        </div>
+        <?php
+
+    }
+
+    //--------------------------------- Affichage IHM Affichage Champs -------------------------------------------
+    
+    $reqAffichageChamps ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
+    $resultatSelectChamps = $GLOBALS['bdd'] -> query($reqAffichageChamps);
+
+    if(isset($_POST['AffichageChamps']))
+    {?>
+            <div class="container">
+          <h1>Les Champs</h1>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nom d'Equipement</th>
+                <th>Nom de la sène</th>
+                <th>Nom du champs</th>
+                <th>Adresse</th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php
+                $i3 = 0;
+                while($AffichageChamps = $resultatSelectChamps->fetch())
+                {    
+                                        
+                                        
+                    ?>
+                    <tr>                      
+                    <?php
+                        echo '<td>';echo ''.$AffichageChamps["nomEquipement"].'</td>';
+                        echo '<td>';echo ''.$AffichageChamps["nom"].'</td>';
+                        echo '<td>';echo ''.$AffichageChamps["nomChamps"].'</td>';
+                        echo '<td>';echo ''.$AffichageChamps["adress"].'</td>';
+    
+                    ?>
+                    </tr>                   
+                    <?php
+                    $i3 = $i3 +1;
+                                                
+                                            
+                }
+                ?>
+            </tbody>
+          </table>
+        </div>
+        <?php
+
+    }
+
+
+
+
     ?>
         
 

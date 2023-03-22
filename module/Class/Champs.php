@@ -14,6 +14,12 @@ class Champs{
         $this-> adresse_ = $Newadresse;
     }
 
+    public function creationChamps($nomChamps, $adress, $idCanaux)
+    {
+        $sqlInsertChamps = "INSERT INTO champs(nomChamps, adress, idCanaux) VALUES('".$nomChamps."','".$adress."','".$idCanaux."')";
+        $reqInsertChamps = $GLOBALS['bdd']->query($sqlInsertChamps);
+    }
+
 }
 
 

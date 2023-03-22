@@ -11,8 +11,14 @@ class Canaux{
     {
         $this-> id_ = $Newid;
         $this-> valeur_ = $Newvaleur;
-        $this-> idModule_ = $NewModule;
+        $this-> idModule_ = $NewidModule;
         $this-> idScene_ = $NewidScene;
+    }
+
+    public function creationCanaux($valeur, $idModule, $idScene)
+    {
+        $sqlInsertCanaux = "INSERT INTO canaux(valeur, idmodule, idscene) VALUES('".$valeur."','".$idModule."','".$idScene."')";
+        $reqInsertCanaux = $GLOBALS['bdd']->query($sqlInsertCanaux);
     }
 
 
