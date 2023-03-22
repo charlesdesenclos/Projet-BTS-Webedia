@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    background-color: black;
+}
+
+.scene-block {
+    background-color: #0074D9;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    width: 200px;
+    height: 40px;
+}
+
+/* Media query pour les écrans plus petits */
+@media screen and (max-width: 600px) {
+    .scene-block {
+        width: 100%;
+        height: auto;
+    }
+}
