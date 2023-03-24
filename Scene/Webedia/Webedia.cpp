@@ -65,6 +65,7 @@ void Webedia::onButtonClickedScene()
     QString nom = ui->lineEdit_nom_scene->text();
     ui->label_console->setText(nom);
     
+
     RequeteInsertScene(ConnexionBDD(), nom);
 
 }
