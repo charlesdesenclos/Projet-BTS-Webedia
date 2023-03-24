@@ -22,8 +22,8 @@ QSqlDatabase Webedia::ConnexionBDD()
 {
     QString Host = "192.168.64.157";
     QString Name = "Webedia";
-    QString User = "user";
-    QString Pass = "jGqOaSMyy927qO-a";
+    QString User = "root";
+    QString Pass = "root";
 
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
@@ -38,21 +38,17 @@ QSqlDatabase Webedia::ConnexionBDD()
     
 }
 
-void Webedia::onButtonClickedScene()
+void Webedia::RequeteInsertScene(QSqlDatabase db, QString nom)
 {
-    QString nom = ui->lineEdit_nom_scene->text();
-    
-}
-
-void Webedia::RequeteInsertScene(QSqlDatabase db, QString name_scene) {
     if (db.open())
     {
         ui->label_bdd->setText("Database: connection ok");
+
+
         QSqlQuery query;
 
-        query.prepare("INSERT INTO 'scene' ('nom') VALUES (:nom)");
-        query.bindValue(":name", name_scene);
-
+        query.prepare("INSERT INTO `scene`(`nom`) VALUES (:nom)");
+        query.bindValue(":nom", nom);
         query.exec();
         db.close();
 
@@ -64,6 +60,16 @@ void Webedia::RequeteInsertScene(QSqlDatabase db, QString name_scene) {
     }
 }
 
+void Webedia::onButtonClickedScene()
+{
+    QString nom = ui->lineEdit_nom_scene->text();
+    ui->label_console->setText(nom);
+    
+    RequeteInsertScene(ConnexionBDD(), nom);
+
+}
+
+/*
 void Webedia::RequeteSelectScene(QSqlDatabase & db) {
 
 	ui->label_bdd->setText("Database: connection ok");
@@ -106,3 +112,4 @@ void Webedia::RequeteInsertCanaux(QSqlDatabase db) {
 }
 
 
+*/

@@ -31,10 +31,10 @@ public slots :
 
     QSqlDatabase ConnexionBDD();
     void onButtonClickedScene();
-    void RequeteInsertScene(QSqlDatabase db, QString name_scene);
-	void RequeteSelectScene(QSqlDatabase & db);
+    void RequeteInsertScene(QSqlDatabase db, QString nom);
+	/*void RequeteSelectScene(QSqlDatabase& db);
 	void RequeteSelectModule(QSqlDatabase db);
 	void RequeteSelectCanaux(QSqlDatabase db);
-	void RequeteInsertCanaux(QSqlDatabase db);
+	void RequeteInsertCanaux(QSqlDatabase db);*/
  
 };

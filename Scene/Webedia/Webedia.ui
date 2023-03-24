@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>963</width>
+    <width>768</width>
     <height>526</height>
    </rect>
   </property>
@@ -59,12 +59,25 @@
      <rect>
       <x>50</x>
       <y>300</y>
-      <width>71</width>
+      <width>721</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>BDD :</string>
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_console">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>211</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -73,7 +86,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>963</width>
+     <width>768</width>
      <height>21</height>
     </rect>
    </property>
@@ -132,11 +145,25 @@
  <resources>
   <include location="Webedia.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_creer_scene</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onButtonClickedScene()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>481</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
-  <slot>onCreationButtonClicked()</slot>
-  <slot>onListWidgetClicked()</slot>
-  <slot>onAjoutEquipementButtonClicked()</slot>
-  <slot>creationModule()</slot>
+  <slot>onButtonClickedScene()</slot>
  </slots>
 </ui>
