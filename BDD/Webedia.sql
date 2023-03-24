@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 22 mars 2023 à 10:41
+-- Généré le : ven. 24 mars 2023 à 11:49
 -- Version du serveur :  10.5.18-MariaDB-0+deb11u1
 -- Version de PHP : 7.4.33
 
@@ -40,8 +40,8 @@ CREATE TABLE `canaux` (
 
 INSERT INTO `canaux` (`id`, `valeur`, `idmodule`, `idscene`) VALUES
 (7, 16, 21, 2),
-(8, 16, 21, 2),
-(9, 19, 23, 3);
+(9, 19, 23, 3),
+(10, 250, 21, 2);
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,8 @@ CREATE TABLE `champs` (
 
 INSERT INTO `champs` (`id`, `nomChamps`, `adress`, `idCanaux`) VALUES
 (3, 'Champs rouge Lampe 1', 66, 7),
-(4, 'Champs vert Lampe 1', 18, 9);
+(4, 'Champs vert Lampe 1', 18, 9),
+(5, 'Champs Vert Lampe 1', 67, 10);
 
 -- --------------------------------------------------------
 
@@ -119,9 +120,22 @@ CREATE TABLE `scene` (
 --
 
 INSERT INTO `scene` (`id`, `nom`) VALUES
-(1, 'Scène Webedia'),
-(2, 'Scène 1'),
-(3, 'Scène 2');
+(1, 'Scène 1'),
+(2, 'Scène 2'),
+(3, 'Scène 3'),
+(4, 'Scène 4'),
+(10, 'Scène 5'),
+(11, 'Scène 6'),
+(12, 'Scène 7'),
+(13, 'Scène 8'),
+(14, 'Scène 9'),
+(16, 'Scène 10'),
+(17, 'Scène 11'),
+(18, 'Scène 12'),
+(19, 'Scène 13'),
+(20, 'Scène 14'),
+(21, 'Scène 15'),
+(22, 'Scène 16');
 
 -- --------------------------------------------------------
 
@@ -167,8 +181,8 @@ ALTER TABLE `champs`
 --
 ALTER TABLE `favoris`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idScene` (`idScene`),
-  ADD KEY `idUser` (`idUser`);
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idScene` (`idScene`);
 
 --
 -- Index pour la table `module`
@@ -196,13 +210,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `canaux`
 --
 ALTER TABLE `canaux`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `champs`
 --
 ALTER TABLE `champs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `favoris`
@@ -215,6 +229,12 @@ ALTER TABLE `favoris`
 --
 ALTER TABLE `module`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT pour la table `scene`
+--
+ALTER TABLE `scene`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -243,8 +263,8 @@ ALTER TABLE `champs`
 -- Contraintes pour la table `favoris`
 --
 ALTER TABLE `favoris`
-  ADD CONSTRAINT `favoris_ibfk_1` FOREIGN KEY (`idScene`) REFERENCES `scene` (`id`),
-  ADD CONSTRAINT `favoris_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `favoris_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `favoris_ibfk_3` FOREIGN KEY (`idScene`) REFERENCES `scene` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
