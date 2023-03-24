@@ -37,8 +37,8 @@
 
     
 
-    $RequetSQL = "SELECT id, nomEquipement FROM module";
-    $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
+    
+    $resultatModule = $TheModule->getIdANDnomEquipement();
 
     $RequetSQL2 = "SELECT id, nom FROM scene";
     $resultatScene = $GLOBALS['bdd'] -> query($RequetSQL2);
@@ -52,21 +52,10 @@
         
     }
 
-    include("./Class/Canaux.php");
-    $TheCanaux = new Canaux(null,null,null,null);
-
-    
-
-    if(isset($_POST['submit-creation-canaux']))
-    {
-
-        $TheCanaux->creationCanaux($_POST['Valeur'],$_POST['idModule'],$_POST['idScene']);
-    }
-
     include("./Class/Champs.php");
     $TheChamps = new Champs(null,null,null,null);
 
-    $RequetSQL3 = "SELECT id FROM canaux";
+    $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
     $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
     
     if(isset($_POST['submit-creation-champs']))
@@ -132,26 +121,7 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Canaux</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion :</h6>
-                        <form action="" method="POST">
-                            <input class="collapse-item" type="submit" value="Creation" name="CreationCanaux"  >
-                            <input class="collapse-item" type="submit" value="Modifier" name="ModifierCanaux" >
-                            <input class="collapse-item" type="submit" value="Supprimer" name="SupprimerCanaux" >
-                            <input class="collapse-item" type="submit" value="Affichage" name="AffichageCanaux" >
-                        </form>
-                    </div>
-                </div>
-            </li>
+        
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -300,99 +270,6 @@
     <?php
     }
 
-    //--------------------------------- Affichage IHM Création Canaux ---------------------------------------------
-
-    if(isset($_POST['CreationCanaux']))
-    {
-        ?>
-        <div class="row">
-        <div class="form-holder">
-            <div class="form-content">
-                <div class="form-items">
-                    <h3>Création de Canaux</h3>
-                        
-                    <form class="requires-validation" action="" method="POST" novalidate>
-
-                        <div class="col-md-12">
-                            <select name="idModule">
-                                <option value=""> Choisissez un Module</option>
-                                <?php 
-                                // affiche les commandes déja faites par l'utilisateur
-                                $n =1;
-                                $n2=1;
-                                while($tab1 = $resultatModule->fetch())
-                                {    
-                                    
-                                    
-                                    ?>
-                                    
-                                    <?php
-                                        echo '<option value="'.$tab1["id"].'">';echo $n ;echo " : ";echo ''.$tab1["nomEquipement"].'</option>';
-                                    ?>
-                                    
-                                    <?php
-                                    $n = $n +1;
-                                            
-                                        
-                                }
-                                
-
-                                ?>
-                            
-                            </select>
-                            <select name="idScene">
-                                <option value=""> Choisissez une Scène</option>
-                                <?php 
-                                // affiche les commandes déja faites par l'utilisateur
-                                while($tab = $resultatScene->fetch()){    
-                                    
-                                    
-                                    ?>
-                                    
-                                    <?php
-                                        echo '<option value="'.$tab["id"].'">';echo $n2 ;echo " : ";echo ''.$tab["nom"].'</option>';
-                                    ?>
-                                    
-                                    <?php
-                                    $n2 = $n2 +1;
-                                            
-                                        
-                                }
-                                
-
-                                ?>
-                            
-                            </select>
-                               
-                        </div>
-
-                        <div class="col-md-12">
-                            <input class="form-control" type="text" name="Valeur" placeholder="Valeur" required>
-                                 
-                         </div>
-
-                        <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation-canaux">Enregistrer</button>
-                            <?php
-                                if(isset($_SESSION['ModulExisteDeja']) && $_SESSION['ModulExisteDeja'] == true)
-                                {?>
-                                    <div class="invalid-feedback">Module existe déja</div>
-                                    <?php
-
-                                        
-                                }
-
-                            ?>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php
-    }
-
-
     //--------------------------------- Affichage IHM Création Channels --------------------------------------------
 
 
@@ -449,7 +326,7 @@
                                 ?>
                                     
                                 <?php
-                                    echo '<option value="'.$tab["id"].'">';echo $n3 ;echo " : ";echo ''.$tab["id"].'</option>';
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';echo " : ";echo "valeur : ";echo ''.$tab["valeur"].'</option>';
                                 ?>
                                     
                                 <?php
@@ -486,6 +363,10 @@
     <?php
 
     }
+
+    //--------------------------------- Affichage IHM Modification Module --------------------------------------------
+
+    if(isset($_POST['ModifierModule']))
 
     //--------------------------------- Affichage IHM Affichage Module ----------------------------------------------
 
@@ -528,52 +409,6 @@
       </table>
     </div>
     <?php
-    }
-
-    //--------------------------------- Affichage IHM Affichage Canaux -----------------------------------------------
-
-    $reqAffichageCanaux ="SELECT module.nomEquipement AS nomEquipement, canaux.valeur AS valeur, scene.nom AS nom FROM module, canaux, scene WHERE canaux.idmodule = module.id AND canaux.idscene = scene.id";
-    $resultatSelectCanaux = $GLOBALS['bdd'] -> query($reqAffichageCanaux);
-
-    if(isset($_POST['AffichageCanaux']))
-    {?>
-            <div class="container">
-          <h1>Les Canaux</h1>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Nom d'Equipement</th>
-                <th>Nom de la sène</th>
-                <th>Valeur</th>
-              </tr>
-            </thead>
-            <tbody>
-                <?php
-                $i2 = 0;
-                while($AffichageCanaux = $resultatSelectCanaux->fetch())
-                {    
-                                        
-                                        
-                    ?>
-                    <tr>                      
-                    <?php
-                        echo '<td>';echo ''.$AffichageCanaux["nomEquipement"].'</td>';
-                        echo '<td>';echo ''.$AffichageCanaux["nom"].'</td>';
-                        echo '<td>';echo ''.$AffichageCanaux["valeur"].'</td>';
-    
-                    ?>
-                    </tr>                   
-                    <?php
-                    $i2 = $i2 +1;
-                                                
-                                            
-                }
-                ?>
-            </tbody>
-          </table>
-        </div>
-        <?php
-
     }
 
     //--------------------------------- Affichage IHM Affichage Champs -------------------------------------------
@@ -623,6 +458,9 @@
         <?php
 
     }
+
+
+   
 
 
 

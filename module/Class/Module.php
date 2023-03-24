@@ -50,6 +50,13 @@ class Module{
       return $result;
    }
 
+   public function getIdANDnomEquipement()
+   {
+      $RequetSQL = "SELECT id, nomEquipement FROM module";
+      $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
+      return $resultatModule;
+   }
+
 }
 
 
