@@ -367,10 +367,13 @@
     //--------------------------------- Affichage IHM Modification Module --------------------------------------------
 
     if(isset($_POST['ModifierModule']))
+    {
+        
+    }
 
     //--------------------------------- Affichage IHM Affichage Module ----------------------------------------------
-
-    $reqAffichageModule ="SELECT nomEquipement, adress FROM module";
+    
+    $reqAffichageModule ="SELECT `nomEquipement`, `adress` FROM `module`";
     $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
 
     if(isset($_POST['AffichageModule']))
@@ -386,7 +389,7 @@
         </thead>
         <tbody>
             <?php
-            $i = 0;
+            $i4 = 0;
             while($AffichageModule = $resultatSelectModule->fetch())
             {    
                                     
@@ -400,7 +403,7 @@
                 ?>
                 </tr>                   
                 <?php
-                $i = $i +1;
+                $i4 = $i4 + 1;
                                             
                                         
             }
