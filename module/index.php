@@ -48,7 +48,7 @@
     if(isset($_POST['submit-creation']))
     {
 
-        $TheModule->creation($_POST['nomEquipement'],$_POST['adresse']);
+        $TheModule->creationModule($_POST['nomEquipement'],$_POST['adresse']);
         
     }
 
