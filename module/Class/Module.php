@@ -13,7 +13,7 @@ class Module{
         $this-> adresse_ = $Newadresse;
      }
 
-   public function creation($nomEquipement, $adresse)
+   public function creationModule($nomEquipement, $adresse)
    {
       
       $check = $GLOBALS['bdd']->prepare('SELECT nomEquipement FROM `module` WHERE nomEquipement = ?');
