@@ -63,6 +63,7 @@
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
 
     }
+    /*
     if(isset($_POST['ModifierModule']))
     {
         $idTest = 0;
@@ -70,7 +71,7 @@
         $adressTest = 0;
         $TheModule->modificationModule($idTest,$nomEquipementTest,$adressTest);
         
-    }
+    }*/
     if(isset($_POST['SupprimerModule']))
     {
         $idTest = 0;
@@ -397,13 +398,113 @@
 
     //--------------------------------- Affichage IHM Modification Module --------------------------------------------
 
+    $resultatModuleModifier = $TheModule->getIdANDnomEquipement();
+
     if(isset($_POST['ModifierModule']))
     {
-        
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Modifier le module</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        
+
+                        <select name="idModule">
+                            <option value=""> Choisissez une Canaux</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $n6= 0;
+                            while($tab = $resultatModuleModifier->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n6 = $n6 +1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="ChoixModifierModule1">Choisir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <?php
+
+    
     }
 
     //--------------------------------- Affichage IHM Affichage Module ----------------------------------------------
-    
+    if(isset($_POST['ChoixModifierModule1']))
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Modifier de module</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nomEquipement" placeholder="Nom d'Equipement" required>
+                               
+                        </div>
+
+                        <select name="adresse">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation">Modifier</button>
+                           
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    }
     
     $resultatSelectModule = $TheModule->affichageModule();
     

@@ -73,6 +73,8 @@ class Module{
       $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
       return $resultatSelectModule;
    }
+
+   
 }
 
 
