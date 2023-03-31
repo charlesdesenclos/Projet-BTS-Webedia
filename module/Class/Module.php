@@ -13,7 +13,7 @@ class Module{
         $this-> adresse_ = $Newadresse;
      }
 
-   public function creation($nomEquipement, $adresse)
+   public function creationModule($nomEquipement, $adresse)
    {
       
       $check = $GLOBALS['bdd']->prepare('SELECT nomEquipement FROM `module` WHERE nomEquipement = ?');
@@ -50,6 +50,29 @@ class Module{
       return $result;
    }
 
+   public function getIdANDnomEquipement()
+   {
+      $RequetSQL = "SELECT id, nomEquipement FROM module";
+      $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
+      return $resultatModule;
+   }
+
+   public function modificationModule($id, $nomEquipement, $adress)
+   {
+      echo "Modifier en BDD";
+   }
+
+   public function suppressionModule($id)
+   {
+      echo "Supprime en BDD";
+   }
+
+   public function affichageModule()
+   {
+      $reqAffichageModule ="SELECT `nomEquipement`, `adress` FROM `module`";
+      $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
+      return $resultatSelectModule;
+   }
 }
 
 
