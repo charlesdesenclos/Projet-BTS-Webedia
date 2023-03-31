@@ -90,6 +90,16 @@ void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur){
 	}
 }
 
+void Webedia::onButtonClickedCanal()
+{
+	QString nom = ui->lineEdit_valeur_canal->text();
+	ui->label_console->setText(nom);
+
+
+	RequeteInsertCanaux(ConnexionBDD(), nom);
+
+}
+
 
 /*void Webedia::RequeteSelectScene(QSqlDatabase& db) {
 
