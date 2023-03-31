@@ -18,6 +18,7 @@ $TheUser = new user(null, null, null, null);
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <?php 
@@ -39,11 +40,6 @@ $TheUser = new user(null, null, null, null);
   }
 } 
 
-  if(isset($_POST['creer_scene'])) {
-    $TheScene->createScene();
-  }
-
-
   if(isset($_POST['connexion']) && $_SESSION['connexion'] == true) {
     // echo "Vous êtes déjà connecté !";
     ?>
@@ -52,10 +48,35 @@ $TheUser = new user(null, null, null, null);
         <input type = "submit" name = "deconnexion" value = "Deconnexion"/>
     </form>
 
+    <div class="app">
+		<?php
+			$Request = "SELECT * FROM `scene`";
+			$Result = $GLOBALS["PDO"]->query($Request);
+		?>
+
+		<div class="lists">
+			<div class="list">
+				<?php
+                // Vérifier s'il y a des résultats
+				if ($Result->rowCount() > 0) {
+					foreach ($Result as $row) {                
+					// Afficher le bloc de scène
+					echo "<div class= 'list-item' draggable='true'>" .$row['nom']. "</div>"; 
+					}
+				}
+				?>
+			</div>
+			<div class="list"></div>
+		</div>
+	</div>
+	<script src="js/dragndrop.js"></script>
+
     <?php
 
 } else {
   ?>
+
+
 
   <body class="img js-fullheight" style="background-image: url(https://www.bmagroupparis.fr/wp-content/uploads/2016/09/webediaimages-04.jpg);">
   
@@ -119,14 +140,13 @@ $TheUser = new user(null, null, null, null);
     </div>
   </section>
 
-
-
 	<script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
 	<script src="js/hide-button.js"></script>
   <script src="js/dragndrop.js"></script>
+
 <?php
 }
 
@@ -135,7 +155,6 @@ $TheUser = new user(null, null, null, null);
     $TheUser->seDeconnecter();
   }
 ?> 
-
 
 </body>
 </html>
