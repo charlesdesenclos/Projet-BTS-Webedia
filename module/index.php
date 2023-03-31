@@ -63,6 +63,37 @@
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
 
     }
+    if(isset($_POST['ModifierModule']))
+    {
+        $idTest = 0;
+        $nomEquipementTest = 0;
+        $adressTest = 0;
+        $TheModule->modificationModule($idTest,$nomEquipementTest,$adressTest);
+        
+    }
+    if(isset($_POST['SupprimerModule']))
+    {
+        $idTest = 0;
+        $TheModule->suppressionModule($idTest);
+        
+    }
+
+    if(isset($_POST['ModifierChamps']))
+    {
+        $idTest = 0;
+        $nomChamps =0;
+        $adress = 0;
+        $idCanaux = 0;
+        $TheChamps->modificationChamps($idTest,$idCanaux,$nomChamps,$adress,);
+        
+    }
+
+    if(isset($_POST['SupprimerModule']))
+    {
+        $idTest = 0;
+        $TheChamps->suppressionChamps($idTest);
+        
+    }
 
     ?>
     
@@ -373,8 +404,9 @@
 
     //--------------------------------- Affichage IHM Affichage Module ----------------------------------------------
     
-    $reqAffichageModule ="SELECT `nomEquipement`, `adress` FROM `module`";
-    $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
+    
+    $resultatSelectModule = $TheModule->affichageModule();
+    
 
     if(isset($_POST['AffichageModule']))
     {?>
@@ -418,6 +450,8 @@
     
     $reqAffichageChamps ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
     $resultatSelectChamps = $GLOBALS['bdd'] -> query($reqAffichageChamps);
+
+    $resultatSelectChamps = $TheChamps->affichageChamps();
 
     if(isset($_POST['AffichageChamps']))
     {?>

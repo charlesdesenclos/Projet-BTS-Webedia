@@ -57,6 +57,22 @@ class Module{
       return $resultatModule;
    }
 
+   public function modificationModule($id, $nomEquipement, $adress)
+   {
+      echo "Modifier en BDD";
+   }
+
+   public function suppressionModule($id)
+   {
+      echo "Supprime en BDD";
+   }
+
+   public function affichageModule()
+   {
+      $reqAffichageModule ="SELECT `nomEquipement`, `adress` FROM `module`";
+      $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
+      return $resultatSelectModule;
+   }
 }
 
 
