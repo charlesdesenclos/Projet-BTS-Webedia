@@ -70,8 +70,28 @@ void Webedia::onButtonClickedScene()
 
 }
 
-/*
-void Webedia::RequeteSelectScene(QSqlDatabase & db) {
+
+void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur){
+	if (db.open())
+	{
+		ui->label_bdd->setText("Database: connection ok");
+
+
+		QSqlQuery query;
+		query.prepare("INSERT INTO `canaux`(`valeur`,`idmodule`,`idscene`) VALUES (:nom, :idmodule,:idscene)");
+		query.bindValue(":valeur", valeur);
+		query.exec();
+		db.close;
+	}
+	else
+	{
+		ui->label_bdd->setText("Error INSERT MODULE: connection with database fail");
+
+	}
+}
+
+
+/*void Webedia::RequeteSelectScene(QSqlDatabase& db) {
 
 	ui->label_bdd->setText("Database: connection ok");
 	QSqlQuery query;
@@ -91,21 +111,12 @@ void Webedia::RequeteSelectScene(QSqlDatabase & db) {
 }
 
 
+void Webedia::onListSceneClicked() {
+
+}
+*/
+/*
 void Webedia::RequeteSelectModule(QSqlDatabase db) {
-	ui->label_bdd->setText("Database: connection ok");
-	QSqlQuery query;
-
-
-}
-
-void Webedia::RequeteSelectCanaux(QSqlDatabase db) {
-	ui->label_bdd->setText("Database: connection ok");
-	QSqlQuery query;
-
-
-}
-
-void Webedia::RequeteInsertCanaux(QSqlDatabase db) {
 	ui->label_bdd->setText("Database: connection ok");
 	QSqlQuery query;
 
