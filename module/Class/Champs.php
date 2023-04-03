@@ -14,20 +14,29 @@ class Champs{
         $this-> adresse_ = $Newadresse;
     }
 
+    // Méthode creationChamps : créer en bdd un champ  avec son nom, son adresse et avec un idCanaux
+
     public function creationChamps($nomChamps, $adress, $idCanaux)
     {
         $sqlInsertChamps = "INSERT INTO champs(nomChamps, adress, idCanaux) VALUES('".$nomChamps."','".$adress."','".$idCanaux."')";
         $reqInsertChamps = $GLOBALS['bdd']->query($sqlInsertChamps);
     }
+
+    // Méthode modificationChamps : modifie le nom, son adresse et son idCanaux
+
     public function modificationChamps($id, $idCanaux, $nomChamps, $adress)
    {
       echo "Modifier en BDD";
    }
 
+   // Méthode suppressionChamps : supprime le champ
+
    public function suppressionChamps($id)
    {
       echo "Supprime en BDD";
    }
+
+   // Méthode affichageChamps : affiche tous les champs
 
    public function affichageChamps()
    {
