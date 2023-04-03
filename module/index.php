@@ -58,22 +58,18 @@
     $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
     $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
     
+
+
     if(isset($_POST['submit-creation-champs']))
     {
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
-
     }
     
     if(isset($_POST['submit-modifier']))
     {
-        $idModifier = $_POST['idModuleModifier'];
-        $nomEquipementModifier = $_POST['nomEquipementModifier'];
-        $adressModifier = $_POST['adresseModifier'];
-        $RequetSQLModifier= "UPDATE module SET `nomEquipement`='".$nomEquipementModifier."',`adress`='".$adressModifier."' WHERE id = '".$idModifier."'";
-        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifier);
-        
-        
+        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
     }
+
     if(isset($_POST['SupprimerModule']))
     {
         $idTest = 0;

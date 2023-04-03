@@ -59,7 +59,8 @@ class Module{
 
    public function modificationModule($id, $nomEquipement, $adress)
    {
-      echo "Modifier en BDD";
+      $RequetSQLModifier= "UPDATE module SET `nomEquipement`='".$nomEquipement."',`adress`='".$adress."' WHERE id = '".$id."'";
+        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifier);
    }
 
    public function suppressionModule($id)
