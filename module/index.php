@@ -57,8 +57,7 @@
 
     /* ---------------------*/
 
-    $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
-    $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
+    $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux();
     
     // Création des champs
 
