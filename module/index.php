@@ -24,20 +24,18 @@
     require_once 'pdo/pdo.php'; // appele de la bdd
     $GLOBALS['bdd'] = $bdd;
 
+    // Initialisation de la class Module
+
     include("./Class/Module.php");
  
     $TheModule = new Module(null,null,null);
 
+    /* ---------------------*/
+
     $IDModule = $TheModule->getID();
     
-
-    
-
     $nom = $TheModule->getnomEquipement();
-
-    
-
-    
+ 
     $resultatModule = $TheModule->getIdANDnomEquipement();
 
     $RequetSQL2 = "SELECT id, nom FROM scene";
@@ -52,8 +50,12 @@
         
     }
 
+    //Initialisation de la class Champs
+
     include("./Class/Champs.php");
     $TheChamps = new Champs(null,null,null,null);
+
+    /* ---------------------*/
 
     $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
     $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
@@ -636,13 +638,6 @@
         <?php
 
     }
-
-
-   
-
-
-
-
     ?>
         
 
