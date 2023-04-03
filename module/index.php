@@ -85,14 +85,9 @@
 
     // Modification des Champs
 
-    if(isset($_POST['ModifierChamps']))
+    if(isset($_POST['submit-modifier-champs']))
     {
-        $idTest = 0;
-        $nomChamps =0;
-        $adress = 0;
-        $idCanaux = 0;
-        $TheChamps->modificationChamps($idTest,$idCanaux,$nomChamps,$adress,);
-        
+        $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
     }
 
     // Suppression des champs
@@ -310,7 +305,7 @@
     <?php
     }
 
-    //--------------------------------- Affichage IHM Création Channels --------------------------------------------
+    //--------------------------------- Affichage IHM Création Champs --------------------------------------------
 
 
     if(isset($_POST['CreationChamps']))
@@ -638,6 +633,117 @@
         <?php
 
     }
+
+    //--------------------------------- Affichage IHM Modification Champs -------------------------------------------
+    $resultatChampsModifier = $TheChamps->getIDandNOM();
+   
+
+    if(isset($_POST['ModifierChamps']))
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Modifier le module</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        
+
+                        <select name="idChampsModifier">
+                            <option value=""> Choisissez une Champs</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $n7= 0;
+                            while($tabCHamps = $resultatChampsModifier->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n7 = $n7 +1;            
+                            }
+                            ?>
+                            
+                        </select>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                               
+                        </div>
+
+                        <select name="adresseModifier">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <?php $n3 = 1; ?>
+                        <select name="idCanaux">
+                            <option value=""> Choisissez une Canaux</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            while($tab = $resultatCanaux->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';echo " : ";echo "valeur : ";echo ''.$tab["valeur"].'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n3 = $n3 +1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                        </select>
+                               
+                        
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-champs">Modifier</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <?php
+    }
+
+
     ?>
         
 

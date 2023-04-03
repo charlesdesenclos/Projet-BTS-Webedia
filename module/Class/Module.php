@@ -71,7 +71,7 @@ class Module{
    public function modificationModule($id, $nomEquipement, $adress)
    {
       $RequetSQLModifier= "UPDATE module SET `nomEquipement`='".$nomEquipement."',`adress`='".$adress."' WHERE id = '".$id."'";
-        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifier);
+      $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifier);
    }
 
    // Méthode suppressionModule : supprime le module 

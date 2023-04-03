@@ -26,7 +26,8 @@ class Champs{
 
     public function modificationChamps($id, $idCanaux, $nomChamps, $adress)
    {
-      echo "Modifier en BDD";
+        $RequetSQLModifierChamps= "UPDATE champs SET `nomChamps`='".$nomChamps."',`adress`='".$adress."',idCanaux = '".$idCanaux."' WHERE id = '".$id."'";
+        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifierChamps);
    }
 
    // Méthode suppressionChamps : supprime le champ
@@ -43,6 +44,13 @@ class Champs{
         $reqAffichageChamps ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
         $resultatSelectChamps = $GLOBALS['bdd'] -> query($reqAffichageChamps);
         return $resultatSelectChamps;
+   }
+
+   public function getIDandNOM()
+   {
+        $requetSQLChampsModifier = "SELECT id, nomChamps FROM champs";
+        $resultatChampsModifier = $GLOBALS['bdd'] -> query($requetSQLChampsModifier);
+        return $resultatChampsModifier;
    }
 
 
