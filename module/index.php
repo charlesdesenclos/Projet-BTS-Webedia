@@ -43,7 +43,7 @@
     $RequetSQL2 = "SELECT id, nom FROM scene";
     $resultatScene = $GLOBALS['bdd'] -> query($RequetSQL2);
 
-
+    // Création des modules
 
     if(isset($_POST['submit-creation']))
     {
@@ -58,17 +58,21 @@
     $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
     $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
     
-
+    // Création des champs
 
     if(isset($_POST['submit-creation-champs']))
     {
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
     }
     
+    // Modification des modules
+
     if(isset($_POST['submit-modifier']))
     {
         $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
     }
+
+    // Suppression des modules
 
     if(isset($_POST['SupprimerModule']))
     {
@@ -76,6 +80,8 @@
         $TheModule->suppressionModule($idTest);
         
     }
+
+    // Modification des Champs
 
     if(isset($_POST['ModifierChamps']))
     {
@@ -86,6 +92,8 @@
         $TheChamps->modificationChamps($idTest,$idCanaux,$nomChamps,$adress,);
         
     }
+
+    // Suppression des champs
 
     if(isset($_POST['SupprimerModule']))
     {
