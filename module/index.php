@@ -63,15 +63,17 @@
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
 
     }
-    /*
-    if(isset($_POST['ModifierModule']))
+    
+    if(isset($_POST['submit-modifier']))
     {
-        $idTest = 0;
-        $nomEquipementTest = 0;
-        $adressTest = 0;
-        $TheModule->modificationModule($idTest,$nomEquipementTest,$adressTest);
+        $idModifier = $_POST['idModuleModifier'];
+        $nomEquipementModifier = $_POST['nomEquipementModifier'];
+        $adressModifier = $_POST['adresseModifier'];
+        $RequetSQLModifier= "UPDATE module SET `nomEquipement`='".$nomEquipementModifier."',`adress`='".$adressModifier."' WHERE id = '".$idModifier."'";
+        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifier);
         
-    }*/
+        
+    }
     if(isset($_POST['SupprimerModule']))
     {
         $idTest = 0;
@@ -413,8 +415,8 @@
 
                         
 
-                        <select name="idModule">
-                            <option value=""> Choisissez une Canaux</option>
+                        <select name="idModuleModifier">
+                            <option value=""> Choisissez une Module</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
                             $n6= 0;
@@ -432,6 +434,37 @@
                                             
                                         
                             }
+
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" required>
+                               
+                        </div>
+
+                        <select name="adresseModifier">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
                                 
 
                             ?>
@@ -439,13 +472,16 @@
                         </select>
 
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="ChoixModifierModule1">Choisir</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
+                           
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
     
     <?php
 
@@ -495,7 +531,7 @@
                         </select>
 
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation">Modifier</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
                            
                         </div>
                     </form>
