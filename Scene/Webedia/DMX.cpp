@@ -1,5 +1,6 @@
 ﻿#include "DMX.h"
 #include <qt_windows.h>
+#include <iostream>
 #include <vector>
 
 DMX::DMX()
@@ -27,14 +28,7 @@ DMX::DMX()
 		// Mais il faut creer la trame
 		int i;
 		for (i = 0; i < DMX_MAXCHANNEL + 1; i++) {
-			dmxBlock[0] = 255;
-			dmxBlock[1] = 255;
-			dmxBlock[2] = 0;
-			dmxBlock[3] = 0;
-			dmxBlock[4] = 255;
-			dmxBlock[5] = 0;
-			dmxBlock[6] = 255;
-			dmxBlock[7] = 0;
+			dmxBlock[i] = ;
 		}
 
 		DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
@@ -107,7 +101,7 @@ QSqlDatabase DMX::ConnexionBDD()
 const int TAILLE_TABLEAU = 100;
 
 
-void DMX::Requeteselect(QSqlDatabase& db)
+int DMX::Requeteselect(QSqlDatabase& db)
 {
 	int tableau_resultat[TAILLE_TABLEAU] = {};
 	int res;
@@ -124,12 +118,17 @@ void DMX::Requeteselect(QSqlDatabase& db)
 			tableau_resultat[index] = adress.toInt();
 			tableau_resultat[index + 1] = valeur.toInt();
 			index += 2;
+			return tableau_resultat[index];
 		}
-
 		db.close();
 	}
 	else {
 		qInfo() << "Error BDD";
+	}
+	for (int i = 0; i < TAILLE_TABLEAU; i += 2) {
+		int adresse = tableau_resultat[i];
+		int valeur = tableau_resultat[i + 1];
+		std::cout << "Adresse : " << adresse << " | Valeur : " << valeur << std::endl;
 	}
 }
 
