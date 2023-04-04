@@ -1,5 +1,6 @@
 ﻿#include "DMX.h"
 #include <qt_windows.h>
+#include <vector>
 
 DMX::DMX()
 {
@@ -103,16 +104,27 @@ QSqlDatabase DMX::ConnexionBDD()
 
 
 }
+const int TAILLE_TABLEAU = 100;
+
 
 void DMX::Requeteselect(QSqlDatabase& db)
 {
+	int tableau_resultat[TAILLE_TABLEAU] = {};
+	int res;
 	QSqlQuery query;
 
 	if (db.open()) {
-		query.exec("SELECT module.adress AS adressChamps, canaux.valeur AS valeurCanaux FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id;");
-		while (query.next()) {
-			QString  
+		res = query.exec("SELECT module.adress AS adressChamps, canaux.valeur AS valeurCanaux FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id;");
+		int index = 0;
+		while (res = query.next() && index < TAILLE_TABLEAU) {
+			QString adress =  query.value(0).toString();
+			QString	valeur = query.value(1).toString();
+			int adresse = res->getInt("adresse");
+			int valeur = res->getInt("valeur");
 
+			tableau_resultat[index] = adress;
+			tableau_resultat[index + 1] = valeur;
+			index += 2;
 		}
 
 		db.close();
