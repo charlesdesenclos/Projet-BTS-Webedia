@@ -119,11 +119,10 @@ void DMX::Requeteselect(QSqlDatabase& db)
 		while (res = query.next() && index < TAILLE_TABLEAU) {
 			QString adress =  query.value(0).toString();
 			QString	valeur = query.value(1).toString();
-			int adresse = res->getInt("adresse");
-			int valeur = res->getInt("valeur");
 
-			tableau_resultat[index] = adress;
-			tableau_resultat[index + 1] = valeur;
+
+			tableau_resultat[index] = adress.toInt();
+			tableau_resultat[index + 1] = valeur.toInt();
 			index += 2;
 		}
 
