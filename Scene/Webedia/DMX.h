@@ -23,7 +23,7 @@ public :
 	DMX();
 	QSqlDatabase ConnexionBDD();
 	void SendTrame();
-	void Requeteselect(QSqlDatabase& db);
+	int Requeteselect(QSqlDatabase& db);
 
 };
 
