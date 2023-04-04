@@ -28,7 +28,7 @@ DMX::DMX()
 		// Mais il faut creer la trame
 		int i;
 		for (i = 0; i < DMX_MAXCHANNEL + 1; i++) {
-			dmxBlock[i] = ;
+			dmxBlock[i] = Requeteselect(ConnexionBDD());
 		}
 
 		DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
@@ -98,37 +98,31 @@ QSqlDatabase DMX::ConnexionBDD()
 
 
 }
-const int TAILLE_TABLEAU = 100;
+const int TAILLE_TABLEAU = 512;
 
 
-int DMX::Requeteselect(QSqlDatabase& db)
+int DMX::Requeteselect(QSqlDatabase db)
 {
 	int tableau_resultat[TAILLE_TABLEAU] = {};
 	int res;
 	QSqlQuery query;
 
 	if (db.open()) {
-		res = query.exec("SELECT module.adress AS adressChamps, canaux.valeur AS valeurCanaux FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id;");
+		res = query.exec("SELECT champs.adress AS adressChamps, canaux.valeur AS valeurCanaux FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id;");
 		int index = 0;
-		while (res = query.next() && index < TAILLE_TABLEAU) {
-			QString adress =  query.value(0).toString();
+		while (query.next() && index < TAILLE_TABLEAU) {
+			QString adress = query.value(0).toString();
 			QString	valeur = query.value(1).toString();
-
 
 			tableau_resultat[index] = adress.toInt();
 			tableau_resultat[index + 1] = valeur.toInt();
 			index += 2;
-			return tableau_resultat[index];
 		}
 		db.close();
+		return tableau_resultat[index];
 	}
 	else {
 		qInfo() << "Error BDD";
-	}
-	for (int i = 0; i < TAILLE_TABLEAU; i += 2) {
-		int adresse = tableau_resultat[i];
-		int valeur = tableau_resultat[i + 1];
-		std::cout << "Adresse : " << adresse << " | Valeur : " << valeur << std::endl;
 	}
 }
 
