@@ -75,11 +75,9 @@
 
     // Suppression des modules
 
-    if(isset($_POST['SupprimerModule']))
+    if(isset($_POST['submit-supprimer-module']))
     {
-        $idTest = 0;
-        $TheModule->suppressionModule($idTest);
-        
+        $TheModule->suppressionModule($_POST['idModuleSupprimer']);
     }
 
     // Modification des Champs
@@ -91,11 +89,9 @@
 
     // Suppression des champs
 
-    if(isset($_POST['SupprimerModule']))
+    if(isset($_POST['submit-supprimer-champs']))
     {
-        $idTest = 0;
-        $TheChamps->suppressionChamps($idTest);
-        
+        $TheChamps->suppressionChamps($_POST['idChampsSupprimer']);
     }
 
     ?>
@@ -440,7 +436,6 @@
                             ?>
                             
                         </select>
-
                         <div class="col-md-12">
                             <input class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" required>
                                
@@ -740,6 +735,111 @@
     
     
     <?php
+    }
+
+    if(isset($_POST['SupprimerModule']))
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Supprimer le module</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        
+
+                        <select name="idModuleSupprimer">
+                            <option value=""> Choisissez une Module</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $n6= 0;
+                            while($tab = $resultatModuleModifier->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n6 = $n6 +1;
+                                            
+                                        
+                            }
+
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-supprimer-module">Supprimer</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <?php
+
+    }
+
+    if(isset($_POST['SupprimerChamps']))
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Supprimer le champ</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        
+
+                        <select name="idChampsSupprimer">
+                            <option value=""> Choisissez une Champs</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $n7= 0;
+                            while($tabCHamps = $resultatChampsModifier->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n7 = $n7 +1;            
+                            }
+                            ?>
+                            
+                        </select>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-supprimer-champs">Supprimer</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <?php
+
     }
 
 
