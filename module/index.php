@@ -24,26 +24,24 @@
     require_once 'pdo/pdo.php'; // appele de la bdd
     $GLOBALS['bdd'] = $bdd;
 
+    // Initialisation de la class Module
+
     include("./Class/Module.php");
  
     $TheModule = new Module(null,null,null);
 
+    /* ---------------------*/
+
     $IDModule = $TheModule->getID();
     
-
-    
-
     $nom = $TheModule->getnomEquipement();
-
-    
-
-    
+ 
     $resultatModule = $TheModule->getIdANDnomEquipement();
 
     $RequetSQL2 = "SELECT id, nom FROM scene";
     $resultatScene = $GLOBALS['bdd'] -> query($RequetSQL2);
 
-
+    // Création des modules
 
     if(isset($_POST['submit-creation']))
     {
@@ -52,26 +50,31 @@
         
     }
 
+    //Initialisation de la class Champs
+
     include("./Class/Champs.php");
     $TheChamps = new Champs(null,null,null,null);
 
-    $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
-    $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
+    /* ---------------------*/
+
+    $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux();
     
+    // Création des champs
+
     if(isset($_POST['submit-creation-champs']))
     {
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
-
     }
-    /*
-    if(isset($_POST['ModifierModule']))
+    
+    // Modification des modules
+
+    if(isset($_POST['submit-modifier']))
     {
-        $idTest = 0;
-        $nomEquipementTest = 0;
-        $adressTest = 0;
-        $TheModule->modificationModule($idTest,$nomEquipementTest,$adressTest);
-        
-    }*/
+        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
+    }
+
+    // Suppression des modules
+
     if(isset($_POST['SupprimerModule']))
     {
         $idTest = 0;
@@ -79,15 +82,14 @@
         
     }
 
-    if(isset($_POST['ModifierChamps']))
+    // Modification des Champs
+
+    if(isset($_POST['submit-modifier-champs']))
     {
-        $idTest = 0;
-        $nomChamps =0;
-        $adress = 0;
-        $idCanaux = 0;
-        $TheChamps->modificationChamps($idTest,$idCanaux,$nomChamps,$adress,);
-        
+        $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
     }
+
+    // Suppression des champs
 
     if(isset($_POST['SupprimerModule']))
     {
@@ -302,7 +304,7 @@
     <?php
     }
 
-    //--------------------------------- Affichage IHM Création Channels --------------------------------------------
+    //--------------------------------- Affichage IHM Création Champs --------------------------------------------
 
 
     if(isset($_POST['CreationChamps']))
@@ -413,8 +415,8 @@
 
                         
 
-                        <select name="idModule">
-                            <option value=""> Choisissez une Canaux</option>
+                        <select name="idModuleModifier">
+                            <option value=""> Choisissez une Module</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
                             $n6= 0;
@@ -432,6 +434,37 @@
                                             
                                         
                             }
+
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" required>
+                               
+                        </div>
+
+                        <select name="adresseModifier">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
                                 
 
                             ?>
@@ -439,13 +472,16 @@
                         </select>
 
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="ChoixModifierModule1">Choisir</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
+                           
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
     
     <?php
 
@@ -495,7 +531,7 @@
                         </select>
 
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation">Modifier</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
                            
                         </div>
                     </form>
@@ -597,10 +633,114 @@
 
     }
 
-
+    //--------------------------------- Affichage IHM Modification Champs -------------------------------------------
+    $resultatChampsModifier = $TheChamps->getIDandNOM();
    
 
+    if(isset($_POST['ModifierChamps']))
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Modifier le module</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
 
+                        
+
+                        <select name="idChampsModifier">
+                            <option value=""> Choisissez une Champs</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $n7= 0;
+                            while($tabCHamps = $resultatChampsModifier->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n7 = $n7 +1;            
+                            }
+                            ?>
+                            
+                        </select>
+
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                               
+                        </div>
+
+                        <select name="adresseModifier">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <?php $n3 = 1; ?>
+                        <select name="idCanaux">
+                            <option value=""> Choisissez une Canaux</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            while($tab = $resultatCanaux->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';echo " : ";echo "valeur : ";echo ''.$tab["valeur"].'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n3 = $n3 +1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                        </select>
+                               
+                        
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-champs">Modifier</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <?php
+    }
 
 
     ?>
