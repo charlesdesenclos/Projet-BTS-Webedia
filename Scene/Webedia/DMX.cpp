@@ -26,12 +26,20 @@ DMX::DMX()
 		// Mais il faut creer la trame
 		int i;
 		for (i = 0; i < DMX_MAXCHANNEL + 1; i++) {
-			dmxBlock[i] = 255;
+			dmxBlock[0] = 255;
+			dmxBlock[1] = 255;
+			dmxBlock[2] = 0;
+			dmxBlock[3] = 0;
+			dmxBlock[4] = 255;
+			dmxBlock[5] = 0;
+			dmxBlock[6] = 255;
+			dmxBlock[7] = 0;
 		}
 
 		DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
 	}
 }
+
 /*
 //---------------------------------------------------------------------------
 void __fastcall TForm1::SendTrame() {
@@ -75,3 +83,42 @@ void __fastcall TForm1::TrackBar1Change(TObject *Sender)
 void DMX::SendTrame()
 {
 }
+
+QSqlDatabase DMX::ConnexionBDD()
+{
+	QString Host = "192.168.64.157";
+	QString Name = "Webedia";
+	QString User = "root";
+	QString Pass = "root";
+
+
+	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+	db.setHostName(Host);
+	db.setDatabaseName(Name);
+	db.setUserName(User);
+	db.setPassword(Pass);
+
+	return db;
+
+
+
+}
+
+void DMX::Requeteselect(QSqlDatabase& db)
+{
+	QSqlQuery query;
+
+	if (db.open()) {
+		query.exec("SELECT module.adress AS adressChamps, canaux.valeur AS valeurCanaux FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id;");
+		while (query.next()) {
+			QString  
+
+		}
+
+		db.close();
+	}
+	else {
+		qInfo() << "Error BDD";
+	}
+}
+

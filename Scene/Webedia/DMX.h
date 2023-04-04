@@ -3,6 +3,11 @@
 #include <qwindowdefs_win.h>
 #include <Windows.h>
 #include <DasHard.h>
+#include <QtSql>
+
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QtSql>
 
 #define DMX_MAXCHANNEL 512
 
@@ -16,7 +21,9 @@ private :
 	unsigned char dmxBlock[DMX_MAXCHANNEL];
 public : 
 	DMX();
+	QSqlDatabase ConnexionBDD();
 	void SendTrame();
+	void Requeteselect(QSqlDatabase& db);
 
 };
 

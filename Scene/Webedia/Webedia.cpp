@@ -70,7 +70,7 @@ void Webedia::onButtonClickedScene()
 
 }
 
-
+/*
 void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur){
 	if (db.open())
 	{
@@ -99,7 +99,7 @@ void Webedia::onButtonClickedCanal()
 	RequeteInsertCanaux(ConnexionBDD(), nom);
 
 }
-
+*/
 
 /*void Webedia::RequeteSelectScene(QSqlDatabase& db) {
 

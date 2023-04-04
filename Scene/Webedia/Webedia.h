@@ -34,6 +34,6 @@ public slots :
     void RequeteInsertScene(QSqlDatabase db, QString nom);
 	/*void RequeteSelectScene(QSqlDatabase& db);
     void onListSceneClicked();*/
-    void RequeteSelectModule(QSqlDatabase db);
+    /*void RequeteSelectModule(QSqlDatabase db);*/
  
 };
