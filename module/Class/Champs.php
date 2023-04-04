@@ -34,7 +34,8 @@ class Champs{
 
    public function suppressionChamps($id)
    {
-      echo "Supprime en BDD";
+     $RequetSQLSupprimerChamps= "DELETE FROM champs WHERE id = '".$id."'";
+     $resultatSupprimer = $GLOBALS['bdd']-> query($RequetSQLSupprimerChamps);
    }
 
    // Méthode affichageChamps : affiche tous les champs

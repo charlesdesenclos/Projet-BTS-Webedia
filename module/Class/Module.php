@@ -78,7 +78,8 @@ class Module{
 
    public function suppressionModule($id)
    {
-      echo "Supprime en BDD";
+      $RequetSQLSupprimer= "DELETE FROM module WHERE id = '".$id."'";
+      $resultatSupprimer = $GLOBALS['bdd']-> query($RequetSQLSupprimer);
    }
 
    // Méthode affichageModule : affiche tous les modules
