@@ -98,6 +98,7 @@ QSqlDatabase DMX::ConnexionBDD()
 
 
 }
+
 const int TAILLE_TABLEAU = 512;
 
 
@@ -110,7 +111,7 @@ int DMX::Requeteselect(QSqlDatabase db)
 	if (db.open()) {
 		res = query.exec("SELECT champs.adress AS adressChamps, canaux.valeur AS valeurCanaux FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id;");
 		int index = 0;
-		while (query.next() && index < TAILLE_TABLEAU) {
+		while (res = query.next() && index < TAILLE_TABLEAU) {
 			QString adress = query.value(0).toString();
 			QString	valeur = query.value(1).toString();
 
