@@ -11,6 +11,11 @@ char default_db[] = "Webedia";
 EthernetClient client;
 MySQL_Connection conn((Client *)&client);
 
+
+IPAddress ip(192, 168, 65, 2);                      // Adresse IP de votre carte Ethernet
+IPAddress server(192, 168, 64, 79);                  // Adresse IP du serveur à contacter
+
+
 void setup() {
   Serial.begin(9600);
   while (!Serial); // wait for serial port to connect
@@ -24,7 +29,29 @@ void setup() {
   else
     Serial.println("Connection failed.");
   conn.close();
+
+
+
+
+  Ethernet.begin(ip);  
+  delay(1000);                                        // Attente de la connexion
+  Serial.println("Connexion Ethernet établie");
 }
 
-void loop() {
+void loop() 
+{
+  if (client.connect(server, 80)) {                  // Connexion au serveur sur le port 80
+    Serial.println("Connecté au serveur");
+    client.println("GET / HTTP/1.0 / test");                 // Envoi de la requête HTTP
+    client.println();                                 // Envoi d'une ligne vide
+    delay(1000);                                      // Attente pour la réception de la réponse
+    while (client.available()) {                     // Lecture de la réponse
+      char c = client.read();
+      Serial.print(c);
+    }
+    client.stop();                                    // Fermeture de la connexion
+  } else {
+    Serial.println("Connexion échouée");
+  }
+  delay(5000);   
 }
