@@ -7,7 +7,6 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QtSql>
 
 #define DMX_MAXCHANNEL 512
 
@@ -23,7 +22,8 @@ public :
 	DMX();
 	QSqlDatabase ConnexionBDD();
 	void SendTrame();
-	int Requeteselect(QSqlDatabase db);
+	/*int Requeteselect(QSqlDatabase db);*/
+	QVector<int> Requeteselect(QSqlDatabase db);
 
 };
 
