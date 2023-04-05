@@ -29,11 +29,11 @@ DMX::DMX()
 		QVector<int> tableau_resultat = Requeteselect(ConnexionBDD());
 		qDebug() << tableau_resultat;
 		for (int i = 0; i < tableau_resultat.size() && i < DMX_MAXCHANNEL; i += 2) {
-			dmxBlock[tableau_resultat[i]] = tableau_resultat[i + 1];
-			qDebug() << "1;" << dmxBlock[tableau_resultat[i]];
-			qDebug() <<"2 :" << tableau_resultat[i + 1];
-			
+			dmxBlock[tableau_resultat[i]] = tableau_resultat[i+ 1];
 
+
+			qDebug() << "1;" << dmxBlock[tableau_resultat[i]];
+			qDebug() <<"2 :" << tableau_resultat[i + 1];		
 		}
 		
 
