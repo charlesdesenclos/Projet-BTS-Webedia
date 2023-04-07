@@ -26,16 +26,29 @@ DMX::DMX()
 		// Param�tre : Commande DHC_DMXOUT, Taille Block 512 , Trame dmxbloc Pointeur
 		// dmxBlock[512] est d�clar� en global dans le .h
 		// Mais il faut creer la trame
-		QVector<int> tableau_resultat = Requeteselect(ConnexionBDD());
-		qDebug() << tableau_resultat;
-		for (int i = 0; i < tableau_resultat.size() && i < DMX_MAXCHANNEL; i += 2) {
-			dmxBlock[tableau_resultat[i]] = tableau_resultat[i+ 1];
+		int* tableau_resultatAdress = nullptr;
+		int taille_tableau_resultatAdress = 0;
+		tableau_resultatAdress = RequeteselectAdress(ConnexionBDD(), taille_tableau_resultatAdress);
 
+		int* tableau_resultatValeurs = nullptr;
+		int taille_tableau_resultatValeurs = 0;
+		tableau_resultatValeurs = RequeteselectValeur(ConnexionBDD(), taille_tableau_resultatValeurs);
 
-			qDebug() << "1;" << dmxBlock[tableau_resultat[i]];
-			qDebug() <<"2 :" << tableau_resultat[i + 1];		
-		}
 		
+
+		qDebug() << tableau_resultatAdress;
+		qDebug() << tableau_resultatValeurs;
+
+		if (taille_tableau_resultatAdress == taille_tableau_resultatValeurs) 
+		{
+			
+			for (int i = 0;i < taille_tableau_resultatAdress; i += 1)
+			{
+				dmxBlock[i] = tableau_resultatValeurs[i];
+				qDebug() << "1;" << dmxBlock[tableau_resultatAdress[i]];
+				qDebug() << "2 :" << tableau_resultatValeurs[i];
+			}
+		}
 
 		DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
 	}
@@ -84,6 +97,8 @@ void __fastcall TForm1::TrackBar1Change(TObject *Sender)
 void DMX::SendTrame()
 {
 }
+
+
 
 QSqlDatabase DMX::ConnexionBDD()
 {
@@ -134,7 +149,7 @@ QSqlDatabase DMX::ConnexionBDD()
 }
 */
 
-QVector<int> DMX::Requeteselect(QSqlDatabase db)
+/*QVector<int> DMX::Requeteselect(QSqlDatabase db)
 {
 	QVector<int> tableau_resultat;
 	QSqlQuery query;
@@ -147,6 +162,72 @@ QVector<int> DMX::Requeteselect(QSqlDatabase db)
 
 				tableau_resultat.append(adress.toInt());
 				tableau_resultat.append(valeur.toInt());
+			}
+		}
+		else {
+			qInfo() << "Error executing query:" << query.lastError().text();
+		}
+		db.close();
+	}
+	else {
+		qInfo() << "Error opening database";
+	}
+
+	return tableau_resultat;
+}
+*/
+
+int* DMX::RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat)
+{
+	int* tableau_resultat = nullptr;
+	QSqlQuery query;
+
+	if (db.open()) {
+		if (query.exec("SELECT champs.adress AS adressChamps FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id")) {
+			taille_tableau_resultat = 0;
+			while (query.next()) {
+				QString adress = query.value(0).toString();
+				taille_tableau_resultat++;
+				int* nouveau_tableau_resultat = new int[taille_tableau_resultat];
+				if (tableau_resultat) {
+					memcpy(nouveau_tableau_resultat, tableau_resultat, (taille_tableau_resultat - 1) * sizeof(int));
+					delete[] tableau_resultat;
+				}
+				nouveau_tableau_resultat[taille_tableau_resultat - 1] = adress.toInt();
+				tableau_resultat = nouveau_tableau_resultat;
+			}
+		}
+		else {
+			qInfo() << "Error executing query:" << query.lastError().text();
+		}
+		db.close();
+	}
+	else {
+		qInfo() << "Error opening database";
+	}
+
+	return tableau_resultat;
+}
+
+
+int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
+{
+	int* tableau_resultat = nullptr;
+	QSqlQuery query;
+
+	if (db.open()) {
+		if (query.exec("SELECT canaux.valeur AS valeurCanaux FROM scene, canaux WHERE scene.id = canaux.idscene;")) {
+			taille_tableau_resultat = 0;
+			while (query.next()) {
+				QString valeur = query.value(0).toString();
+				taille_tableau_resultat++;
+				int* nouveau_tableau_resultat = new int[taille_tableau_resultat];
+				if (tableau_resultat) {
+					memcpy(nouveau_tableau_resultat, tableau_resultat, (taille_tableau_resultat - 1) * sizeof(int));
+					delete[] tableau_resultat;
+				}
+				nouveau_tableau_resultat[taille_tableau_resultat - 1] = valeur.toInt();
+				tableau_resultat = nouveau_tableau_resultat;
 			}
 		}
 		else {

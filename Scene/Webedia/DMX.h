@@ -23,7 +23,10 @@ public :
 	QSqlDatabase ConnexionBDD();
 	void SendTrame();
 	/*int Requeteselect(QSqlDatabase db);*/
-	QVector<int> Requeteselect(QSqlDatabase db);
+	/*QVector<int> Requeteselect(QSqlDatabase db);*/
+	int* RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat);
+	int* RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat);
+	
 
 };
 
