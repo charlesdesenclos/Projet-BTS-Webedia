@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="icon" href="https://fr.webedia-group.com/wp-content/uploads/sites/6/2021/11/Webedia-Monogram.png">
   </head>
   <body >    
   <?php
@@ -580,8 +581,7 @@
 
     //--------------------------------- Affichage IHM Affichage Champs -------------------------------------------
     
-    $reqAffichageChamps ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
-    $resultatSelectChamps = $GLOBALS['bdd'] -> query($reqAffichageChamps);
+    
 
     $resultatSelectChamps = $TheChamps->affichageChamps();
 
@@ -596,6 +596,7 @@
                 <th>Nom de la sène</th>
                 <th>Nom du champs</th>
                 <th>Adresse</th>
+                <th>Valeur</th>
               </tr>
             </thead>
             <tbody>
@@ -612,6 +613,7 @@
                         echo '<td>';echo ''.$AffichageChamps["nom"].'</td>';
                         echo '<td>';echo ''.$AffichageChamps["nomChamps"].'</td>';
                         echo '<td>';echo ''.$AffichageChamps["adress"].'</td>';
+                        echo '<td>';echo ''.$AffichageChamps["valeur"].'</td>';
     
                     ?>
                     </tr>                   
