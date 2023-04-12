@@ -238,10 +238,18 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion :</h6>
                         <form action="" method="POST">
-                            <input class="collapse-item" type="submit" value="Creation" name="CreationModule" >
-                            <input class="collapse-item" type="submit" value="Modifier" name="ModifierModule"  >
-                            <input class="collapse-item" type="submit" value="Supprimer" name="SupprimerModule"  >
-                            <input class="collapse-item" type="submit" value="Affichage" name="AffichageModule" >
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Creation" name="CreationModule" >
+                        </div>
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Modifier" name="ModifierModule"  >
+                        </div>
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Supprimer" name="SupprimerModule"  >
+                        </div>
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Affichage" name="AffichageModule" >
+                        </div>
                         </form>
                 
                     </div>
@@ -260,10 +268,18 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion :</h6>
                         <form action="" method="POST">
-                            <input class="collapse-item" type="submit" value="Creation" name="CreationChamps" >
-                            <input class="collapse-item" type="submit" value="Modifier" name="ModifierChamps" >
-                            <input class="collapse-item" type="submit" value="Supprimer" name="SupprimerChamps" >
-                            <input class="collapse-item" type="submit" value="Affichage" name="AffichageChamps" >
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Creation" name="CreationChamps">
+                        </div>
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Modifier" name="ModifierChamps">
+                        </div>
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Supprimer" name="SupprimerChamps">
+                        </div>
+                        <div class="col-md-12">
+                            <input class="btn btn-primary" type="submit" value="Affichage" name="AffichageChamps">
+                        </div>
                         </form>
                   
                     </div>
