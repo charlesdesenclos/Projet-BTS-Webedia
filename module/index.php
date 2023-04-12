@@ -298,14 +298,18 @@
         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
         $_SESSION['nbrChannels'] = $_SESSION['nbrChannels'] - 1;
 
-        echo $_SESSION['nbrChannels'];
+        //echo $_SESSION['nbrChannels'];
         
-        for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
+        if($_SESSION['nbrChannels'] != 0)
         {
-            afficheCreationChamps($resultatCanaux, $i);
-            
-        } 
-        return $_SESSION['nbrChannels'];
+            for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
+            {
+                afficheCreationChamps($resultatCanaux, $i);  
+            } 
+        }
+        
+        
+        
 
     }
     
@@ -329,7 +333,7 @@
         
 
     }
-    echo $_SESSION['nbrChannels'];
+    //echo $_SESSION['nbrChannels'];
 
     if(isset($_POST['CreationModule']))
     {
