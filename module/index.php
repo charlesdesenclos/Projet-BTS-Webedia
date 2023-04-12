@@ -83,7 +83,7 @@
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $adress = 0;
+                            $adress = 1;
                             while( $adress < 513){    
                                     
                                     
@@ -371,7 +371,7 @@
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $adress = 0;
+                            $adress = 1;
                             while(  $adress < 513){    
                                     
                                     
@@ -512,7 +512,7 @@
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $adress = 0;
+                            $adress = 1;
                             while(  $adress < 513){    
                                     
                                     
@@ -623,7 +623,7 @@
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $adress = 0;
+                            $adress = 1;
                             while(  $adress < 513){    
                                     
                                     
@@ -682,7 +682,7 @@
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $adress = 0;
+                            $adress = 1;
                             while(  $adress < 513){    
                                     
                                     
@@ -818,7 +818,7 @@
         <div class="form-holder">
             <div class="form-content">
                 <div class="form-items">
-                    <h3>Modifier le module</h3>
+                    <h3>Modifier le champ</h3>
                         
                     <form class="requires-validation" action="" method="POST" novalidate>
 
@@ -854,7 +854,7 @@
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $adress = 0;
+                            $adress = 1;
                             while(  $adress < 513){    
                                     
                                     
