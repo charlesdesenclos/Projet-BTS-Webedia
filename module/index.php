@@ -42,14 +42,9 @@
     $RequetSQL2 = "SELECT id, nom FROM scene";
     $resultatScene = $GLOBALS['bdd'] -> query($RequetSQL2);
 
-    // Création des modules
+    
 
-    if(isset($_POST['submit-creation']))
-    {
-
-        $TheModule->creationModule($_POST['nomEquipement'],$_POST['adresse']);
-        
-    }
+    
 
     //Initialisation de la class Champs
 
@@ -59,13 +54,105 @@
     /* ---------------------*/
 
     $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux();
-    
-    // Création des champs
 
-    if(isset($_POST['submit-creation-champs']))
+    //fonction 
+ 
+
+ 
+    $nbrChannels = 0;
+    
+    function afficheCreationChamps($resultatCanaux, $i)
     {
-        $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
+        ?>
+        <div class="div-channels">
+        <div>
+            <div class="form-content">
+                <div>
+                    <h1><?php echo "Channel ".$i." :";?><h1>
+                    
+                        
+                    <form class="requires-validation" action="" method="POST" >
+
+                        
+                            
+                        <div >
+                            <input  type="text" name="nomChamps" placeholder="Nom" required>         
+                        </div>
+
+                        <select name="adress">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 0;
+                            while( $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <?php $n3 = 1; ?>
+                        <select name="idCanaux">
+                            <option value=""> Choisissez une Canaux</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            while($tab = $resultatCanaux->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';echo " : ";echo "valeur : ";echo ''.$tab["valeur"].'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n3 = $n3 +1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+                               
+                        </div>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation-champs">Enregistrer</button>
+                            
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
     }
+
+    
+    
+    if((isset($_SESSION['nbrChannels']) && $_SESSION['nbrChannels'] == true) )
+    {
+        for ($i = 1; $i <= $nbrChannels; $i++) 
+        {
+            afficheCreationChamps($resultatCanaux, $i);
+        } 
+    }
+        
+
     
     // Modification des modules
 
@@ -95,7 +182,16 @@
         $TheChamps->suppressionChamps($_POST['idChampsSupprimer']);
     }
 
+
+
+
+    
+
+
+    
     ?>
+
+    
     
 
     <!-- Page Wrapper -->
@@ -190,7 +286,52 @@
         <!-- End of Sidebar --> 
         <!--------------------------------- Affichage IHM Création Module ------------------------------------------->
         <?php
-        if(isset($_POST['CreationModule']))
+
+
+
+
+
+    // Création des champs
+
+    if(isset($_POST['submit-creation-champs']))
+    {
+        $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
+        $_SESSION['nbrChannels'] = $_SESSION['nbrChannels'] - 1;
+
+        echo $_SESSION['nbrChannels'];
+        
+        for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
+        {
+            afficheCreationChamps($resultatCanaux, $i);
+            
+        } 
+        return $_SESSION['nbrChannels'];
+
+    }
+    
+    // Création des modules
+    
+    
+    if(isset($_POST['submit-creation']))
+    {
+
+        $TheModule->creationModule($_POST['nomEquipement'],$_POST['adresse']);
+
+        $nbrChannels = $_POST['nbr-channels'];
+        $_SESSION['nbrChannels'] = $nbrChannels;
+            
+        for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
+        {
+            afficheCreationChamps($resultatCanaux, $i);
+            
+        } 
+        return $_SESSION['nbrChannels'];
+        
+
+    }
+    echo $_SESSION['nbrChannels'];
+
+    if(isset($_POST['CreationModule']))
     {
         ?>
         <div class="row">
@@ -231,6 +372,31 @@
                             
                         </select>
 
+                        <select name="nbr-channels">
+                            <option value=""> Choisissez un nombre de channels pour l'équipement</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $nbr_channels = 1;
+                            while(  $nbr_channels < 13){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$nbr_channels.'">';echo ''.$nbr_channels.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $nbr_channels = $nbr_channels + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
                         <div class="form-button mt-3">
                             <button id="submit" type="submit" class="btn btn-primary" name="submit-creation">Enregistrer</button>
                             <?php
@@ -256,7 +422,7 @@
     $resultatSelectTotal = $GLOBALS['bdd'] -> query($reqAffichageTotal);
 
     //--------------------------------- Affichage Total -----------------------------------------------------------
-
+    /*
     if(!isset($_POST['CreationModule']) && !isset($_POST['CreationCanaux']) && !isset($_POST['CreationChamps']) && !isset($_POST['AffichageModule']) && !isset($_POST['AffichageCanaux']) && !isset($_POST['AffichageChamps']) && !isset($_POST['ModifierModule']) && !isset($_POST['ModifierCanaux']) && !isset($_POST['ModifierChamps']) && !isset($_POST['SupprimerModule']) && !isset($_POST['SupprimerCanaux']) && !isset($_POST['SupprimerChamps']))
     {?>
         <div class="container">
@@ -300,6 +466,7 @@
     </div>
     <?php
     }
+    */
 
     //--------------------------------- Affichage IHM Création Champs --------------------------------------------
 
@@ -375,16 +542,6 @@
 
                         <div class="form-button mt-3">
                             <button id="submit" type="submit" class="btn btn-primary" name="submit-creation-champs">Enregistrer</button>
-                            <?php
-                                if(isset($_SESSION['ModulExisteDeja']) && $_SESSION['ModulExisteDeja'] == true)
-                                {?>
-                                    <div class="invalid-feedback">Module existe déja</div>
-                                    <?php
-
-                                        
-                                }
-
-                            ?>
                         </div>
                     </form>
                 </div>
@@ -739,6 +896,8 @@
     <?php
     }
 
+    //--------------------------------- Affichage IHM Supprimer Module -------------------------------------------
+
     if(isset($_POST['SupprimerModule']))
     {
         ?>
@@ -793,6 +952,8 @@
     <?php
 
     }
+
+    //--------------------------------- Affichage IHM Supprimer Champs -------------------------------------------
 
     if(isset($_POST['SupprimerChamps']))
     {
@@ -875,8 +1036,8 @@
   ?>
   
     <?php
-    session_unset();
-    session_destroy();
+    //session_unset();
+    //session_destroy();
 
     ?>
     <!-- Bootstrap core JavaScript-->
