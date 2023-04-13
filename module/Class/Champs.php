@@ -54,6 +54,15 @@ class Champs{
         return $resultatChampsModifier;
    }
 
+   public function getAll($idModule)
+   {
+        $requetSelectAllChamps = "SELECT champs.id, champs.nomChamps, champs.adress, champs.idCanaux FROM `champs`, module, canaux WHERE champs.idCanaux = canaux.id AND module.id = canaux.idmodule AND module.id = '".$idModule."' ;";
+        $resultSelectAll = $GLOBALS['bdd'] -> query($requetSelectAllChamps);
+        return $resultSelectAll;
+   }
+
+   
+
 
 }
 

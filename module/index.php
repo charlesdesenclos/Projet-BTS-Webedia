@@ -142,6 +142,91 @@
     <?php
     }
 
+    function affichagemodifierChamps($resultatModuleModifier, $nbrCanauxExist, $i)
+    {
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                <h1><?php echo "Channel ".$i." :";?><h1>
+                    <h3>Modifier le module</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        
+
+                        <select name="idModuleModifier">
+                            <option value=""> Choisissez une Module</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $n6= 0;
+                            while($tab = $resultatModuleModifier->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n6 = $n6 +1;
+                                            
+                                        
+                            }
+
+                                
+
+                            ?>
+                            
+                        </select>
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" required>
+                               
+                        </div>
+
+                        <select name="adresseModifier">
+                            <option value=""> Choisissez une Adresse</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            $adress = 1;
+                            while(  $adress < 513){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                                ?>
+                                    
+                                <?php
+                                $adress = $adress + 1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <?php
+    }
+
+
     
     
     if((isset($_SESSION['nbrChannels']) && $_SESSION['nbrChannels'] == true) )
@@ -156,9 +241,17 @@
     
     // Modification des modules
 
+
+    
+    
+
+
+
     if(isset($_POST['submit-modifier']))
     {
         $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
+
+        $resultAllChamps = $TheChamps->getAll($_POST['idModuleModifier']);
     }
 
     // Suppression des modules
@@ -181,18 +274,8 @@
     {
         $TheChamps->suppressionChamps($_POST['idChampsSupprimer']);
     }
-
-
-
-
-    
-
-
-    
+ 
     ?>
-
-    
-    
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -302,10 +385,6 @@
         <!-- End of Sidebar --> 
         <!--------------------------------- Affichage IHM Création Module ------------------------------------------->
         <?php
-
-
-
-
 
     // Création des champs
 
@@ -1027,16 +1106,11 @@
 
 
     ?>
-        
-
-        
+               
     </div> 
 
 
     <?php
-
-    
-    
 
     //if(isset($_SESSION['ModuleValider']) && $_SESSION['ModuleValider'] == false)
     //{
