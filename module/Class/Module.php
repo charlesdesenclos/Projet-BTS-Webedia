@@ -97,6 +97,7 @@ class Module{
       $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
       return $resultatCanaux;
    }
+   
 
    
 }

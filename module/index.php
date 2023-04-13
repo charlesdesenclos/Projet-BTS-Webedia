@@ -142,15 +142,15 @@
     <?php
     }
 
-    function affichagemodifierChamps($resultatModuleModifier, $nbrCanauxExist, $i)
+    function affichagemodifierChamps($resultatModuleModifier, $i)
     {
         ?>
-        <div class="row">
-        <div class="form-holder">
+        <div class="div-channels">
+        <div>
             <div class="form-content">
-                <div class="form-items">
+                <div>
                 <h1><?php echo "Channel ".$i." :";?><h1>
-                    <h3>Modifier le module</h3>
+                    
                         
                     <form class="requires-validation" action="" method="POST" novalidate>
 
@@ -212,7 +212,7 @@
                         </select>
 
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-Canaux">Modifier</button>
                            
                         </div>
 
@@ -247,12 +247,7 @@
 
 
 
-    if(isset($_POST['submit-modifier']))
-    {
-        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
-
-        $resultAllChamps = $TheChamps->getAll($_POST['idModuleModifier']);
-    }
+    
 
     // Suppression des modules
 
@@ -515,6 +510,46 @@
         </div>
     </div>
     <?php
+    }
+
+    $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = 14;";
+
+    $resultatCanauxID = $GLOBALS['bdd'] -> query($resultCanauxID);
+    //$resultAllChamps = $TheChamps->getAll(14);
+
+
+    $count = $resultatCanauxID->rowCount();
+        
+    echo $count;
+
+
+    if(isset($_POST['submit-modifier']))
+    {
+        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
+        
+       
+        $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_POST['idModuleModifier']."'";
+
+        $resultatCanauxID = $GLOBALS['bdd'] -> query($resultCanauxID);
+
+        
+
+        $count = $resultatCanauxID->rowCount();
+
+        for ($i = 1; $i <= $count; $i++) 
+        {
+            affichagemodifierChamps($resultatCanaux, $i);
+            
+        } 
+
+
+        echo $count;
+ 
+    }
+
+    if(isset($_POST['submit-modifier-Canaux']))
+    {
+
     }
     
     $reqAffichageTotal ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress, canaux.valeur  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
