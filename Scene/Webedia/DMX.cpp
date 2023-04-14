@@ -242,4 +242,8 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 	return tableau_resultat;
 }
 
+void DMX::RequeteUpdateCanaux(QSqlDatabase db)
+{
+}
+
 

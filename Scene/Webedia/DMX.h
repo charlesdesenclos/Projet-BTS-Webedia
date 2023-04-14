@@ -26,6 +26,7 @@ public :
 	/*QVector<int> Requeteselect(QSqlDatabase db);*/
 	int* RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat);
 	int* RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat);
+	void RequeteUpdateCanaux(QSqlDatabase db);
 	
 
 };
