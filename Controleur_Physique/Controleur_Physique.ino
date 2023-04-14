@@ -1,5 +1,7 @@
-#include <Ethernet.h>
 #include <MySQL_Connection.h>
+#include <MySQL_Cursor.h>
+#include <SPI.h>
+#include <Ethernet.h>
 
 byte mac_addr[] = { 0xA8, 0x61, 0x0A, 0xAE, 0xA9, 0xB1};
 
@@ -40,6 +42,19 @@ void setup() {
 
 void loop() 
 {
+  //BDD
+
+  MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
+  cur_mem->execute("SELECT * FROM `scene`");
+
+  do {
+    MySQL_Row row = cur_mem->get_next_row();
+    if (row.length() > 0) {
+      Serial.println(row[0]); // Afficher la première colonne de la ligne
+    }
+  } while (cur_mem->has_next_row());
+  delete cur_mem;
+  
   if (client.connect(server, 80)) {                  // Connexion au serveur sur le port 80
     Serial.println("Connecté au serveur");
     client.println("GET / HTTP/1.0 / test");                 // Envoi de la requête HTTP
