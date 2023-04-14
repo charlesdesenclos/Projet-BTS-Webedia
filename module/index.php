@@ -55,11 +55,15 @@
 
     $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux();
 
-    //fonction 
+    
  
 
- 
+    $resultatChampsModifier = $TheChamps->getIDandNOM();
+
     $nbrChannels = 0;
+
+
+    //fonction 
     
     function afficheCreationChamps($resultatCanaux, $i)
     {
@@ -142,47 +146,42 @@
     <?php
     }
 
-    function affichagemodifierChamps($resultatModuleModifier, $i)
+    function affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux)
     {
         ?>
-        <div class="div-channels">
+        <div>
         <div>
             <div class="form-content">
                 <div>
-                <h1><?php echo "Channel ".$i." :";?><h1>
-                    
+                    <h1><?php echo "Channel ".$i." :";?><h1>
                         
                     <form class="requires-validation" action="" method="POST" novalidate>
 
                         
 
-                        <select name="idModuleModifier">
-                            <option value=""> Choisissez une Module</option>
+                        <select name="idChampsModifier">
+                            <option value=""> Choisissez une Champs</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            $n6= 0;
-                            while($tab = $resultatModuleModifier->fetch()){    
+                            $n7= 0;
+                            while($tabCHamps = $resultatChampsModifier->fetch()){    
                                     
                                     
                                 ?>
                                     
                                 <?php
-                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';'</option>';
+                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
                                 ?>
                                     
                                 <?php
-                                $n6 = $n6 +1;
-                                            
-                                        
+                                $n7 = $n7 +1;            
                             }
-
-                                
-
                             ?>
                             
                         </select>
+
                         <div class="col-md-12">
-                            <input class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" required>
+                            <input class="form-control" type="text" name="nom" placeholder="Nom" required>
                                
                         </div>
 
@@ -211,8 +210,34 @@
                             
                         </select>
 
+                        <?php $n3 = 1; ?>
+                        <select name="idCanaux">
+                            <option value=""> Choisissez une Canaux</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            while($tab = $resultatCanaux->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';echo " : ";echo "valeur : ";echo ''.$tab["valeur"].'</option>';
+                                ?>
+                                    
+                                <?php
+                                $n3 = $n3 +1;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                        </select>
+                               
+                        
+
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-Canaux">Modifier</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-champs">Modifier</button>
                            
                         </div>
 
@@ -237,17 +262,6 @@
         } 
     }
         
-
-    
-    // Modification des modules
-
-
-    
-    
-
-
-
-    
 
     // Suppression des modules
 
@@ -520,13 +534,15 @@
 
     $count = $resultatCanauxID->rowCount();
         
-    echo $count;
+    //echo $count;
 
+    // Modification des modules
 
     if(isset($_POST['submit-modifier']))
     {
         $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
         
+        $_SESSION['idModuleModifier'] = $_POST['idModuleModifier'];
        
         $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_POST['idModuleModifier']."'";
 
@@ -538,18 +554,19 @@
 
         for ($i = 1; $i <= $count; $i++) 
         {
-            affichagemodifierChamps($resultatCanaux, $i);
+            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
             
         } 
 
 
-        echo $count;
+        //echo $count;
  
     }
+    echo  $_SESSION['idModuleModifier'];
 
     if(isset($_POST['submit-modifier-Canaux']))
     {
-
+        $TheChamps->modificationChampsModule($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier'],  $_SESSION['idModuleModifier']);
     }
     
     $reqAffichageTotal ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress, canaux.valeur  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
@@ -922,7 +939,7 @@
     }
 
     //--------------------------------- Affichage IHM Modification Champs -------------------------------------------
-    $resultatChampsModifier = $TheChamps->getIDandNOM();
+    
    
 
     if(isset($_POST['ModifierChamps']))
