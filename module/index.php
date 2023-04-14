@@ -58,7 +58,7 @@
     
  
 
-    $resultatChampsModifier = $TheChamps->getIDandNOM();
+    $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
     $nbrChannels = 0;
 
@@ -562,11 +562,11 @@
         //echo $count;
  
     }
-    echo  $_SESSION['idModuleModifier'];
+    //echo  $_SESSION['idModuleModifier'];
 
     if(isset($_POST['submit-modifier-Canaux']))
     {
-        $TheChamps->modificationChampsModule($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier'],  $_SESSION['idModuleModifier']);
+        $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
     }
     
     $reqAffichageTotal ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress, canaux.valeur  FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";

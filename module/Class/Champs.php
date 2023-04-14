@@ -47,9 +47,9 @@ class Champs{
         return $resultatSelectChamps;
    }
 
-   public function getIDandNOM()
+   public function getIDandNOM($idModule)
    {
-        $requetSQLChampsModifier = "SELECT id, nomChamps FROM champs";
+        $requetSQLChampsModifier = "SELECT champs.id, champs.nomChamps FROM `champs`,module,canaux WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND module.id = '".$idModule."'";
         $resultatChampsModifier = $GLOBALS['bdd'] -> query($requetSQLChampsModifier);
         return $resultatChampsModifier;
    }
@@ -61,14 +61,7 @@ class Champs{
         return $resultSelectAll;
    }
 
-   public function modificationChampsModule($id, $idCanaux, $nomChamps, $adress, $idModule)
-   {
-        $RequetSQLSelectidCanaux = "SELECT champs.idCanaux FROM `champs`,module,canaux WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND module.id = '".$idModule."'";
-        $resultatSelectidCanaux = $GLOBALS['bdd']-> query($RequetSQLSelectidCanaux);
-
-        $RequetSQLModifierChamps= "UPDATE champs SET `nomChamps`='".$nomChamps."',`adress`='".$adress."',idCanaux = '".$idCanaux."' WHERE id = '".$id."'";
-        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifierChamps);
-   }
+  
 
 
 
