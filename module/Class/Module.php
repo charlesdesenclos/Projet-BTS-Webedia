@@ -91,9 +91,9 @@ class Module{
       return $resultatSelectModule;
    }
 
-   public function getIDCanauxNomEquipementModuleANDValeurCanaux()
+   public function getIDCanauxNomEquipementModuleANDValeurCanaux($idModule)
    {
-      $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
+      $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id AND module.id = '".$idModule."'";
       $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
       return $resultatCanaux;
    }

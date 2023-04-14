@@ -53,7 +53,7 @@
 
     /* ---------------------*/
 
-    $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux();
+    $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
     
  
@@ -330,17 +330,25 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion :</h6>
                         <form action="" method="POST">
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Creation" name="CreationModule" >
+                        <div class="col-md-12">    
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Creation" name="CreationModule" >
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Modifier" name="ModifierModule"  >
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Modifier" name="ModifierModule"  >
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Supprimer" name="SupprimerModule"  >
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Supprimer" name="SupprimerModule"  >
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Affichage" name="AffichageModule" >
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Affichage" name="AffichageModule" >
+                            </div>
                         </div>
                         </form>
                 
@@ -360,17 +368,25 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion :</h6>
                         <form action="" method="POST">
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Creation" name="CreationChamps">
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Creation" name="CreationChamps">
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Modifier" name="ModifierChamps">
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Modifier" name="ModifierChamps">
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Supprimer" name="SupprimerChamps">
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Supprimer" name="SupprimerChamps">
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="btn btn-primary" type="submit" value="Affichage" name="AffichageChamps">
+                        <div class="col-md-12">  
+                            <div class="form-group">
+                                <input class="btn btn-secondary" type="submit" value="Affichage" name="AffichageChamps">
+                            </div>
                         </div>
                         </form>
                   
@@ -603,7 +619,6 @@
                     echo '<td>';echo ''.$AffichageTotal["nomChamps"].'</td>';
                     echo '<td>';echo ''.$AffichageTotal["adress"].'</td>';
                     echo '<td>';echo ''.$AffichageTotal["valeur"].'</td>';
-
                 ?>
                 </tr>                   
                 <?php
