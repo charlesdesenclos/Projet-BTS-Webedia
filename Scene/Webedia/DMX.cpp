@@ -244,6 +244,14 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 
 void DMX::RequeteUpdateCanaux(QSqlDatabase db)
 {
+	QSqlQuery query;
+	if (db.open()) {
+		query.exec("UPDATE `canaux` SET `valeur`='' WHERE id ='' ");
+
+	}
+	else {
+		qInfo() << "Error opening database";
+	}
 }
 
 
