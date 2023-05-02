@@ -162,8 +162,10 @@
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
                             $n7= 0;
-                            while($tabCHamps = $resultatChampsModifier->fetch()){    
-                                    
+                            
+                            
+                            while($tabCHamps = $resultatChampsModifier->fetch())
+                            {      
                                     
                                 ?>
                                     
@@ -560,23 +562,25 @@
         
         $_SESSION['idModuleModifier'] = $_POST['idModuleModifier'];
 
-        $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
-
-    
- 
-
-        $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
+        
        
         $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_POST['idModuleModifier']."'";
 
         $resultatCanauxID = $GLOBALS['bdd'] -> query($resultCanauxID);
-
+       
         
-
+        //$_SESSION['resultatChampsModifier']
         $count = $resultatCanauxID->rowCount();
 
         for ($i = 1; $i <= $count; $i++) 
-        {
+        { 
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
+
+    
+ 
+
+            $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
+            
             affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
             
         } 
