@@ -53,12 +53,10 @@
 
     /* ---------------------*/
 
-    $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
+
+    $_SESSION['idModuleModifier'] = null;
 
     
- 
-
-    $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
     $nbrChannels = 0;
 
@@ -557,8 +555,17 @@
     if(isset($_POST['submit-modifier']))
     {
         $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
+
+        
         
         $_SESSION['idModuleModifier'] = $_POST['idModuleModifier'];
+
+        $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
+
+    
+ 
+
+        $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
        
         $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_POST['idModuleModifier']."'";
 
