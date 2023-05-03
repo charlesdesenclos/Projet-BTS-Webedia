@@ -61,7 +61,7 @@
     $nbrChannels = 0;
 
 
-    //fonction 
+    //fonction affiche l'IHM de creation des champs
     
     function afficheCreationChamps($resultatCanaux, $i)
     {
@@ -439,13 +439,30 @@
     if(isset($_POST['submit-creation']))
     {
 
-        $TheModule->creationModule($_POST['nomEquipement'],$_POST['adresse']);
+        $nomEquipement = $_POST['nomEquipement'];
+        
+        $adresse = $_POST['adresse'];
+
+        $TheModule->creationModule($nomEquipement,$adresse);
 
         $nbrChannels = $_POST['nbr-channels'];
         $_SESSION['nbrChannels'] = $nbrChannels;
+
+        $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
+        $IDModuleCreation= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
+
+
+    
+   
             
-        for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
+        for ($i = 1; $i <= $nbrChannels; $i++) 
         {
+            $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
+            $IDModuleCreation= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
+           
+
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($IDModuleCreation);
+
             afficheCreationChamps($resultatCanaux, $i);
             
         } 
@@ -453,6 +470,8 @@
         
 
     }
+
+    echo $IDModule;
     //echo $_SESSION['nbrChannels'];
 
     if(isset($_POST['CreationModule']))
@@ -580,7 +599,7 @@
  
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
-            
+
             affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
             
         } 
