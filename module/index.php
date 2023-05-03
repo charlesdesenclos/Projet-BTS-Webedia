@@ -471,7 +471,7 @@
 
     }
 
-    echo $IDModule;
+    
     //echo $_SESSION['nbrChannels'];
 
     if(isset($_POST['CreationModule']))
