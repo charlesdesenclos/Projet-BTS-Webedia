@@ -272,10 +272,7 @@
 
     // Modification des Champs
 
-    if(isset($_POST['submit-modifier-champs']))
-    {
-        $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
-    }
+    
 
     // Suppression des champs
 
@@ -411,27 +408,7 @@
         <!--------------------------------- Affichage IHM Création Module ------------------------------------------->
         <?php
 
-    // Création des champs
-
-    if(isset($_POST['submit-creation-champs']))
-    {
-        $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
-        $_SESSION['nbrChannels'] = $_SESSION['nbrChannels'] - 1;
-
-        //echo $_SESSION['nbrChannels'];
-        
-        if($_SESSION['nbrChannels'] != 0)
-        {
-            for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
-            {
-                afficheCreationChamps($resultatCanaux, $i);  
-            } 
-        }
-        
-        
-        
-
-    }
+   
     
     // Création des modules
     
@@ -458,18 +435,43 @@
         for ($i = 1; $i <= $nbrChannels; $i++) 
         {
             $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
-            $IDModuleCreation= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
+            $_SESSION['IDModuleCreation']= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
            
 
-            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($IDModuleCreation);
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
 
             afficheCreationChamps($resultatCanaux, $i);
             
         } 
-        return $_SESSION['nbrChannels'];
+        return $_SESSION['IDModuleCreation'];
         
 
     }
+
+     // Création des champs
+
+     if(isset($_POST['submit-creation-champs']))
+     {
+         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
+         $_SESSION['nbrChannels'] = $_SESSION['nbrChannels'] - 1;
+ 
+         //echo $_SESSION['nbrChannels'];
+         
+         if($_SESSION['nbrChannels'] != 0)
+         {
+             for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
+             {
+ 
+                 $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+                 afficheCreationChamps($resultatCanaux, $i);  
+             } 
+         }
+         
+         
+         
+ 
+     }
 
     
     //echo $_SESSION['nbrChannels'];
@@ -571,6 +573,8 @@
         
     //echo $count;
 
+    
+
     // Modification des modules
 
     if(isset($_POST['submit-modifier']))
@@ -580,34 +584,71 @@
         
         
         $_SESSION['idModuleModifier'] = $_POST['idModuleModifier'];
-
+        
         
        
         $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_POST['idModuleModifier']."'";
 
         $resultatCanauxID = $GLOBALS['bdd'] -> query($resultCanauxID);
-       
+        
+        
         
         //$_SESSION['resultatChampsModifier']
-        $count = $resultatCanauxID->rowCount();
-
-        for ($i = 1; $i <= $count; $i++) 
-        { 
-            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
-
-    
- 
-
-            $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
-
-            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
-            
-        } 
-
-
+        $_SESSION['count1'] = $resultatCanauxID->rowCount();
+        
         //echo $count;
+
+        
+            for ($i = 1; $i <= $_SESSION['count1']; $i++) 
+            { 
+                $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
+    
+        
+     
+    
+                $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
+    
+                affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
+    
+                
+            } 
+    
+            
+            $_SESSION['count1'] = $_SESSION['count1'] -1;
+            
  
     }
+
+    $idModuleModifier = $_SESSION['idModuleModifier'];
+    echo '3: ' . $idModuleModifier;
+
+    if(isset($_POST['submit-modifier-champs']))
+    {
+        $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
+
+        echo '2] : ' . $_SESSION['idModuleModifier'];
+
+
+        for ($i = 1; $i <= $_SESSION['count1']; $i++) 
+        { 
+                
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
+    
+        
+     
+    
+            $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
+    
+            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
+    
+                
+        } 
+        $_SESSION['count1'] = $_SESSION['count1'] -1;
+    }
+    
+   
+
+
     //echo  $_SESSION['idModuleModifier'];
 
     if(isset($_POST['submit-modifier-Canaux']))
