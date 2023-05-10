@@ -43,16 +43,17 @@ void setup() {
 void loop() 
 {
   //BDD
-
+  row_values *row = NULL;
+  long head_count = 0;
   MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
   cur_mem->execute("SELECT * FROM `scene`");
 
   do {
-    MySQL_Row row = cur_mem->get_next_row();
-    if (row.length() > 0) {
-      Serial.println(row[0]); // Afficher la première colonne de la ligne
+    row = cur_mem->get_next_row();
+    if (row != NULL) {
+      head_count = atol(row->values[0]);
     }
-  } while (cur_mem->has_next_row());
+  } while (row != NULL);
   delete cur_mem;
   
   if (client.connect(server, 80)) {                  // Connexion au serveur sur le port 80
