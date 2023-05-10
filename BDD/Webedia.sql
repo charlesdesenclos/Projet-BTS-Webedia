@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : ven. 14 avr. 2023 à 09:38
+-- Généré le : mer. 10 mai 2023 à 11:29
 -- Version du serveur :  10.5.18-MariaDB-0+deb11u1
 -- Version de PHP : 7.4.33
 
@@ -40,17 +40,22 @@ CREATE TABLE `canaux` (
 
 INSERT INTO `canaux` (`id`, `valeur`, `idmodule`, `idscene`) VALUES
 (7, 255, 14, 1),
-(9, 255, 14, 1),
+(9, 0, 14, 1),
 (10, 0, 14, 1),
 (11, 0, 14, 1),
-(12, 0, 19, 1),
+(12, 255, 19, 1),
 (13, 0, 19, 1),
-(14, 255, 19, 1),
+(14, 0, 19, 1),
 (15, 0, 19, 1),
-(16, 255, 23, 1),
-(17, 0, 23, 1),
-(18, 0, 23, 1),
-(19, 0, 23, 1);
+(20, 0, 35, 1),
+(21, 255, 35, 1),
+(22, 0, 35, 1),
+(23, 0, 35, 1),
+(26, 42, 42, 1),
+(27, 255, 45, 1),
+(28, 255, 45, 1),
+(29, 0, 45, 1),
+(30, 0, 45, 1);
 
 -- --------------------------------------------------------
 
@@ -70,7 +75,7 @@ CREATE TABLE `champs` (
 --
 
 INSERT INTO `champs` (`id`, `nomChamps`, `adress`, `idCanaux`) VALUES
-(3, 'Champs rouge Lampe 1', 1, 7),
+(3, 'Champs rouge Lampe 15', 19, 7),
 (4, 'Champs vert Lampe 1', 2, 9),
 (5, 'Champs Bleu Lampe 1', 3, 10),
 (6, 'Lampe 1 Blanc', 4, 11),
@@ -78,10 +83,14 @@ INSERT INTO `champs` (`id`, `nomChamps`, `adress`, `idCanaux`) VALUES
 (8, 'Lampe 2 vert', 6, 13),
 (9, 'Lampe 2 bleu', 7, 14),
 (10, 'Lampe 2 Blanc', 8, 15),
-(26, 'Lampe 3 rouge', 9, 16),
-(27, 'Lampe 3 vert', 10, 17),
-(28, 'Lampe 3 bleu', 11, 18),
-(29, 'Lampe 3 blanc', 12, 19);
+(64, 'Champs rouge Lampe 3', 9, 20),
+(65, 'Champs vert Lampe 3', 10, 21),
+(66, 'Champs bleu Lampe 3', 11, 22),
+(67, 'Champs blanc Lampe 3', 12, 23),
+(72, 'Champs rouge Lampe test', 19, 27),
+(73, 'Champs vert Lampe test', 22, 28),
+(74, 'Champs blanc Lampe test', 23, 27),
+(75, 'Champs bleu Lampe test', 22, 27);
 
 -- --------------------------------------------------------
 
@@ -114,10 +123,10 @@ CREATE TABLE `module` (
 --
 
 INSERT INTO `module` (`id`, `nomEquipement`, `adress`) VALUES
-(14, 'Lampe 1', 1),
+(14, 'Lampe 15', 19),
 (19, 'Lampe 2', 5),
-(23, 'Lampe 3', 9),
-(30, 'Lampe 5', 24);
+(35, 'Lampe 3', 9),
+(45, 'Lampe test', 19);
 
 -- --------------------------------------------------------
 
@@ -143,18 +152,7 @@ INSERT INTO `scene` (`id`, `nom`) VALUES
 (11, 'Scène 6'),
 (12, 'Scène 7'),
 (13, 'Scène 8'),
-(14, 'Scène 9'),
-(16, 'Scène 10'),
-(17, 'Scène 11'),
-(18, 'Scène 12'),
-(19, 'Scène 13'),
-(20, 'Scène 14'),
-(21, 'Scène 15'),
-(22, 'Scène 16'),
-(23, 'scene 33'),
-(24, 'Scène 32'),
-(25, 'Scene 34'),
-(26, 'Scène 36');
+(14, 'Scène 9');
 
 -- --------------------------------------------------------
 
@@ -176,7 +174,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `identifiant`, `password`, `isAdmin`) VALUES
 (1, 'Alexis', 'Alexis', 1),
 (2, 'Enzo', 'Enzo', 0),
-(3, 'Charles', 'Charles', 1);
+(3, 'Charles', 'Charles', 1),
+(4, 'Johnny', 'Sins', 1);
 
 --
 -- Index pour les tables déchargées
@@ -231,13 +230,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `canaux`
 --
 ALTER TABLE `canaux`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `champs`
 --
 ALTER TABLE `champs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT pour la table `favoris`
@@ -249,7 +248,7 @@ ALTER TABLE `favoris`
 -- AUTO_INCREMENT pour la table `module`
 --
 ALTER TABLE `module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `scene`
@@ -261,7 +260,7 @@ ALTER TABLE `scene`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
