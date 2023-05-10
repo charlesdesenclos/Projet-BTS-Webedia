@@ -448,7 +448,7 @@
 
     }
 
-     // Création des champs
+     // Création des champs submit-creation-champs-solo
 
      if(isset($_POST['submit-creation-champs']))
      {
@@ -467,6 +467,15 @@
                  afficheCreationChamps($resultatCanaux, $i);  
              } 
          }
+         
+         
+         
+ 
+     }
+
+     if(isset($_POST['submit-creation-champs-solo']))
+     {
+         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],$_POST['idCanaux']);
          
          
          
@@ -709,6 +718,8 @@
 
     //--------------------------------- Affichage IHM Création Champs --------------------------------------------
 
+    $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id";
+    $resultatCanaux1 = $GLOBALS['bdd'] -> query($RequetSQL3);
 
     if(isset($_POST['CreationChamps']))
     {
@@ -757,7 +768,7 @@
                             <option value=""> Choisissez une Canaux</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            while($tab = $resultatCanaux->fetch()){    
+                            while($tab = $resultatCanaux1->fetch()){    
                                     
                                     
                                 ?>
@@ -780,7 +791,7 @@
                         </div>
 
                         <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation-champs">Enregistrer</button>
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-creation-champs-solo">Enregistrer</button>
                         </div>
                     </form>
                 </div>
@@ -1028,7 +1039,7 @@
 
     //--------------------------------- Affichage IHM Modification Champs -------------------------------------------
     
-   
+    $resultatChampsModifier = $TheChamps->getIDNom();
 
     if(isset($_POST['ModifierChamps']))
     {
@@ -1044,7 +1055,7 @@
                         
 
                         <select name="idChampsModifier">
-                            <option value=""> Choisissez une Champs</option>
+                            <option value=""> Choisissez un Champs</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
                             $n7= 0;
@@ -1099,7 +1110,7 @@
                             <option value=""> Choisissez une Canaux</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
-                            while($tab = $resultatCanaux->fetch()){    
+                            while($tab = $resultatCanaux1->fetch()){    
                                     
                                     
                                 ?>

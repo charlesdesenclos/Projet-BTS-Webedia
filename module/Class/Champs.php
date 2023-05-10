@@ -61,6 +61,13 @@ class Champs{
         return $resultSelectAll;
    }
 
+   public function getIDNom()
+   {
+     $reqAffichageIDNom ="SELECT id, nomChamps FROM  champs ";
+     $resultatSelectIDNom = $GLOBALS['bdd'] -> query($reqAffichageIDNom);
+     return $resultatSelectIDNom;
+   }
+
    
 
   
