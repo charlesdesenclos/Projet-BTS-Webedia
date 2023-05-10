@@ -54,7 +54,7 @@
     /* ---------------------*/
 
 
-    $_SESSION['idModuleModifier'] = null;
+    
 
     
 
@@ -579,11 +579,13 @@
 
     if(isset($_POST['submit-modifier']))
     {
-        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);   
-
+        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);  
         
         
-        $_SESSION['idModuleModifier'] = $_POST['idModuleModifier'];
+        $idModuleModife = $_POST['idModuleModifier'];
+        $_SESSION['idModuleModifier'] = $TheModule->VerifId($idModuleModife);
+        
+        
         
         
        
@@ -616,17 +618,17 @@
             
             $_SESSION['count1'] = $_SESSION['count1'] -1;
             
- 
+        return $_SESSION['idModuleModifier'];
     }
 
-    $idModuleModifier = $_SESSION['idModuleModifier'];
-    echo '3: ' . $idModuleModifier;
+    //$idModuleModifier = $_SESSION['idModuleModifier'];
+    //echo '3: ' . $idModuleModifier;
 
     if(isset($_POST['submit-modifier-champs']))
     {
         $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
 
-        echo '2] : ' . $_SESSION['idModuleModifier'];
+        //echo '2] : ' . $_SESSION['idModuleModifier'];
 
 
         for ($i = 1; $i <= $_SESSION['count1']; $i++) 

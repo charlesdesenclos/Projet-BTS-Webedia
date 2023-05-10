@@ -97,6 +97,13 @@ class Module{
       $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
       return $resultatCanaux;
    }
+
+   public function VerifId($idModule)
+   {
+      $RequetSQLVerifId = "SELECT `id` FROM `module` WHERE id = '".$idModule."'";
+      $resultatVerifId = $GLOBALS['bdd'] -> query($RequetSQLVerifId)->fetchColumn();;
+      return $resultatVerifId;
+   }
    
 
    
