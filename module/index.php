@@ -144,8 +144,9 @@
     <?php
     }
 
-    function affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux)
+    function affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $adressModule)
     {
+        
         ?>
         <div>
         <div>
@@ -186,7 +187,11 @@
                         </div>
 
                         <select name="adresseModifier">
-                            <option value=""> Choisissez une Adresse</option>
+                             <?php
+                                    echo '<option value="'.$adressModule.'">';echo ''.$adressModule.'</option>';
+                                    
+                            ?>
+                            <option value=""> Choisissez une autre Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
                             $adress = 1;
@@ -196,6 +201,7 @@
                                 ?>
                                     
                                 <?php
+                                   
                                     echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
                                 ?>
                                     
@@ -592,9 +598,10 @@
 
         $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);  
 
+        $_SESSION['adresse-Module-Modifier'] = $_POST['adresseModifier'];
         
         
-        
+
         $idModuleModife = $_POST['idModuleModifier'];
         $_SESSION['idModuleModifier'] = $TheModule->VerifId($idModuleModife);
         
@@ -623,8 +630,8 @@
     
                 $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
     
-                affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
-    
+            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $_SESSION['adresse-Module-Modifier']);
+            $_SESSION['adresse-Module-Modifier']++;
                 
             } 
             afficheNonModifierChamps(); 
@@ -632,6 +639,7 @@
             $_SESSION['count1'] = $_SESSION['count1'] -1;
             
         return $_SESSION['idModuleModifier'];
+        return $_SESSION['adresse-Module-Modifier'];
 
 
 
@@ -666,7 +674,8 @@
     <?php
     }
 
-
+    
+    
     
 
     if(isset($_POST['submit-modifier-champs']))
@@ -674,11 +683,12 @@
         $TheChamps->modificationChamps($_POST['idChampsModifier'],$_POST['idCanaux'],$_POST['nom'],$_POST['adresseModifier']);
 
         //echo '2] : ' . $_SESSION['idModuleModifier'];
-
-
-        for ($i = 1; $i <= $_SESSION['count1']; $i++) 
+        
+        
+        
+        for ($i = 1; $i <= $_SESSION['count1']; $i++ ) 
         { 
-                
+            echo $_SESSION['adresse-Module-Modifier2'];    
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
     
         
@@ -686,19 +696,29 @@
     
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
     
-            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
+            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $_SESSION['adresse-Module-Modifier2']);
 
-            afficheNonModifierChamps();
+            
+            $_SESSION['adresse-Module-Modifier2']++; 
     
                 
         } 
+        
+        
+        afficheNonModifierChamps();
         $_SESSION['count1'] = $_SESSION['count1'] -1;
 
 
 
+        return $_SESSION['adresse-Module-Modifier2']++;
+
+
+
     }
+
+    $_SESSION['adresse-Module-Modifier2'] = $_SESSION['adresse-Module-Modifier'] - 3;
     
-   
+    echo "2:";echo $_SESSION['adresse-Module-Modifier2'];  
 
 
     //echo  $_SESSION['idModuleModifier'];
