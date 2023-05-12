@@ -1,7 +1,9 @@
 ﻿#include "DMX.h"
+#include "Webedia.h"
 #include <qt_windows.h>
 #include <iostream>
 #include <vector>
+
 
 DMX::DMX()
 {
@@ -45,7 +47,7 @@ DMX::DMX()
 			for (int i = 0;i < taille_tableau_resultatAdress; i += 1)
 			{
 				dmxBlock[i] = tableau_resultatValeurs[i];
-				qDebug() << "1;" << dmxBlock[tableau_resultatAdress[i]];
+				//qDebug() << "1;" << dmxBlock[tableau_resultatAdress[i]];
 				qDebug() << "2 :" << tableau_resultatValeurs[i];
 			}
 		}
@@ -242,16 +244,30 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 	return tableau_resultat;
 }
 
-void DMX::RequeteUpdateCanaux(QSqlDatabase db)
+void DMX::onClickedCanal()
+{
+	QString id = ui->lineEdit_id->text();
+	QString valeur = ui->lineEdit_valeur->text();
+
+	RequeteUpdateCanaux(ConnexionBDD(), id, valeur);
+}
+
+
+
+void DMX::RequeteUpdateCanaux(QSqlDatabase db, QString id, QString valeur)
 {
 	QSqlQuery query;
 	if (db.open()) {
-		query.exec("UPDATE `canaux` SET `valeur`='' WHERE id ='' ");
-
+		query.exec("UPDATE canaux SET `valeur`=':valeur' WHERE id =':id' ");
+		query.bindValue(":id", id);
+		query.bindValue(":valeur", valeur);
+		query.exec();
+		db.close();
 	}
 	else {
 		qInfo() << "Error opening database";
 	}
 }
+
 
 

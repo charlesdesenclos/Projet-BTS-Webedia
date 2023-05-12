@@ -4,9 +4,11 @@
 #include <Windows.h>
 #include <DasHard.h>
 #include <QtSql>
+#include "ui_Webedia.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QString>
 
 #define DMX_MAXCHANNEL 512
 
@@ -18,6 +20,8 @@ private :
 	DASHARDCOMMAND DasUsbCommand;
 	int interface_open;
 	unsigned char dmxBlock[DMX_MAXCHANNEL];
+
+
 public : 
 	DMX();
 	QSqlDatabase ConnexionBDD();
@@ -26,7 +30,8 @@ public :
 	/*QVector<int> Requeteselect(QSqlDatabase db);*/
 	int* RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat);
 	int* RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat);
-	void RequeteUpdateCanaux(QSqlDatabase db);
+	void onClickedCanal();
+	void RequeteUpdateCanaux(QSqlDatabase db, QString id, QString valeur);
 	
 
 };
