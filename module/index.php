@@ -588,7 +588,11 @@
 
     if(isset($_POST['submit-modifier']))
     {
+
+
         $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);  
+
+        
         
         
         $idModuleModife = $_POST['idModuleModifier'];
@@ -623,15 +627,47 @@
     
                 
             } 
-    
+            afficheNonModifierChamps(); 
             
             $_SESSION['count1'] = $_SESSION['count1'] -1;
             
         return $_SESSION['idModuleModifier'];
+
+
+
     }
 
     //$idModuleModifier = $_SESSION['idModuleModifier'];
     //echo '3: ' . $idModuleModifier;
+
+    function afficheNonModifierChamps()
+    {
+        ?>
+        <div>
+        <div>
+            <div class="form-content">
+                <div>
+                    <h1>Pour ne pas modifer de champs<h1>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-champs_non">Valider</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <?php
+    }
+
+
+    
 
     if(isset($_POST['submit-modifier-champs']))
     {
@@ -651,10 +687,15 @@
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
     
             affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux);
+
+            afficheNonModifierChamps();
     
                 
         } 
         $_SESSION['count1'] = $_SESSION['count1'] -1;
+
+
+
     }
     
    
@@ -1261,24 +1302,10 @@
     </div> 
 
 
-    <?php
-
-    //if(isset($_SESSION['ModuleValider']) && $_SESSION['ModuleValider'] == false)
-    //{
-        ?>
-
     
         <div class="form-body">
        
     </div>
-
-
-
-
-        <?php
-
-    //}
-  ?>
   
     <?php
     //session_unset();
