@@ -255,6 +255,7 @@
     
     
     <?php
+    return $adressModule++;
     }
 
 
@@ -683,25 +684,27 @@
     
         $adress_module_modifier = $adress_module_modifier -3;
 
-        echo $adress_module_modifier;
         
         
-        for ($i = 1; $i <= $_SESSION['count1']; $i++ ) 
+        
+        for ($i = 1; $i <= $_SESSION['count1']; $i++) 
         { 
+            $test =1;
+              echo $test;
             
-              
-            echo $adress_module_modifier;
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
     
         
      
     
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
+
+            
     
             affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $adress_module_modifier);
 
             
-            $adress_module_modifier++; 
+            $test++;
     
                 
         } 
@@ -710,12 +713,7 @@
         afficheNonModifierChamps();
         $_SESSION['count1'] = $_SESSION['count1'] -1;
 
-
-
-       
-
-
-
+        
     }
 
     
