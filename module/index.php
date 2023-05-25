@@ -20,7 +20,7 @@
   </head>
   <body >    
   <?php
-
+    $_SESSION['adresse-Module-Modifier'] = null;
         
     require_once 'pdo/pdo.php'; // appele de la bdd
     $GLOBALS['bdd'] = $bdd;
@@ -636,8 +636,7 @@
             
             $_SESSION['count1'] = $_SESSION['count1'] -1;
             
-        return $_SESSION['idModuleModifier'];
-        return $_SESSION['adresse-Module-Modifier'];
+        
 
 
 
@@ -672,7 +671,11 @@
     <?php
     }
 
+    //echo $_SESSION['adresse-Module-Modifier'];
     
+    $_SESSION['adresse-Module-Modifier'] = $_SESSION['adresse-Module-Modifier'] - 3;
+    
+    //echo $_SESSION['adresse-Module-Modifier'];
 
     if(isset($_POST['submit-modifier-champs']))
     {
@@ -680,39 +683,43 @@
 
         //echo '2] : ' . $_SESSION['idModuleModifier'];
         
-        $adress_module_modifier = $_SESSION['adresse-Module-Modifier'];
-    
-        $adress_module_modifier = $adress_module_modifier -3;
+        
 
         
         
         
         for ($i = 1; $i <= $_SESSION['count1']; $i++) 
         { 
-            $test =1;
-              echo $test;
+           
             
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
     
         
-     
+            
     
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
             
     
-            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $adress_module_modifier);
+            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $_SESSION['adresse-Module-Modifier']);
 
+            echo $_SESSION['adresse-Module-Modifier'];
+
+            $_SESSION['adresse-Module-Modifier']++;
             
-            $test++;
-    
                 
         } 
         
         
-        afficheNonModifierChamps();
+        afficheNonModifierChamps(); 
         $_SESSION['count1'] = $_SESSION['count1'] -1;
 
+        
+
+        
+
+        $_SESSION['adresse-Module-Modifier']++;
+        
         
     }
 
