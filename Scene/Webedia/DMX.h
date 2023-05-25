@@ -20,8 +20,6 @@ private :
 	DASHARDCOMMAND DasUsbCommand;
 	int interface_open;
 	unsigned char dmxBlock[DMX_MAXCHANNEL];
-
-
 public : 
 	DMX();
 	QSqlDatabase ConnexionBDD();
@@ -30,9 +28,6 @@ public :
 	/*QVector<int> Requeteselect(QSqlDatabase db);*/
 	int* RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat);
 	int* RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat);
-	void onClickedCanal();
-	void RequeteUpdateCanaux(QSqlDatabase db, QString id, QString valeur);
-	
 
 };
 
