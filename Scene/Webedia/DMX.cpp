@@ -1,7 +1,9 @@
 ﻿#include "DMX.h"
+#include "Webedia.h"
 #include <qt_windows.h>
 #include <iostream>
 #include <vector>
+
 
 DMX::DMX()
 {
@@ -34,7 +36,6 @@ DMX::DMX()
 		int taille_tableau_resultatValeurs = 0;
 		tableau_resultatValeurs = RequeteselectValeur(ConnexionBDD(), taille_tableau_resultatValeurs);
 
-		
 
 		qDebug() << tableau_resultatAdress;
 		qDebug() << tableau_resultatValeurs;
@@ -45,8 +46,8 @@ DMX::DMX()
 			for (int i = 0;i < taille_tableau_resultatAdress; i += 1)
 			{
 				dmxBlock[i] = tableau_resultatValeurs[i];
-				qDebug() << "1;" << dmxBlock[tableau_resultatAdress[i]];
-				qDebug() << "2 :" << tableau_resultatValeurs[i];
+				qInfo() << "1;" << dmxBlock[tableau_resultatAdress[i]];
+				qInfo() << "2 :" << tableau_resultatValeurs[i];
 			}
 		}
 
@@ -183,7 +184,7 @@ int* DMX::RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat)
 	QSqlQuery query;
 
 	if (db.open()) {
-		if (query.exec("SELECT champs.adress AS adressChamps FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id")) {
+		if (query.exec("SELECT champs.adress AS adressChamps FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id LIMIT 12")) {
 			taille_tableau_resultat = 0;
 			while (query.next()) {
 				QString adress = query.value(0).toString();
@@ -216,7 +217,7 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 	QSqlQuery query;
 
 	if (db.open()) {
-		if (query.exec("SELECT canaux.valeur AS valeurCanaux FROM scene, canaux WHERE scene.id = canaux.idscene;")) {
+		if (query.exec("SELECT canaux.valeur AS valeurCanaux FROM scene, canaux WHERE scene.id = canaux.idscene LIMIT 12;")) {
 			taille_tableau_resultat = 0;
 			while (query.next()) {
 				QString valeur = query.value(0).toString();
@@ -240,18 +241,6 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 	}
 
 	return tableau_resultat;
-}
-
-void DMX::RequeteUpdateCanaux(QSqlDatabase db)
-{
-	QSqlQuery query;
-	if (db.open()) {
-		query.exec("UPDATE `canaux` SET `valeur`='' WHERE id ='' ");
-
-	}
-	else {
-		qInfo() << "Error opening database";
-	}
 }
 
 
