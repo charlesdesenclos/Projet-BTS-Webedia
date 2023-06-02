@@ -238,6 +238,9 @@
     if(isset($_POST['submit-supprimer-module']))
     {
         $TheModule->suppressionModule($_POST['idModuleSupprimer']);
+
+        
+        
     }
 
     // Modification des Champs
@@ -552,6 +555,10 @@
 
     // Modification des modules
 
+
+
+
+
     if(isset($_POST['submit-modifier']))
     {
 
@@ -767,84 +774,100 @@
 
     $resultatModuleModifier = $TheModule->getIdANDnomEquipement();
 
+
+    
+
+
     if(isset($_POST['ModifierModule']))
     {
+        if (isset($_POST['idModuleModifier'])) {
+            $reqInfoModule = "SELECT `nomEquipement`, `adress` FROM `module` WHERE id = '".$_POST['idModuleModifier']."'";
+            $infoModule = $GLOBALS['bdd']->query($reqInfoModule);
+            $module = $infoModule->fetch();
+            $nomEquipementExistant = $module['nomEquipement'];
+            $adresseExistant = $module['adress'];
+
+
+                
+        } else {
+            $nomEquipementExistant = "";
+            $adresseExistant = "";
+        }
+
         ?>
+
         <div class="row">
-        <div class="form-holder">
-            <div class="form-content">
-                <div class="form-items">
-                    <h3>Modifier le module</h3>
-                        
-                    <form class="requires-validation" action="" method="POST" novalidate>
-
-                        
-
-                        <select name="idModuleModifier">
-                            <option value=""> Choisissez une Module</option>
-                            <?php 
-                            // affiche les commandes déja faites par l'utilisateur
-                            $n6= 0;
-                            while($tab = $resultatModuleModifier->fetch()){    
-                                    
-                                    
-                                ?>
-                                    
-                                <?php
-                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';'</option>';
-                                ?>
-                                    
-                                <?php
-                                $n6 = $n6 +1;
-                                            
-                                        
-                            }
-
-                                
-
-                            ?>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Modifier le module</h3>
                             
-                        </select>
-                        <div class="col-md-12">
-                            <input class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" required>
-                               
-                        </div>
-
-                        <select name="adresseModifier">
-                            <option value=""> Choisissez une Adresse</option>
-                            <?php 
-                            // affiche les commandes déja faites par l'utilisateur
-                            $adress = 1;
-                            while(  $adress < 513){    
-                                    
-                                    
+                        <form class="requires-validation" action="" method="POST" novalidate>
+                            <select name="idModuleModifier" onchange="updateModuleInfo(this)">
+                                <option value="">Choisissez un module</option>
+                                <?php 
+                                // affiche les commandes déjà faites par l'utilisateur
+                                $n6 = 0;
+                                while ($tab = $resultatModuleModifier->fetch()) {    
+                                    echo '<option value="'.$tab["id"].'">'.$tab["nomEquipement"].'</option>';
+                                    $n6++;
+                                }
                                 ?>
-                                    
-                                <?php
-                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
+                            </select>
+                            <div class="col-md-12">
+                            <input id="nomEquipementModifier" class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" value="<?php echo $nomEquipementExistant; ?>" required>
+                            </div>
+                            <select name="adresseModifier" id="adresseModifier">
+                                <option value="">Choisissez une adresse</option>
+                                <?php 
+                                // affiche les commandes déjà faites par l'utilisateur
+                                $adress = 1;
+                                while ($adress < 513) {    
+                                    echo '<option value="'.$adress.'"';
+                                    if ($adress == $adresseExistant) {
+                                        echo ' selected';
+                                    }
+                                    echo '>'.$adress.'</option>';
+                                    $adress++;
+                                }
                                 ?>
-                                    
-                                <?php
-                                $adress = $adress + 1;
-                                            
-                                        
-                            }
-                                
-
-                            ?>
-                            
-                        </select>
-
-                        <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
-                           
-                        </div>
-
-                    </form>
+                            </select>
+                            <div class="form-button mt-3">
+                                <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier">Modifier</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <script>
+            function updateModuleInfo(selectElement) {
+                var selectedModuleId = selectElement.value;
+                
+
+                var nomEquipementInput = document.getElementById('nomEquipementModifier');
+                var adresseSelect = document.getElementById('adresseModifier');
+
+                // Récupérer l'adresse correspondante au module sélectionné
+                var selectedModuleAdresse = adresseSelect.options[selectElement.selectedIndex].value;
+
+                var optionAdresseSelect = adresseSelect.options[0];
+
+                
+                optionAdresseSelect.textContent = selectedModuleAdresse;
+
+                // Mettre à jour la valeur de l'input avec le nom du module sélectionné
+                nomEquipementInput.value = selectElement.options[selectElement.selectedIndex].text;
+
+               
+                
+
+                console.log(selectElement);
+            }
+        </script>
+
+        
     
     
     <?php
