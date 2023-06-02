@@ -780,19 +780,7 @@
 
     if(isset($_POST['ModifierModule']))
     {
-        if (isset($_POST['idModuleModifier'])) {
-            $reqInfoModule = "SELECT `nomEquipement`, `adress` FROM `module` WHERE id = '".$_POST['idModuleModifier']."'";
-            $infoModule = $GLOBALS['bdd']->query($reqInfoModule);
-            $module = $infoModule->fetch();
-            $nomEquipementExistant = $module['nomEquipement'];
-            $adresseExistant = $module['adress'];
-
-
-                
-        } else {
-            $nomEquipementExistant = "";
-            $adresseExistant = "";
-        }
+        
 
         ?>
 
@@ -815,7 +803,7 @@
                                 ?>
                             </select>
                             <div class="col-md-12">
-                            <input id="nomEquipementModifier" class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" value="<?php echo $nomEquipementExistant; ?>" required>
+                            <input id="nomEquipementModifier" class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" value="<?php if(isset($nomEquipementExistant)){echo $nomEquipementExistant;} ?>" required>
                             </div>
                             <select name="adresseModifier" id="adresseModifier">
                                 <option value="">Choisissez une adresse</option>
@@ -824,8 +812,11 @@
                                 $adress = 1;
                                 while ($adress < 513) {    
                                     echo '<option value="'.$adress.'"';
-                                    if ($adress == $adresseExistant) {
-                                        echo ' selected';
+                                    if(isset($adresseExistant))
+                                    {
+                                        if ($adress == $adresseExistant) {
+                                            echo ' selected';
+                                        }
                                     }
                                     echo '>'.$adress.'</option>';
                                     $adress++;
@@ -840,6 +831,24 @@
                 </div>
             </div>
         </div>
+
+        <?php
+        if (isset($_POST['idModuleModifier'])) {
+            $reqInfoModule = "SELECT `nomEquipement`, `adress` FROM `module` WHERE id = '".$_POST['idModuleModifier']."'";
+            $infoModule = $GLOBALS['bdd']->query($reqInfoModule);
+            $module = $infoModule->fetch();
+            $nomEquipementExistant = $module['nomEquipement'];
+            $adresseExistant = $module['adress'];
+
+
+                
+        } else {
+            $nomEquipementExistant = "";
+            $adresseExistant = "";
+        }
+
+
+        ?>
 
         <script>
             function updateModuleInfo(selectElement) {
@@ -974,7 +983,7 @@
     
     
 
-    $resultatSelectChamps = $TheChamps->affichageChamps();
+    $resultatAffichageChamps = $TheChamps->affichageChamps();
 
     if(isset($_POST['AffichageChamps']))
     {?>
@@ -993,7 +1002,7 @@
             <tbody>
                 <?php
                 $i3 = 0;
-                while($AffichageChamps = $resultatSelectChamps->fetch())
+                while($AffichageChamps = $resultatAffichageChamps->fetch())
                 {    
                                         
                                         
@@ -1033,6 +1042,8 @@
 
     if(isset($_POST['ModifierChamps']))
     {
+
+        
         ?>
         <div class="row">
         <div class="form-holder">
@@ -1044,7 +1055,7 @@
 
                         
 
-                        <select name="idChampsModifier">
+                        <select name="idChampsModifier" onchange="this.form.submit()">
                             <option value=""> Choisissez un Champs</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
@@ -1066,11 +1077,11 @@
                         </select>
 
                         <div class="col-md-12">
-                            <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                            <input id="nom" class="form-control" type="text" name="nom" placeholder="Nom" value="<?php if(isset($nomExistant)){ echo $nomExistant; }?>"required>
                                
                         </div>
 
-                        <select name="adresseModifier">
+                        <select name="adresseModifier" id="adresseModifierChamps">
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
@@ -1078,14 +1089,14 @@
                             while(  $adress < 513){    
                                     
                                     
-                                ?>
-                                    
-                                <?php
-                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
-                                ?>
-                                    
-                                <?php
-                                $adress = $adress + 1;
+                                echo '<option value="'.$adress.'"';
+                                    if(isset($adresseExistant)){
+                                        if ($adress == $adresseExistant) {
+                                            echo ' selected';
+                                        }
+                                    }   
+                                    echo '>'.$adress.'</option>';
+                                    $adress++;
                                             
                                         
                             }
@@ -1110,6 +1121,66 @@
             </div>
         </div>
     </div>
+
+    <?php
+    if (isset($_POST['idChampsModifier'])) {
+        $idChampsModifier = $_POST['idChampsModifier'];
+        
+        // Exécutez votre requête ici avec $idChampsModifier
+        $reqInfoChamps = "SELECT `nomChamps`, `adress` FROM `champs` WHERE id = '".$idChampsModifier."'";
+        $infoChamps = $GLOBALS['bdd']->query($reqInfoChamps);
+    
+        // Vérifiez si la requête a renvoyé des résultats
+        if ($infoChamps === false) {
+            die("Erreur lors de l'exécution de la requête : " . $GLOBALS['bdd']->error);
+        }
+    
+        // Vérifiez si des résultats ont été renvoyés
+        if ($infoChamps->num_rows > 0) {
+            $champs = $infoChamps->fetch();
+            $nomExistant = $champs['nomChamps'];
+            $adresseExistant = $champs['adress'];
+            
+            // Affichez les valeurs récupérées
+            echo "Nom existant : " . $nomExistant . "<br>";
+            echo "Adresse existante : " . $adresseExistant . "<br>";
+        } else {
+            // Aucun résultat trouvé
+            echo "Aucun résultat trouvé pour cet ID.";
+        }
+    } else {
+        $nomExistant = "";
+        $adresseExistant = "";
+    }   
+
+    ?>
+
+
+    <script>
+            function updateChampsInfo(selectElementChamps) {
+                var selectedChampseId = selectElementChamps.value;
+                
+
+                var nomInput = document.getElementById('nom');
+                var adresseSelect = document.getElementById('adresseModifierChamps');
+
+                // Récupérer l'adresse correspondante au module sélectionné
+                var selectedModuleAdresse = adresseSelect.options[selectElementChamps.selectedIndex].value;
+
+                var optionAdresseSelect = adresseSelect.options[0];
+
+                
+                optionAdresseSelect.textContent = selectedModuleAdresse;
+
+                // Mettre à jour la valeur de l'input avec le nom du module sélectionné
+                nomInput.value = selectElementChamps.options[selectElementChamps.selectedIndex].text;
+
+               
+                
+
+                console.log(selectElementChamps);
+            }
+        </script>
     
     
     <?php
