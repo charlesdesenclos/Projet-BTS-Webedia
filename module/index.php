@@ -61,10 +61,7 @@
 
     /* ---------------------*/
 
-
-    
-
-    
+ 
 
     $nbrChannels = 0;
 
@@ -222,7 +219,7 @@
     }
 
 
-    
+    // Affichage création des champs
     
     if((isset($_SESSION['nbrChannels']) && $_SESSION['nbrChannels'] == true) )
     {
@@ -243,7 +240,7 @@
         
     }
 
-    // Modification des Champs
+    
 
     
 
@@ -444,18 +441,19 @@
          
  
      }
+     
+     // Création d'un champs
 
      if(isset($_POST['submit-creation-champs-solo']))
      {
          $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],0);
          
-         
-         
- 
      }
 
     
     //echo $_SESSION['nbrChannels'];
+
+    //Formulaire de création module
 
     if(isset($_POST['CreationModule']))
     {
@@ -555,28 +553,25 @@
 
     // Modification des modules
 
-
-
-
-
     if(isset($_POST['submit-modifier']))
     {
+        
 
 
-        $TheModule->modificationModule($_POST['idModuleModifier'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);  
+        $TheModule->modificationModule($_SESSION['idModuleModifierChoisi'],$_POST['nomEquipementModifier'],$_POST['adresseModifier']);  
 
         $_SESSION['adresse-Module-Modifier'] = $_POST['adresseModifier'];
         
         
 
-        $idModuleModife = $_POST['idModuleModifier'];
+        $idModuleModife = $_SESSION['idModuleModifierChoisi'];
         $_SESSION['idModuleModifier'] = $TheModule->VerifId($idModuleModife);
         
         
         
         
        
-        $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_POST['idModuleModifier']."'";
+        $resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = '".$_SESSION['idModuleModifierChoisi']."'";
 
         $resultatCanauxID = $GLOBALS['bdd'] -> query($resultCanauxID);
         
@@ -614,6 +609,8 @@
     //$idModuleModifier = $_SESSION['idModuleModifier'];
     //echo '3: ' . $idModuleModifier;
 
+    // Affichage pour ne pas modifier les champs
+
     function afficheNonModifierChamps()
     {
         ?>
@@ -646,16 +643,13 @@
     
     //echo $_SESSION['adresse-Module-Modifier'];
 
+    // Modification des champs 
+
     if(isset($_POST['submit-modifier-champs']))
     {
         $TheChamps->modificationChamps($_POST['idChampsModifier'],0,$_POST['nom'],$_POST['adresseModifier']);
 
-        //echo '2] : ' . $_SESSION['idModuleModifier'];
-        
-        
-
-        
-        
+        //echo '2] : ' . $_SESSION['idModuleModifier'];   
         
         for ($i = 1; $i <= $_SESSION['count1']; $i++) 
         { 
@@ -692,12 +686,9 @@
         
     }
 
-    
-    
-   
-
-
     //echo  $_SESSION['idModuleModifier'];
+
+    //Modification des champs
 
     if(isset($_POST['submit-modifier-Canaux']))
     {
@@ -802,6 +793,58 @@
                                 }
                                 ?>
                             </select>
+                            <div class="form-button mt-3">
+                                <button id="submit" type="submit" class="btn btn-primary" name="submit-choix-modifier-valider">Modifier</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php
+
+        
+        if (isset($_POST['idModuleModifier'])) {
+
+            
+            $reqInfoModule = "SELECT `nomEquipement`, `adress` FROM `module` WHERE id = '".$_POST['idModuleModifier']."'";
+            $infoModule = $GLOBALS['bdd']->query($reqInfoModule);
+            $module = $infoModule->fetch();
+            $nomEquipementExistant = $module['nomEquipement'];
+            $adresseExistant = $module['adress'];
+
+
+                
+        } else {
+            $nomEquipementExistant = "";
+            $adresseExistant = "";
+        }
+
+       $adresseExistant = 0;
+
+ 
+    }
+
+    if(isset($_POST['submit-choix-modifier-valider']))
+    {
+            $_SESSION['idModuleModifierChoisi'] = $_POST['idModuleModifier'];
+            $reqInfoModule = "SELECT `nomEquipement`, `adress` FROM `module` WHERE id = '".$_POST['idModuleModifier']."'";
+            $infoModule = $GLOBALS['bdd']->query($reqInfoModule);
+            $module = $infoModule->fetch();
+            $nomEquipementExistant = $module['nomEquipement'];
+            $adresseExistant = $module['adress'];
+        ?>
+
+        
+
+        <div class="row">
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Modifier le module</h3>
+                            
+                        <form class="requires-validation" action="" method="POST" novalidate>
                             <div class="col-md-12">
                             <input id="nomEquipementModifier" class="form-control" type="text" name="nomEquipementModifier" placeholder="Nom d'Equipement" value="<?php if(isset($nomEquipementExistant)){echo $nomEquipementExistant;} ?>" required>
                             </div>
@@ -833,56 +876,11 @@
         </div>
 
         <?php
-        if (isset($_POST['idModuleModifier'])) {
-            $reqInfoModule = "SELECT `nomEquipement`, `adress` FROM `module` WHERE id = '".$_POST['idModuleModifier']."'";
-            $infoModule = $GLOBALS['bdd']->query($reqInfoModule);
-            $module = $infoModule->fetch();
-            $nomEquipementExistant = $module['nomEquipement'];
-            $adresseExistant = $module['adress'];
 
-
-                
-        } else {
-            $nomEquipementExistant = "";
-            $adresseExistant = "";
-        }
-
-
-        ?>
-
-        <script>
-            function updateModuleInfo(selectElement) {
-                var selectedModuleId = selectElement.value;
-                
-
-                var nomEquipementInput = document.getElementById('nomEquipementModifier');
-                var adresseSelect = document.getElementById('adresseModifier');
-
-                // Récupérer l'adresse correspondante au module sélectionné
-                var selectedModuleAdresse = adresseSelect.options[selectElement.selectedIndex].value;
-
-                var optionAdresseSelect = adresseSelect.options[0];
-
-                
-                optionAdresseSelect.textContent = selectedModuleAdresse;
-
-                // Mettre à jour la valeur de l'input avec le nom du module sélectionné
-                nomEquipementInput.value = selectElement.options[selectElement.selectedIndex].text;
-
-               
-                
-
-                console.log(selectElement);
-            }
-        </script>
-
-        
-    
-    
-    <?php
-
-    
     }
+
+
+
 
     //--------------------------------- Affichage IHM Affichage Module ----------------------------------------------
     if(isset($_POST['ChoixModifierModule1']))
@@ -1035,6 +1033,12 @@
         $TheChamps->modificationChamps($_POST['idChampsModifier'],0,$_POST['nom'],$_POST['adresseModifier']);
 
     }
+    if(isset($_POST['submit-modifier-champs-solo']))
+    {
+
+        $TheChamps->modificationChamps($_SESSION['idChampsModifier-choisi'],0,$_POST['nom'],$_POST['adresseModifier']);
+
+    }
 
     //--------------------------------- Affichage IHM Modification Champs -------------------------------------------
     
@@ -1075,9 +1079,43 @@
                             ?>
                             
                         </select>
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-champs-solo-choisi">Modifier</button>
+                           
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    
+    }
+
+    if(isset($_POST['submit-modifier-champs-solo-choisi']))
+    {
+
+        $_SESSION['idChampsModifier-choisi'] = $_POST['idChampsModifier'];
+        
+        // Exécutez votre requête ici avec $idChampsModifier
+        $reqInfoChamps = "SELECT `nomChamps`, `adress` FROM `champs` WHERE id = '".$_POST['idChampsModifier']."'";
+        $InfoChamps = $GLOBALS['bdd']->query($reqInfoChamps);
+        $champs = $InfoChamps->fetch();
+        $nomChampsExistant = $champs['nomChamps'];
+        $adresseExistant = $champs['adress'];
+        ?>
+        <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Modifier le champ</h3>
+                        
+                    <form class="requires-validation" action="" method="POST" novalidate>
 
                         <div class="col-md-12">
-                            <input id="nom" class="form-control" type="text" name="nom" placeholder="Nom" value="<?php if(isset($nomExistant)){ echo $nomExistant; }?>"required>
+                            <input id="nom" class="form-control" type="text" name="nom" placeholder="Nom" value="<?php if(isset($nomChampsExistant)){ echo $nomChampsExistant; }?>"required>
                                
                         </div>
 
@@ -1123,67 +1161,7 @@
     </div>
 
     <?php
-    if (isset($_POST['idChampsModifier'])) {
-        $idChampsModifier = $_POST['idChampsModifier'];
-        
-        // Exécutez votre requête ici avec $idChampsModifier
-        $reqInfoChamps = "SELECT `nomChamps`, `adress` FROM `champs` WHERE id = '".$idChampsModifier."'";
-        $infoChamps = $GLOBALS['bdd']->query($reqInfoChamps);
-    
-        // Vérifiez si la requête a renvoyé des résultats
-        if ($infoChamps === false) {
-            die("Erreur lors de l'exécution de la requête : " . $GLOBALS['bdd']->error);
-        }
-    
-        // Vérifiez si des résultats ont été renvoyés
-        if ($infoChamps->num_rows > 0) {
-            $champs = $infoChamps->fetch();
-            $nomExistant = $champs['nomChamps'];
-            $adresseExistant = $champs['adress'];
-            
-            // Affichez les valeurs récupérées
-            echo "Nom existant : " . $nomExistant . "<br>";
-            echo "Adresse existante : " . $adresseExistant . "<br>";
-        } else {
-            // Aucun résultat trouvé
-            echo "Aucun résultat trouvé pour cet ID.";
-        }
-    } else {
-        $nomExistant = "";
-        $adresseExistant = "";
-    }   
 
-    ?>
-
-
-    <script>
-            function updateChampsInfo(selectElementChamps) {
-                var selectedChampseId = selectElementChamps.value;
-                
-
-                var nomInput = document.getElementById('nom');
-                var adresseSelect = document.getElementById('adresseModifierChamps');
-
-                // Récupérer l'adresse correspondante au module sélectionné
-                var selectedModuleAdresse = adresseSelect.options[selectElementChamps.selectedIndex].value;
-
-                var optionAdresseSelect = adresseSelect.options[0];
-
-                
-                optionAdresseSelect.textContent = selectedModuleAdresse;
-
-                // Mettre à jour la valeur de l'input avec le nom du module sélectionné
-                nomInput.value = selectElementChamps.options[selectElementChamps.selectedIndex].text;
-
-               
-                
-
-                console.log(selectElementChamps);
-            }
-        </script>
-    
-    
-    <?php
     }
 
     //--------------------------------- Affichage IHM Supprimer Module -------------------------------------------
