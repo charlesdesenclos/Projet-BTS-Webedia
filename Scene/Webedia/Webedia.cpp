@@ -47,6 +47,21 @@ void Webedia::RequeteInsertScene(QSqlDatabase db, QString nom)
 
         QSqlQuery query;
 
+		// Vérifier si le nom de la scène est déjà présent en BDD
+		query.prepare("SELECT COUNT(*) FROM `scene` WHERE `nom` = :nom");
+		query.bindValue(":nom", nom);
+		query.exec();
+
+		if (query.next()) {
+			int count = query.value(0).toInt();
+			if (count > 0) {
+				// Le nom de la scène est déjà présent en BDD, afficher une erreur
+				ui->label_bdd->setText("Error: Scene name already exists");
+				db.close();
+				return;
+			}
+		}
+
         query.prepare("INSERT INTO `scene`(`nom`) VALUES (:nom)");
         query.bindValue(":nom", nom);
         query.exec();
@@ -152,13 +167,14 @@ void Webedia::RequeteUpdateCanaux(QSqlDatabase db, QString id, QString valeur)
 	}
 }
 
-void Webedia::onClickedCanal()
+/*void Webedia::onClickedCanal()
 {
 	QString id = ui->lineEdit_id->text();
 	QString valeur = ui->lineEdit_valeur->text();
 
 	RequeteUpdateCanaux(ConnexionBDD(), id, valeur);
 }
+*/
 
 void Webedia::RequeteAfficherParametreScene(QSqlDatabase db, QString id, QString valeur, QString adress, QString idCanaux){
 	QVector<QString> result;
@@ -203,3 +219,46 @@ void Webedia::onButtonClickedParametreScene(){
 	RequeteAfficherParametreScene(ConnexionBDD(),id , valeur, adress, idCanaux);
 
 }
+
+/*void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecomboBox) {
+	QSqlQuery query;
+	if (query.exec("SELECT nom FROM scene")) {
+		qDebug() << "Requête exécutée avec succès";
+		scenecomboBox->clear();
+
+		while (query.next()) {
+			QString sceneName = query.value(0).toString();
+			qDebug() << "Nom de la scène : " << sceneName;
+			scenecomboBox->addItem(sceneName);
+		}
+	}
+	else {
+		// Gérer les erreurs de requête
+		qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
+	}
+}
+*/
+
+void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db) {
+
+}
+
+void onButtonClickedListederoulante() {
+	QString scene = ui->scenecomboBox->addItem("");
+}
+/*
+void Webedia::updateChannelComboBox(const QString& sceneName, QComboBox* CanauxcomboBox) {
+	CanauxcomboBox->clear();
+
+	// Exécuter la requête pour récupérer les canaux associés à la scène sélectionnée
+	QSqlQuery query;
+	query.prepare("SELECT id FROM canaux WHERE idscene = ?");
+	query.addBindValue(sceneName);
+	query.exec();
+
+	while (query.next()) {
+		QString channelId = query.value(0).toString();
+		CanauxcomboBox->addItem(channelId);
+	}
+}
+*/
