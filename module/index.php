@@ -141,78 +141,7 @@
                 <div>
                     <h1><?php echo "Champs ".$i." :";?><h1>
                         
-                    <form class="requires-validation" action="" method="POST" novalidate>
-
-                        
-
-                        <select name="idChampsModifier">
-                            <option value=""> Choisissez une Champs</option>
-                            <?php 
-                            // affiche les commandes déja faites par l'utilisateur
-                            $n7= 0;
-                            
-                            
-                            while($tabCHamps = $resultatChampsModifier->fetch())
-                            {      
-                                    
-                                ?>
-                                    
-                                <?php
-                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
-                                ?>
-                                    
-                                <?php
-                                $n7 = $n7 +1;            
-                            }
-                            ?>
-                            
-                        </select>
-
-                        <div class="col-md-12">
-                            <input class="form-control" type="text" name="nom" placeholder="Nom" required>
-                               
-                        </div>
-
-                        <select name="adresseModifier">
-                             <?php
-                                    echo '<option value="'.$adressModule.'">';echo ''.$adressModule.'</option>';
-                                    
-                            ?>
-                            <option value=""> Choisissez une autre Adresse</option>
-                            <?php 
-                            // affiche les commandes déja faites par l'utilisateur
-                            $adress = 1;
-                            while(  $adress < 513){    
-                                    
-                                    
-                                ?>
-                                    
-                                <?php
-                                   
-                                    echo '<option value="'.$adress.'">';echo ''.$adress.'</option>';
-                                ?>
-                                    
-                                <?php
-                                $adress = $adress + 1;
-                                            
-                                        
-                            }
-
-                        
-                                
-
-                            ?>
-                            
-                        </select>
-                               
-                        
-
-                        <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary" name="submit-modifier-champs">Modifier</button>
-                           
-                        </div>
-
-                    </form>
+                     
                 </div>
             </div>
         </div>
@@ -404,10 +333,24 @@
         $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
         $IDModuleCreation= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
 
+        $_SESSION['b'] =1;
+        if ($_SESSION['b'] == 1 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
+            $_SESSION['IDModuleCreation']= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
+           
 
-    
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'],$_SESSION['CreationModuleAdress'] );
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        
+        
+        return $_SESSION['IDModuleCreation'];
    
-            
+        /* 
         for ($i = 1; $i <= $nbrChannels; $i++) 
         {
             $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
@@ -421,19 +364,125 @@
             
         } 
         $_SESSION['CreationModuleAdress']= $_SESSION['CreationModuleAdress'] -3;
-        return $_SESSION['IDModuleCreation'];
+        
+
+        */
         
 
     }
 
-     // Création des champs submit-creation-champs
 
+    
+   
+
+    
+
+     // Création des champs submit-creation-champs
+    
      if(isset($_POST['submit-creation-champs']))
      {
+        
          $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],0);
-         $_SESSION['nbrChannels'] = $_SESSION['nbrChannels'] - 1;
+         echo $_SESSION['nbrChannels'] ;
+         echo $_SESSION['b'];
  
          //echo $_SESSION['nbrChannels'];
+
+
+        if($_SESSION['b'] == 2 && $_SESSION['b']< $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 3 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 4 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 5 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 6 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 7 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 8 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 9 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 10 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 11 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        else if($_SESSION['b'] == 12 && $_SESSION['b']<= $_SESSION['nbrChannels'])
+        {
+            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
+ 
+            afficheCreationChamps($resultatCanaux, $_SESSION['b'], $_SESSION['CreationModuleAdress']);  
+            $_SESSION['CreationModuleAdress']++;
+            $_SESSION['b']++;
+        }
+        
+
+
+
+
+         /*
          
          if($_SESSION['nbrChannels'] != 0)
          {
@@ -449,7 +498,7 @@
              } 
              $_SESSION['CreationModuleAdress']= $_SESSION['CreationModuleAdress'] -2;
          }
-         
+         */
          
          
  
