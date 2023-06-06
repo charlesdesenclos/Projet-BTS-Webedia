@@ -11,15 +11,15 @@ DMX::DMX()
 	g_dasusbdll = LoadLibrary(L"DasHard2006.dll");
 	//Verification du chargement
 	if (g_dasusbdll)
-	DasUsbCommand = (DASHARDCOMMAND)::GetProcAddress((HMODULE)g_dasusbdll, "DasUsbCommand");
-		//Initialisation de la DLL
-		interface_open = DasUsbCommand(DHC_INIT, 0, NULL);
+		DasUsbCommand = (DASHARDCOMMAND)::GetProcAddress((HMODULE)g_dasusbdll, "DasUsbCommand");
+	//Initialisation de la DLL
+	interface_open = DasUsbCommand(DHC_INIT, 0, NULL);
 	//On affiche la version de la DLL qui est retourn�e par DasUSBCommand DHC INIT
-	
+
 	//On ouvre la liaison avec l'interface USB -1 si on ne trouve pas le port USB
 	//retourn DHC-OK = 1 si USB connect�
 	interface_open = DasUsbCommand(DHC_OPEN, 0, 0);
-	
+
 	//Envoi D'une Trame DMX
 	//pour test je force USB meme si pas branch�
 	//interface_open = 1;
@@ -40,21 +40,41 @@ DMX::DMX()
 		qDebug() << tableau_resultatAdress;
 		qDebug() << tableau_resultatValeurs;
 
-		if (taille_tableau_resultatAdress == taille_tableau_resultatValeurs) 
+		int taille_max = qMax(taille_tableau_resultatAdress, taille_tableau_resultatValeurs);
+
+		for (int i = 1; i < taille_max; i++)
 		{
-			
-			for (int i = 0;i < taille_tableau_resultatAdress; i += 1)
+			if (i < taille_tableau_resultatAdress)
 			{
-				dmxBlock[i] = tableau_resultatValeurs[i];
-				qInfo() << "1;" << dmxBlock[tableau_resultatAdress[i]];
-				qInfo() << "2 :" << tableau_resultatValeurs[i];
+				int adresse = tableau_resultatAdress[i];
+				if (adresse < DMX_MAXCHANNEL)
+				{
+					if (i < taille_tableau_resultatValeurs)
+					{
+						int valeur = tableau_resultatValeurs[i];
+						dmxBlock[adresse] = valeur;
+						qInfo() << "1;" << dmxBlock[adresse];
+						qInfo() << "2 :" << valeur;
+					}
+					else
+					{
+						dmxBlock[adresse] = 0; // Valeur par défaut si aucune valeur associée
+					}
+				}
+				else
+				{
+					qWarning() << "Adresse DMX hors limite : " << adresse;
+				}
+			}
+			else
+			{
+				qWarning() << "Index de tableau hors limite : " << i;
 			}
 		}
 
 		DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
 	}
 }
-
 /*
 //---------------------------------------------------------------------------
 void __fastcall TForm1::SendTrame() {
@@ -184,7 +204,7 @@ int* DMX::RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat)
 	QSqlQuery query;
 
 	if (db.open()) {
-		if (query.exec("SELECT champs.adress AS adressChamps FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id LIMIT 12")) {
+		if (query.exec("SELECT champs.adress AS adressChamps FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id")) {
 			taille_tableau_resultat = 0;
 			while (query.next()) {
 				QString adress = query.value(0).toString();
@@ -217,7 +237,7 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 	QSqlQuery query;
 
 	if (db.open()) {
-		if (query.exec("SELECT canaux.valeur AS valeurCanaux FROM scene, canaux WHERE scene.id = canaux.idscene LIMIT 12;")) {
+		if (query.exec("SELECT canaux.valeur AS valeurCanaux FROM scene, canaux WHERE scene.id = canaux.idscene")) {
 			taille_tableau_resultat = 0;
 			while (query.next()) {
 				QString valeur = query.value(0).toString();
