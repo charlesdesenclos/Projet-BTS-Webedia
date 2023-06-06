@@ -63,7 +63,7 @@ class Champs{
 
    public function getIDNom()
    {
-     $reqAffichageIDNom ="SELECT id, nomChamps FROM  champs ";
+     $reqAffichageIDNom ="SELECT champs.id, champs.nomChamps, scene.nom FROM `scene`, module, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id AND module.id = canaux.idmodule ";
      $resultatSelectIDNom = $GLOBALS['bdd'] -> query($reqAffichageIDNom);
      return $resultatSelectIDNom;
    }

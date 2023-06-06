@@ -788,7 +788,7 @@
                                 // affiche les commandes déjà faites par l'utilisateur
                                 $n6 = 0;
                                 while ($tab = $resultatModuleModifier->fetch()) {    
-                                    echo '<option value="'.$tab["id"].'">'.$tab["nomEquipement"].'</option>';
+                                    echo '<option value="'.$tab["id"].'">'.$tab["nom"].' : '.$tab["nomEquipement"].'</option>';
                                     $n6++;
                                 }
                                 ?>
@@ -946,6 +946,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Nom de la Scène</th>
             <th>Nom d'Equipement</th>
             <th>Adresse</th>
           </tr>
@@ -960,6 +961,7 @@
                 ?>
                 <tr>                      
                 <?php
+                    echo '<td>';echo ''.$AffichageModule["nom"].'</td>';
                     echo '<td>';echo ''.$AffichageModule["nomEquipement"].'</td>';
                     echo '<td>';echo ''.$AffichageModule["adress"].'</td>';
 
@@ -1043,6 +1045,7 @@
     //--------------------------------- Affichage IHM Modification Champs -------------------------------------------
     
     $resultatChampsModifier = $TheChamps->getIDNom();
+    
 
     if(isset($_POST['ModifierChamps']))
     {
@@ -1070,7 +1073,7 @@
                                 ?>
                                     
                                 <?php
-                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
+                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nom"].'';echo " : ";echo ''.$tabCHamps["nomChamps"].'';'</option>';
                                 ?>
                                     
                                 <?php
@@ -1190,7 +1193,7 @@
                                 ?>
                                     
                                 <?php
-                                    echo '<option value="'.$tab["id"].'">';echo ''.$tab["nomEquipement"].'';'</option>';
+                                    echo '<option value="'.$tab["id"].'">'.$tab["nom"].' : '.$tab["nomEquipement"].'</option>';
                                 ?>
                                     
                                 <?php
@@ -1247,7 +1250,7 @@
                                 ?>
                                     
                                 <?php
-                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
+                                    echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nom"].'';echo " : ";echo ''.$tabCHamps["nomChamps"].'';'</option>';
                                 ?>
                                     
                                 <?php
