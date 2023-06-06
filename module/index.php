@@ -27,7 +27,8 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="icon" href="https://fr.webedia-group.com/wp-content/uploads/sites/6/2021/11/Webedia-Monogram.png">
   </head>
-  <body >    
+  <body>    
+
   <?php
     $_SESSION['adresse-Module-Modifier'] = null;
         
@@ -68,7 +69,7 @@
 
     //fonction affiche l'IHM de creation des champs
     
-    function afficheCreationChamps($resultatCanaux, $i)
+    function afficheCreationChamps($resultatCanaux, $i, $adressModule)
     {
         ?>
         <div class="div-channels">
@@ -87,6 +88,10 @@
                         </div>
 
                         <select name="adress">
+                            <?php
+                                    echo '<option value="'.$adressModule.'">';echo ''.$adressModule.'</option>';
+                                    
+                            ?>
                             <option value=""> Choisissez une Adresse</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
@@ -389,6 +394,8 @@
         
         $adresse = $_POST['adresse'];
 
+        $_SESSION['CreationModuleAdress'] = $adresse;
+
         $TheModule->creationModule($nomEquipement,$adresse);
 
         $nbrChannels = $_POST['nbr-channels'];
@@ -409,15 +416,17 @@
 
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
 
-            afficheCreationChamps($resultatCanaux, $i);
+            afficheCreationChamps($resultatCanaux, $i,$_SESSION['CreationModuleAdress'] );
+            $_SESSION['CreationModuleAdress']++;
             
         } 
+        $_SESSION['CreationModuleAdress']= $_SESSION['CreationModuleAdress'] -3;
         return $_SESSION['IDModuleCreation'];
         
 
     }
 
-     // Création des champs submit-creation-champs-solo
+     // Création des champs submit-creation-champs
 
      if(isset($_POST['submit-creation-champs']))
      {
@@ -428,13 +437,17 @@
          
          if($_SESSION['nbrChannels'] != 0)
          {
+            
              for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
              {
+                echo $_SESSION['CreationModuleAdress'];
  
                  $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
  
-                 afficheCreationChamps($resultatCanaux, $i);  
+                 afficheCreationChamps($resultatCanaux, $i, $_SESSION['CreationModuleAdress']);  
+                 $_SESSION['CreationModuleAdress']++;
              } 
+             $_SESSION['CreationModuleAdress']= $_SESSION['CreationModuleAdress'] -2;
          }
          
          
@@ -442,7 +455,7 @@
  
      }
      
-     // Création d'un champs
+     // Création d'un champs submit-creation-champs-solo
 
      if(isset($_POST['submit-creation-champs-solo']))
      {
@@ -1308,5 +1321,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
 </body>
 </html>
