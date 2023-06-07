@@ -108,7 +108,7 @@ void handleSerialData(HANDLE hSerial) {
         buffer[bytesRead] = '\0';
         receivedData = buffer;
 
-        if (receivedData.find('1') != std::string::npos) {
+        if (receivedData.find('A') != std::string::npos) {
             std::cout << "Bouton poussoir appuye !" << std::endl;
             // Faites ce que vous voulez lorsque le bouton est appuyé
         }

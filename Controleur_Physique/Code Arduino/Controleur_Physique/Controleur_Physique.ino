@@ -15,7 +15,7 @@ void loop() {
   int sensorValue2 = analogRead(potentiometerPin2);
 
   if (digitalRead(buttonPin) == LOW) {
-    Serial.println('1');
+    Serial.println('A');
     delay(1000);  // Délai pour éviter les rebonds
   }
   

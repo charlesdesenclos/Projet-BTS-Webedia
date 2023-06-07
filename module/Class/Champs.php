@@ -5,20 +5,24 @@ class Champs{
     private $idCanaux_;
     private $nomChamps_;
     private $adresse_;
+    private $idModule_;
+   
 
-    public function __construct($Newid, $NewidCanaux, $NewnomChamps, $Newadresse)
+    public function __construct($Newid, $NewidCanaux, $NewnomChamps, $Newadresse, $NewidModule)
     {
         $this-> id_ = $Newid;
         $this-> idCanaux_ = $NewidCanaux;
         $this-> nomChamps_ = $NewnomChamps;
         $this-> adresse_ = $Newadresse;
+        $this-> idModule_ = $NewidModule;
+        
     }
 
     // Méthode creationChamps : créer en bdd un champ  avec son nom, son adresse et avec un idCanaux
 
-    public function creationChamps($nomChamps, $adress, $idCanaux)
+    public function creationChamps($nomChamps, $adress, $idCanaux, $idModule)
     {
-        $sqlInsertChamps = "INSERT INTO champs(nomChamps, adress, idCanaux) VALUES('".$nomChamps."','".$adress."','".$idCanaux."')";
+        $sqlInsertChamps = "INSERT INTO champs(nomChamps, adress, idCanaux, idModule) VALUES('".$nomChamps."','".$adress."','".$idCanaux."', '".$idModule."')";
         $reqInsertChamps = $GLOBALS['bdd']->query($sqlInsertChamps);
     }
 
@@ -42,14 +46,14 @@ class Champs{
 
    public function affichageChamps()
    {
-        $reqAffichageChamps ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress, canaux.valeur AS valeur FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND canaux.idscene = scene.id";
+        $reqAffichageChamps ="SELECT module.nomEquipement AS nomEquipement, scene.nom AS nom, champs.nomChamps AS nomChamps, champs.adress AS adress, canaux.valeur AS valeur FROM  champs, canaux, module, scene WHERE champs.idCanaux = canaux.id AND champs.idmodule = module.id AND canaux.idscene = scene.id";
         $resultatSelectChamps = $GLOBALS['bdd'] -> query($reqAffichageChamps);
         return $resultatSelectChamps;
    }
 
    public function getIDandNOM($idModule)
    {
-        $requetSQLChampsModifier = "SELECT champs.id, champs.nomChamps FROM `champs`,module,canaux WHERE champs.idCanaux = canaux.id AND canaux.idmodule = module.id AND module.id = '".$idModule."'";
+        $requetSQLChampsModifier = "SELECT champs.id, champs.nomChamps FROM `champs`,module,canaux WHERE champs.idCanaux = canaux.id AND champs.idmodule = module.id AND module.id = '".$idModule."'";
         $resultatChampsModifier = $GLOBALS['bdd'] -> query($requetSQLChampsModifier);
         return $resultatChampsModifier;
    }
@@ -63,10 +67,19 @@ class Champs{
 
    public function getIDNom()
    {
-     $reqAffichageIDNom ="SELECT champs.id, champs.nomChamps, scene.nom FROM `scene`, module, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id AND module.id = canaux.idmodule ";
+     $reqAffichageIDNom ="SELECT champs.id, champs.nomChamps, scene.nom FROM `scene`, module, canaux, champs WHERE scene.id = canaux.idscene AND champs.idCanaux = canaux.id AND module.id = champs.idmodule ";
      $resultatSelectIDNom = $GLOBALS['bdd'] -> query($reqAffichageIDNom);
      return $resultatSelectIDNom;
    }
+
+   public function suppimerChampSolo()
+   {
+     $reqSelectChampSupprimer = "SELECT champs.id, scene.nom, champs.nomChamps FROM `champs`, canaux, scene WHERE champs.idCanaux = canaux.id AND scene.id = canaux.idscene";
+     $resultatChampSupprimer = $GLOBALS['bdd'] -> query($reqSelectChampSupprimer);
+     return $resultatChampSupprimer;
+   }
+
+   
 
    
 
