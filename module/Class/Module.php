@@ -61,7 +61,14 @@ class Module{
 
    public function getIdANDnomEquipement()
    {
-      $RequetSQL = "SELECT DISTINCT module.id, scene.nom, module.nomEquipement FROM module, canaux, scene WHERE module.id = canaux.idmodule AND scene.id = canaux.idscene";
+      $RequetSQL = "SELECT DISTINCT module.nomEquipement, module.id, scene.nom FROM module, canaux, scene, champs WHERE champs.idCanaux = canaux.id AND scene.id = canaux.idscene AND module.nomEquipement <> 'Aucun Equipement';";
+      $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
+      return $resultatModule;
+   }
+
+   public function getIDnomEquip()
+   {
+      $RequetSQL = "SELECT id, nomEquipement FROM module";
       $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
       return $resultatModule;
    }
@@ -78,7 +85,7 @@ class Module{
 
    public function suppressionModule($id)
 {
-    $RequetSQLSUpprimerChamps = "DELETE FROM `champs` WHERE idCanaux IN (SELECT canaux.id FROM canaux, module WHERE canaux.idmodule = module.id AND module.id = '".$id."')";
+    $RequetSQLSUpprimerChamps = "DELETE FROM `champs` WHERE idCanaux IN (SELECT canaux.id FROM canaux, module WHERE champs.idmodule = module.id AND module.id = '".$id."')";
     $resultatSupprimerChamps = $GLOBALS['bdd']->query($RequetSQLSUpprimerChamps);
 
     $RequetSQLSupprimer = "DELETE FROM module WHERE id = '".$id."'";
@@ -95,7 +102,7 @@ class Module{
 
    public function affichageModule()
    {
-      $reqAffichageModule ="SELECT DISTINCT scene.nom,module.nomEquipement, module.adress FROM module, canaux, scene WHERE module.id = canaux.idmodule AND canaux.idscene = scene.id";
+      $reqAffichageModule =" SELECT DISTINCT scene.nom, module.nomEquipement, module.adress FROM module, canaux, scene, champs WHERE module.id = champs.idModule AND canaux.idscene = scene.id AND canaux.id = champs.idCanaux AND module.nomEquipement <> 'Aucun Equipement';";
       $resultatSelectModule = $GLOBALS['bdd'] -> query($reqAffichageModule);
       return $resultatSelectModule;
    }
