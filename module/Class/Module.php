@@ -61,7 +61,7 @@ class Module{
 
    public function getIdANDnomEquipement()
    {
-      $RequetSQL = "SELECT DISTINCT module.nomEquipement, module.id, scene.nom FROM module, canaux, scene, champs WHERE champs.idCanaux = canaux.id AND scene.id = canaux.idscene AND module.nomEquipement <> 'Aucun Equipement';";
+      $RequetSQL = "SELECT DISTINCT module.nomEquipement, module.id, scene.nom FROM module, canaux, scene, champs WHERE champs.idCanaux = canaux.id AND scene.id = canaux.idscene AND module.id = champs.idModule AND module.nomEquipement <> 'Aucun Equipement';";
       $resultatModule = $GLOBALS['bdd'] -> query($RequetSQL);
       return $resultatModule;
    }
