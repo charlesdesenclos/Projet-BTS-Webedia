@@ -239,6 +239,19 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>80</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Liste déroulante</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -353,10 +366,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onButtonSceneDeroulante()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>920</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>551</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onButtonClickedScene()</slot>
   <slot>onClickedCanal()</slot>
   <slot>onButtonClickedParametreScene()</slot>
+  <slot>onButtonSceneDeroulante()</slot>
  </slots>
 </ui>

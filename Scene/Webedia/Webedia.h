@@ -34,12 +34,11 @@ public slots :
     void RequeteInsertScene(QSqlDatabase db, QString nom);
 	/*void RequeteSelectScene(QSqlDatabase& db);
     void onListSceneClicked();*/
-    /*void RequeteSelectModule(QSqlDatabase db);*/
-    //void onClickedCanal();
     void RequeteAfficherParametreScene(QSqlDatabase db, QString id, QString valeur, QString adress, QString idCanaux);
     void RequeteUpdateCanaux(QSqlDatabase db, QString id, QString valeur);
     void onButtonClickedParametreScene();
-    void RequeteSceneListeDeroulante(QSqlDatabase db);
-    void onButtonClickedListederoulante();
+    void RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecomboBox, QComboBox* CanauxcomboBox);
+    void onButtonSceneDeroulante();
+    void updateChannelComboBox(QSqlDatabase db, const QString& sceneName, QComboBox* CanauxcomboBox);
     //void updateChannelComboBox(const QString& sceneName, QComboBox* CanauxcomboBox)
 };
