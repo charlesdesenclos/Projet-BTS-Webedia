@@ -29,11 +29,16 @@ class Champs{
     // Méthode modificationChamps : modifie le nom, son adresse et son idCanaux
 
     public function modificationChamps($id, $idCanaux, $nomChamps, $adress)
-   {
+     {
         $RequetSQLModifierChamps= "UPDATE champs SET `nomChamps`='".$nomChamps."',`adress`='".$adress."',idCanaux = '".$idCanaux."' WHERE id = '".$id."'";
         $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifierChamps);
-   }
+     }
 
+     public function modificationChampsSolo($id, $idCanaux, $nomChamps, $adress, $idModule)
+     {
+        $RequetSQLModifierChamps= "UPDATE champs SET `nomChamps`='".$nomChamps."',`adress`='".$adress."',idCanaux = '".$idCanaux."', idModule='".$idModule."' WHERE id = '".$id."'";
+        $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifierChamps);
+     }
    // Méthode suppressionChamps : supprime le champ
 
    public function suppressionChamps($id)

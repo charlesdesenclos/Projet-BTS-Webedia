@@ -237,7 +237,7 @@
                         
 
                         <div class="col-md-12">
-                            <input class="form-control" type="text" name="nom" placeholder="Nom" value=" <?php if(isset($tabCHampsNom)){echo $tabCHampsNom['nomChamps'];} ?>" required>
+                            <input class="form-control" type="text" name="nom" placeholder="Nom" value="<?php if(isset($tabCHampsNom)){echo $tabCHampsNom['nomChamps'];} ?>" required>
                                
                         </div>
 
@@ -597,7 +597,9 @@
 
      if(isset($_POST['submit-creation-champs-solo']))
      {
-         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],0,1);
+         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],0,$_POST['idModuleSolo']);
+
+
          
      }
 
@@ -1033,6 +1035,34 @@
                             ?>
                             
                         </select>
+                        <?php
+                        $resultatChampsModifier = $TheModule->getIDnomEquip();
+                        ?>
+
+                        <select name="idModuleSolo">
+                            <option value=""> Choisissez le Module a associé</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            
+                            while($tabModule = $resultatModule->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabModule['id'].'">';echo ''.$tabModule['nomEquipement'].'</option>';
+                                ?>
+                                    
+                                <?php
+                                
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
 
                        
                                
@@ -1327,7 +1357,7 @@
     if(isset($_POST['submit-modifier-champs-solo']))
     {
 
-        $TheChamps->modificationChamps($_SESSION['idChampsModifier-choisi'],0,$_POST['nom'],$_POST['adresseModifier']);
+        $TheChamps->modificationChampsSolo($_SESSION['idChampsModifier-choisi'],0,$_POST['nom'],$_POST['adresseModifier'], $_POST['idModuleSolo']);
 
     }
 
@@ -1392,11 +1422,13 @@
         $_SESSION['idChampsModifier-choisi'] = $_POST['idChampsModifier'];
         
         // Exécutez votre requête ici avec $idChampsModifier
-        $reqInfoChamps = "SELECT `nomChamps`, `adress` FROM `champs` WHERE id = '".$_POST['idChampsModifier']."'";
+        $reqInfoChamps = "SELECT champs.nomChamps AS nomChamps, champs.adress AS adress, champs.idModule AS idModule, module.nomEquipement FROM champs, module WHERE champs.id = '".$_POST['idChampsModifier']."' AND module.id = champs.idModule";
         $InfoChamps = $GLOBALS['bdd']->query($reqInfoChamps);
         $champs = $InfoChamps->fetch();
         $nomChampsExistant = $champs['nomChamps'];
         $adresseExistant = $champs['adress'];
+        $idModule = $champs['idModule'];
+        $nomEquipement = $champs['nomEquipement'];
         ?>
         <div class="row">
         <div class="form-holder">
@@ -1427,6 +1459,38 @@
                                     }   
                                     echo '>'.$adress.'</option>';
                                     $adress++;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <?php
+                        $resultatChampsModifier = $TheModule->getIDnomEquip();
+                        ?>
+
+                        <select name="idModuleSolo">
+                            <?php 
+                                echo '<option value="'.$idModule.'">';echo ''.$nomEquipement.'</option>'; 
+                            ?>
+                            <option value=""> Choisissez le Module a associé</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            
+                            while($tabModule = $resultatModule->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabModule['id'].'">';echo ''.$tabModule['nomEquipement'].'</option>';
+                                ?>
+                                    
+                                <?php
+                                
                                             
                                         
                             }
