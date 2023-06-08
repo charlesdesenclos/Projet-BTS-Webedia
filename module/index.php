@@ -131,6 +131,8 @@
     <?php
     }
 
+    //Formulaire d'affichage pour créer des champs
+
     function afficheCreationChamps_($resultatCanaux, $i)
     {
         ?>
@@ -189,6 +191,8 @@
     </div>
     <?php
     }
+
+    // Formulaire pour modifier les champs
 
     function affichagemodifierChamps($resultatChampsModifier, $i, $adressModule,$resultSelectChampsNom)
     {
@@ -721,7 +725,7 @@
         
         
         
-        //$_SESSION['resultatChampsModifier']
+        
         $_SESSION['count1'] = $resultatCanauxID->rowCount();
 
         $_SESSION['q'] = 1;
@@ -1086,7 +1090,7 @@
 
 
     
-
+    // Formulaire pour choisir le module que l'on souhaite modifier
 
     if(isset($_POST['ModifierModule']))
     {
@@ -1144,6 +1148,8 @@
 
  
     }
+
+    //Formulaire pour modifier un module
 
     if(isset($_POST['submit-choix-modifier-valider']))
     {
@@ -1349,11 +1355,16 @@
 
     }
 
+    // Formulaire pour modifier des champs
+
     if(isset($_POST['submit-modifier-champs']))
     {
         $TheChamps->modificationChamps($_POST['idChampsModifier'],0,$_POST['nom'],$_POST['adresseModifier']);
 
     }
+
+    // Formulaire pour modifier un seul champ
+
     if(isset($_POST['submit-modifier-champs-solo']))
     {
 
@@ -1415,6 +1426,8 @@
     <?php
     
     }
+
+    //Formulaire pour modifier un seul champ
 
     if(isset($_POST['submit-modifier-champs-solo-choisi']))
     {

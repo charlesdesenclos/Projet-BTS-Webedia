@@ -34,6 +34,8 @@ class Champs{
         $resultatModifier = $GLOBALS['bdd']-> query($RequetSQLModifierChamps);
      }
 
+     // Méthodes modificationChampsSolo permet de modifier un seul champ
+
      public function modificationChampsSolo($id, $idCanaux, $nomChamps, $adress, $idModule)
      {
         $RequetSQLModifierChamps= "UPDATE champs SET `nomChamps`='".$nomChamps."',`adress`='".$adress."',idCanaux = '".$idCanaux."', idModule='".$idModule."' WHERE id = '".$id."'";
@@ -56,6 +58,8 @@ class Champs{
         return $resultatSelectChamps;
    }
 
+   // Méthodes getIDandNOM permet de récupèrer l'id d'un champs ainsi que son nom
+
    public function getIDandNOM($idModule)
    {
         $requetSQLChampsModifier = "SELECT champs.id, champs.nomChamps FROM `champs`,module,canaux WHERE champs.idCanaux = canaux.id AND champs.idmodule = module.id AND module.id = '".$idModule."'";
@@ -63,12 +67,7 @@ class Champs{
         return $resultatChampsModifier;
    }
 
-   public function getAll($idModule)
-   {
-        $requetSelectAllChamps = "SELECT champs.id, champs.nomChamps, champs.adress, champs.idCanaux FROM `champs`, module, canaux WHERE champs.idCanaux = canaux.id AND module.id = canaux.idmodule AND module.id = '".$idModule."' ;";
-        $resultSelectAll = $GLOBALS['bdd'] -> query($requetSelectAllChamps);
-        return $resultSelectAll;
-   }
+   //Méthodes getIDNom permet d'avoir l'id d'un champ, son nom ainsi que le nom de la scène
 
    public function getIDNom()
    {
@@ -76,6 +75,8 @@ class Champs{
      $resultatSelectIDNom = $GLOBALS['bdd'] -> query($reqAffichageIDNom);
      return $resultatSelectIDNom;
    }
+
+   // Méthodes suppimerChampSolo pour supprimer un champ
 
    public function suppimerChampSolo()
    {

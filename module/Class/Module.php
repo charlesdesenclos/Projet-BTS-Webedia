@@ -66,6 +66,8 @@ class Module{
       return $resultatModule;
    }
 
+   // Méthode getIDnomEquip permet d'avir l'id et le nom d'équipement d'un module
+
    public function getIDnomEquip()
    {
       $RequetSQL = "SELECT id, nomEquipement FROM module";
@@ -107,12 +109,16 @@ class Module{
       return $resultatSelectModule;
    }
 
+   // Méthodes getIDCanauxNomEquipementModuleANDValeurCanaux permet de récupèrer l'id des canaux, le nom d'équipement et la valeur du canal
+
    public function getIDCanauxNomEquipementModuleANDValeurCanaux($idModule)
    {
       $RequetSQL3 = "SELECT canaux.id, module.nomEquipement, canaux.valeur FROM canaux, module WHERE canaux.idmodule = module.id AND module.id = '".$idModule."'";
       $resultatCanaux = $GLOBALS['bdd'] -> query($RequetSQL3);
       return $resultatCanaux;
    }
+
+   // Méthodes VerifId perme d'obtenir l'id d'un module 
 
    public function VerifId($idModule)
    {
