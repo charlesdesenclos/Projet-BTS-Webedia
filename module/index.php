@@ -377,12 +377,12 @@
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Modifier" name="ModifierModule"  >
+                                <input class="btn btn-secondary" type="submit" value="Modification" name="ModifierModule"  >
                             </div>
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Supprimer" name="SupprimerModule"  >
+                                <input class="btn btn-secondary" type="submit" value="Suppression" name="SupprimerModule"  >
                             </div>
                         </div>
                         <div class="col-md-12">  
@@ -415,12 +415,12 @@
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Modifier" name="ModifierChamps">
+                                <input class="btn btn-secondary" type="submit" value="Modification" name="ModifierChamps">
                             </div>
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Supprimer" name="SupprimerChamps">
+                                <input class="btn btn-secondary" type="submit" value="Suppression" name="SupprimerChamps">
                             </div>
                         </div>
                         <div class="col-md-12">  
