@@ -116,12 +116,22 @@ void Webedia::onbuttonAfficherScene() {
 
 void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur, QComboBox* comboBox_scene){
 	QSqlQuery query;
+	int selectedSceneIndex = comboBox_scene->currentIndex();
 	if (db.open()) {
-		QString sceneName = comboBox_scene->currentText();
-		while (query.next()) {
-			QString sceneName = query.value(0).toString();
-			comboBox_scene->addItem(sceneName);
+
+		if (db.open()) {
+			if (!query.exec("SELECT nom FROM scene")) {
+				qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
+			}
+			while (query.next()) {
+				QString sceneName = query.value(0).toString();
+				comboBox_scene->addItem(sceneName);
+			}
+			if (selectedSceneIndex >= 0 && selectedSceneIndex < comboBox_scene->count()) {
+				comboBox_scene->setCurrentIndex(selectedSceneIndex);
+			}
 		}
+		QString sceneName = comboBox_scene->currentText();
 		query.prepare("INSERT INTO canaux (valeur, idscene) "
 			"VALUES (:valeur, (SELECT id FROM scene WHERE nom = :sceneName))");
 		query.bindValue(":sceneName", sceneName);
