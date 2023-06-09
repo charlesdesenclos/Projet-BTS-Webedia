@@ -1,84 +1,117 @@
 <?php 
 include("class/user.php");
-// include("class/scene.php");
+include("class/scene.php");
+include("class/favori.php");
 include ("pdo.php");
 
 session_start();
 
+// Création des objets nécessaires
 $TheUser = new user(null, null, null, null);
-// $TheScene = new scene(null, null, null);
+$TheScene = new scene(null, null);
+$TheFav = new favori (null, null, null, null, null);
+
+// Variable globale pour stocker l'ID de l'utilisateur connecté
+$GLOBALS['idUser'] = null;
+        
 ?>
 
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Connexion</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/websocket.js"></script>    <!-- Script pour la connexion en websocket -->
+    <script src="js/getSceneID.js"></script>   <!-- Script pour récupérer l'id de la scène -->
 </head>
+<?php
+    
+    // TRAITEMENT DU FORMULAIRE DE CONNEXION
+    if(isset($_POST['connexion'])) {
+        $TheUser->seConnecter($_POST['login'], $_POST['password']);
 
-<?php 
+        $GLOBALS['idUser'] = $TheUser->getId($_POST['login'], $_POST['password']);
+    }
 
-  // TRAITEMENT DU FORMULAIRE DE CONNEXION
-  if(isset($_POST['connexion'])) {
-    $TheUser->seConnecter($_POST['login'], $_POST['password']);
-  }
+    if(!isset($_SESSION['connexion'])) {
+        $_SESSION['connexion'] = false;
+    
+      // TRAITEMENT DU FORMULAIRE D'INSCRIPTION
+      if(isset($_POST['inscription-2'])) {
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+          
+        $TheUser->inscription($login, $password);
+      }
+    }
+ 
+    // TRAITEMENT DE LA DECONNEXION
+    if(isset($_POST['deconnexion'])) {
+        $TheUser->seDeconnecter();
+    }
 
-  if(!isset($_SESSION['connexion'])) {
-    $_SESSION['connexion'] = false;
+    if(isset($_POST['connexion']) && $_SESSION['connexion'] == true) {
+        // echo "Vous êtes déjà connecté !";
+        $isUserAdmin = $TheUser->isAdmin($GLOBALS['idUser']);
+        ?>
+        <div class = "header">
+        <!-- <h1>Bienvenue,--> <?php // echo $idUser; ?> <!-- </h1> -->
+        <h1>Bienvenue, <?php echo $TheUser->getNom($idUser); ?></h1>
+        <?php
+        if ($isUserAdmin) {
+          echo "<h3>Vous êtes un administrateur.</h3>";
+          ?>
+          <a href="module/index.php" class="module-btn">
+            <span class="module-btn-icon"></span>
+            
+          </a>
+        <?php
+        } else {
+            echo "<h3>Vous n'êtes pas un administrateur.</h3>";
+        }
+        ?>
 
-  // TRAITEMENT DU FORMULAIRE D'INSCRIPTION
-  if(isset($_POST['inscription-2'])) {
-    $login = $_POST['login'];
-    $password = $_POST['password'];
+      <form action="" method="POST">
+        <input type="submit" name="deconnexion" value="Déconnexion" class="deconnexion-btn" />
+      </form>
+      </div>
       
-    $TheUser->inscription($login, $password);
-  }
-} 
+        <div class = "menu">
+        
+        <div class="app">
 
-  if(isset($_POST['connexion']) && $_SESSION['connexion'] == true) {
-    // echo "Vous êtes déjà connecté !";
-    ?>
-
-    <form action = "" method = "POST">
-        <input type = "submit" name = "deconnexion" value = "Deconnexion"/>
-    </form>
-
-    <div class="app">
-		<?php
-			$Request = "SELECT * FROM `scene`";
-			$Result = $GLOBALS["PDO"]->query($Request);
-		?>
-
-		<div class="lists">
-			<div class="list">
+        <div class = "lists">
+            <div class="list">
+                <h1> Scènes existantes </h1>
 				<?php
                 // Vérifier s'il y a des résultats
-				if ($Result->rowCount() > 0) {
-					foreach ($Result as $row) {                
-					// Afficher le bloc de scène
-					echo "<div class= 'list-item' draggable='true'>" .$row['nom']. "</div>"; 
-					}
-				}
+                    $TheScene->getAllScene();
 				?>
 			</div>
-			<div class="list"></div>
+
+			<div class="list">
+          <h1> Favori </h1>
+            <?php
+                // Vérifier s'il y a des résultats
+                    // $TheFav->getAllFavorite();
+				    ?>
+            </div>
 		</div>
 	</div>
-	<script src="js/dragndrop.js"></script>
-
     <?php
+    } else {
+?>
 
-} else {
-  ?>
+<div>
 
-
-
-  <body class="img js-fullheight" style="background-image: url(https://www.bmagroupparis.fr/wp-content/uploads/2016/09/webediaimages-04.jpg);">
+<body>
+<body class="img js-fullheight" style="background-image: url(https://www.bmagroupparis.fr/wp-content/uploads/2016/09/webediaimages-04.jpg);">
   
   <section class="ftco-section">
     <div class="container">
@@ -140,21 +173,16 @@ $TheUser = new user(null, null, null, null);
     </div>
   </section>
 
-	<script src="js/jquery.min.js"></script>
+  <?php
+    }
+    ?>
+  <script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
-	<script src="js/hide-button.js"></script>
+  <script src="js/hide-button.js"></script>
   <script src="js/dragndrop.js"></script>
 
-<?php
-}
-
-  // TRAITEMENT DE LA DECONNEXION
-  if(isset($_POST['deconnexion'])) {
-    $TheUser->seDeconnecter();
-  }
-?> 
-
+  <script> detectSceneMove(); </script>
 </body>
 </html>
