@@ -7,7 +7,7 @@
         $login = "user";
         $password ="jGqOaSMyy927qO-a";
 
-        $GLOBALS["PDO"] = new PDO('mysql:host='.$ipServer.';dbname='.$nomBase.'', $login, $password);
+        $GLOBALS["bdd"] = new PDO('mysql:host='.$ipServer.';dbname='.$nomBase.'', $login, $password);
         // echo "Connexion à la base de donnée réussi !";
     } catch (PDOException $e) {
         die('Erreur : '.$e->getMessage());
