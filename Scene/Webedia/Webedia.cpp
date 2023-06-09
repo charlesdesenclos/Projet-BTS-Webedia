@@ -11,6 +11,11 @@ Webedia::Webedia(QWidget *parent)
     ui->setupUi(this);
 
 	dmx = new DMX();
+	WebSocketServer server;
+
+	QObject::connect(&server, &WebSocketServer::sceneIdReceived, [&server](int sceneId) {
+		qDebug() << "Received scene ID:" << sceneId;
+		});
 }
 
 Webedia::~Webedia()
@@ -85,112 +90,68 @@ void Webedia::onButtonClickedScene()
 
 }
 
-/*
-void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur){
-	if (db.open())
-	{
-		ui->label_bdd->setText("Database: connection ok");
 
+void Webedia::afficherScene(QSqlDatabase db, QComboBox* comboBox_scene){
+	QSqlQuery query;
+	int selectedSceneIndex = comboBox_scene->currentIndex();
+	if (db.open()) {
+		if (!query.exec("SELECT nom FROM scene")) {
+			qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
+		}
+		while (query.next()) {
+			QString sceneName = query.value(0).toString();
+			comboBox_scene->addItem(sceneName);
+		}
+		if (selectedSceneIndex >= 0 && selectedSceneIndex < comboBox_scene->count()) {
+			comboBox_scene->setCurrentIndex(selectedSceneIndex);
+		}
+	}
+	db.close();
+}
 
-		QSqlQuery query;
-		query.prepare("INSERT INTO `canaux`(`valeur`,`idmodule`,`idscene`) VALUES (:nom, :idmodule,:idscene)");
+void Webedia::onbuttonAfficherScene() {
+
+	afficherScene(ConnexionBDD(), ui->comboBox_scene);
+}
+
+void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur, QComboBox* comboBox_scene){
+	QSqlQuery query;
+	if (db.open()) {
+		QString sceneName = comboBox_scene->currentText();
+		while (query.next()) {
+			QString sceneName = query.value(0).toString();
+			comboBox_scene->addItem(sceneName);
+		}
+		query.prepare("INSERT INTO canaux (valeur, idscene) "
+			"VALUES (:valeur, (SELECT id FROM scene WHERE nom = :sceneName))");
+		query.bindValue(":sceneName", sceneName);
 		query.bindValue(":valeur", valeur);
-		query.exec();
-		db.close;
+		if (query.exec()) {
+			qDebug() << "Nouveau canal inséré avec succès.";
+		}
+		else {
+			qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
+		}
 	}
-	else
-	{
-		ui->label_bdd->setText("Error INSERT MODULE: connection with database fail");
-
-	}
+	db.close();
 }
 
 void Webedia::onButtonClickedCanal()
 {
-	QString nom = ui->lineEdit_valeur_canal->text();
-	ui->label_console->setText(nom);
+	QString valeur = ui->lineEdit_ajout_canal->text();
 
-
-	RequeteInsertCanaux(ConnexionBDD(), nom);
-
-}
-*/
-
-void Webedia::RequeteUpdateCanaux(QSqlDatabase db, QString id, QString valeur)
-{
-	if (db.open()) {
-		QSqlQuery query;
-		ui->label_bdd->setText("Database: connection ok");
-
-		query.prepare("UPDATE canaux SET valeur=:valeur WHERE id =:id ");
-		query.bindValue(":id", id);
-		query.bindValue(":valeur", valeur);
-		query.exec();
-		db.close();
-	}
-	else {
-		ui->label_bdd->setText("Error UPDATE CANAUX: connection with database fail");
-	}
-}
-
-/*void Webedia::onClickedCanal()
-{
-	QString id = ui->lineEdit_id->text();
-	QString valeur = ui->lineEdit_valeur->text();
-
-	RequeteUpdateCanaux(ConnexionBDD(), id, valeur);
-}
-*/
-
-void Webedia::RequeteAfficherParametreScene(QSqlDatabase db, QString id, QString valeur, QString adress, QString idCanaux){
-	QVector<QString> result;
-
-	QSqlQuery query;
-	if (db.open()) {
-		ui->label_bdd->setText("Database: connection ok");
-
-		query.exec("SELECT nom FROM scene");
-		while (query.next()) {
-			QString nom = query.value(0).toString();
-			result.append(nom);
-		}
-
-		QComboBox* comboBox_nom_scene = new QComboBox(this);
-
-		foreach(const QString & nom, result) {
-			comboBox_nom_scene->addItem(nom);
-		}
-
-		query.prepare("SELECT valeur, idCanaux, adress FROM scene, canaux, champs WHERE scene.id = canaux.idscene AND canaux.id = champs.idCanaux AND nom=:nom ");
-		query.prepare("SELECT id FROM scene");
-		query.bindValue("id", id);
-		query.bindValue("valeur", valeur);
-		query.bindValue("adress", adress);
-		query.bindValue("idCanaux", idCanaux);
-		query.exec();
-		db.close();
-		ui->label_valeur_canaux->setText(valeur);
-	}
-	else {
-		ui->label_bdd->setText("Error Affichage des paramètres de la scène: connection with database fail");
-	}
-}
-
-void Webedia::onButtonClickedParametreScene(){
-	QString id = ui->label_idscene->text();
-	QString valeur = ui->label_valeur_canaux->text();
-	QString adress = ui->label_addresse_champs->text();
-	QString idCanaux = ui->label_idCanaux->text();
-
-	RequeteAfficherParametreScene(ConnexionBDD(),id , valeur, adress, idCanaux);
+	RequeteInsertCanaux(ConnexionBDD(), valeur, ui->comboBox_scene);
 
 }
 
-void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecomboBox, QComboBox* CanauxcomboBox) {
+
+
+void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecomboBox, QComboBox* CanauxcomboBox, QString valeur) {
 	QSqlQuery query;
 	int selectedSceneIndex = scenecomboBox->currentIndex();
-
+	int selectCanauxIndex = CanauxcomboBox->currentIndex();
 	scenecomboBox->clear();
+	CanauxcomboBox->clear();
 
 	if (db.open()) {
 		if (!query.exec("SELECT nom FROM scene")) {
@@ -215,18 +176,74 @@ void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecombo
 				int channelId = query.value(0).toInt();
 				CanauxcomboBox->addItem(QString::number(channelId));
 			}
+			if (selectCanauxIndex >= 0 && selectCanauxIndex < CanauxcomboBox->count()) {
+				CanauxcomboBox->setCurrentIndex(selectCanauxIndex);
+			}
+
 		}
+		QString selectedChannel = CanauxcomboBox->currentText();
+
+		query.prepare("SELECT valeur FROM canaux WHERE id = :channelId");
+		query.bindValue(":channelId", selectedChannel);
+
+		if (query.exec() && query.next()) {
+			QString channelValue = query.value(0).toString();
+			ui->lineEdit_valeur->setText(channelValue);
+		}
+
 		else {
 			qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
 		}
+
+
 		db.close();
 	}
 }
 
 void Webedia::onButtonSceneDeroulante() {
 
-	RequeteSceneListeDeroulante(ConnexionBDD(),ui->scenecomboBox, ui->CanauxcomboBox);
+	QString valeur = ui->lineEdit_valeur->text();
+
+	RequeteSceneListeDeroulante(ConnexionBDD(),ui->scenecomboBox, ui->CanauxcomboBox, valeur);
 }
+
+void Webedia::RequeteUpdateCanaux(QSqlDatabase db, QString valeur, QComboBox* CanauxcomboBox)
+{
+	if (db.open()) {
+		QSqlQuery query;
+		ui->label_bdd->setText("Database: connection ok");
+
+		int canauxId = CanauxcomboBox->currentText().toInt();
+
+		query.prepare("UPDATE canaux SET valeur=:valeur WHERE id=:id");
+		query.bindValue(":valeur", valeur);
+		query.bindValue(":id", canauxId);
+
+		if (query.exec()) {
+			// La requête s'est exécutée avec succès
+			db.commit();
+			ui->label_bdd->setText("Update successful");
+		}
+		else {
+			// Erreur lors de l'exécution de la requête
+			db.rollback();
+			ui->label_bdd->setText("Error updating canal");
+		}
+		db.close();
+	}
+	else {
+		ui->label_bdd->setText("Error UPDATE CANAUX: connection with database fail");
+	}
+}
+
+void Webedia::onClickedCanal()
+{
+
+	QString valeur = ui->lineEdit_valeur->text();
+
+	RequeteUpdateCanaux(ConnexionBDD(), valeur, ui->CanauxcomboBox);
+}
+
 
 
 void Webedia::updateChannelComboBox(QSqlDatabase db,const QString& sceneName, QComboBox* CanauxcomboBox) {

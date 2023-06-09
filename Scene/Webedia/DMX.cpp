@@ -3,7 +3,10 @@
 #include <qt_windows.h>
 #include <iostream>
 #include <vector>
-
+#include <QTimer>
+#include <QDebug>
+#include <QObject>
+#include <QCoreApplication>
 
 DMX::DMX()
 {
@@ -22,12 +25,26 @@ DMX::DMX()
 
 	//Envoi D'une Trame DMX
 	//pour test je force USB meme si pas branch�
-	//interface_open = 1;
+	QTimer* timer = new QTimer();
+
+	timer->setInterval(500);
+
+	// Connectez le signal timeout() du QTimer à la fonction slot qui contient votre code
+	connect(timer, &QTimer::timeout, this, &DMX::SendTrame);
+		// Placez votre code ici
+
+		
+
+	// Démarrez le timer
+	timer->start();
+
+
+}
+
+void DMX::SendTrame()
+{
 	if (interface_open > 0)
 	{
-		// Param�tre : Commande DHC_DMXOUT, Taille Block 512 , Trame dmxbloc Pointeur
-		// dmxBlock[512] est d�clar� en global dans le .h
-		// Mais il faut creer la trame
 		int* tableau_resultatAdress = nullptr;
 		int taille_tableau_resultatAdress = 0;
 		tableau_resultatAdress = RequeteselectAdress(ConnexionBDD(), taille_tableau_resultatAdress);
@@ -36,87 +53,33 @@ DMX::DMX()
 		int taille_tableau_resultatValeurs = 0;
 		tableau_resultatValeurs = RequeteselectValeur(ConnexionBDD(), taille_tableau_resultatValeurs);
 
-
 		qDebug() << tableau_resultatAdress;
 		qDebug() << tableau_resultatValeurs;
 
-		int taille_max = qMax(taille_tableau_resultatAdress, taille_tableau_resultatValeurs);
-
-		for (int i = 1; i < taille_max; i++)
+		for (int i = 0; i < taille_tableau_resultatAdress; i++)
 		{
-			if (i < taille_tableau_resultatAdress)
+			int adresse = tableau_resultatAdress[i];
+			if (adresse >= 1 && adresse <= DMX_MAXCHANNEL)
 			{
-				int adresse = tableau_resultatAdress[i];
-				if (adresse < DMX_MAXCHANNEL)
+				if (i < taille_tableau_resultatValeurs)
 				{
-					if (i < taille_tableau_resultatValeurs)
-					{
-						int valeur = tableau_resultatValeurs[i];
-						dmxBlock[adresse] = valeur;
-						qInfo() << "1;" << dmxBlock[adresse];
-						qInfo() << "2 :" << valeur;
-					}
-					else
-					{
-						dmxBlock[adresse] = 0; // Valeur par défaut si aucune valeur associée
-					}
+					int valeur = tableau_resultatValeurs[i];
+					dmxBlock[adresse - 1] = valeur;
+					qInfo() << "Adresse :" << adresse << ", Valeur :" << valeur;
 				}
 				else
 				{
-					qWarning() << "Adresse DMX hors limite : " << adresse;
+					dmxBlock[adresse - 1] = 0; // Valeur par défaut si aucune valeur associée
 				}
 			}
 			else
 			{
-				qWarning() << "Index de tableau hors limite : " << i;
+				qWarning() << "Adresse DMX hors limite : " << adresse;
 			}
 		}
 
 		DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
 	}
-}
-/*
-//---------------------------------------------------------------------------
-void __fastcall TForm1::SendTrame() {
-	if (interface_open > 0)
-	{
-		try {
-			DasUsbCommand(DHC_DMXOUT, DMX_MAXCHANNEL, dmxBlock);
-		}
-		catch (int x)
-		{
-		}
-	}
-}
-void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
-{
-	//Fermeture du DMX � l'arret du programme
-	if (interface_open > 0) {
-		DasUsbCommand(DHC_CLOSE, 0, 0);
-		DasUsbCommand(DHC_EXIT, 0, NULL);
-	}
-	if (g_dasusbdll != NULL)
-		FreeLibrary(g_dasusbdll);
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Timer1Timer(TObject *Sender)
-{
-	SendTrame();
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::btnForceUSBClick(TObject *Sender)
-{
-	interface_open = 1;
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::TrackBar1Change(TObject *Sender)
-{
-	dmxBlock[1] = TrackBar1->Position;
-}
-//---------------------------------------------------------------------------
-*/
-void DMX::SendTrame()
-{
 }
 
 
@@ -237,7 +200,7 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 	QSqlQuery query;
 
 	if (db.open()) {
-		if (query.exec("SELECT canaux.valeur AS valeurCanaux FROM scene, canaux WHERE scene.id = canaux.idscene")) {
+		if (query.exec("SELECT canaux.valeur FROM champs, canaux WHERE champs.idCanaux = canaux.id")) {
 			taille_tableau_resultat = 0;
 			while (query.next()) {
 				QString valeur = query.value(0).toString();

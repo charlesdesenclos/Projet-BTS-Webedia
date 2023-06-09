@@ -12,18 +12,22 @@
 
 #define DMX_MAXCHANNEL 512
 
-class DMX
+class DMX : public QMainWindow
 {
+	Q_OBJECT
 private :
 	HINSTANCE g_dasusbdll;
 	typedef int(*DASHARDCOMMAND)(int, int, unsigned char*);
 	DASHARDCOMMAND DasUsbCommand;
 	int interface_open;
 	unsigned char dmxBlock[DMX_MAXCHANNEL];
+
+public slots:
+	void SendTrame();
+
 public : 
 	DMX();
 	QSqlDatabase ConnexionBDD();
-	void SendTrame();
 	/*int Requeteselect(QSqlDatabase db);*/
 	/*QVector<int> Requeteselect(QSqlDatabase db);*/
 	int* RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat);

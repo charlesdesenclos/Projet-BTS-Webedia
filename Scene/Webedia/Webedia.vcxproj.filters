@@ -43,10 +43,16 @@
     <ClCompile Include="DMX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="websocketserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DMX.h">
+    <QtMoc Include="DMX.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
+    <QtMoc Include="websocketserver.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

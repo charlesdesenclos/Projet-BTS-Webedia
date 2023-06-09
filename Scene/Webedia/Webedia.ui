@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1104</width>
-    <height>526</height>
+    <width>937</width>
+    <height>657</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -133,8 +133,8 @@
    <widget class="QLabel" name="label_bdd">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>340</y>
+      <x>640</x>
+      <y>500</y>
       <width>341</width>
       <height>16</height>
      </rect>
@@ -142,102 +142,6 @@
     <property name="text">
      <string/>
     </property>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>230</y>
-      <width>231</width>
-      <height>148</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Afficher les paramètres de la scène :</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QFormLayout" name="formLayout_4">
-       <item row="0" column="0">
-        <widget class="QLabel" name="nomSceneLabel">
-         <property name="text">
-          <string>nom scene</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>id : </string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_idscene">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Adresse champs:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_addresse_champs">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Valeur des canaux :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_valeur_canaux">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox_nom_scene"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>idCanaux</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_idCanaux">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_afficher_para">
-       <property name="text">
-        <string>Afficher les paramètres de la scène</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
@@ -252,13 +156,76 @@
      <string>Liste déroulante</string>
     </property>
    </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>210</y>
+      <width>241</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>Ajout de canal de lumière :</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout_5">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Scène : </string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboBox_scene"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>valeur : </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_ajout_canal"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_ajout_canal">
+       <property name="text">
+        <string>Ajout d'un canal de lumère</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_afficher_scene">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>270</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Afficher liste scène</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1104</width>
+     <width>937</width>
      <height>21</height>
     </rect>
    </property>
@@ -351,22 +318,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_afficher_para</sender>
-   <signal>clicked()</signal>
-   <receiver>WebediaClass</receiver>
-   <slot>onButtonClickedParametreScene()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>565</x>
-     <y>391</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>412</x>
-     <y>262</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>WebediaClass</receiver>
@@ -382,11 +333,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_ajout_canal</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onButtonClickedCanal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>431</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>530</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_afficher_scene</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>onbuttonAfficherScene()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>530</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onButtonClickedScene()</slot>
   <slot>onClickedCanal()</slot>
   <slot>onButtonClickedParametreScene()</slot>
   <slot>onButtonSceneDeroulante()</slot>
+  <slot>onButtonClickedCanal()</slot>
+  <slot>onbuttonAfficherScene()</slot>
  </slots>
 </ui>
