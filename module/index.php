@@ -72,10 +72,10 @@
     function afficheCreationChamps($resultatCanaux, $i, $adressModule)
     {
         ?>
-        <div class="div-channels">
-        <div>
+        <div class="row">
+        <div class="form-holder">
             <div class="form-content">
-                <div>
+                <div class="form-items">
                     <h1><?php echo "Champs ".$i." :";?><h1>
                     
                         
@@ -131,13 +131,15 @@
     <?php
     }
 
+    //Formulaire d'affichage pour créer des champs
+
     function afficheCreationChamps_($resultatCanaux, $i)
     {
         ?>
-        <div class="div-channels">
-        <div>
+        <div class="row">
+        <div class="form-holder">
             <div class="form-content">
-                <div>
+                <div class="form-items">
                     <h1><?php echo "Champs ".$i." :";?><h1>
                     
                         
@@ -190,26 +192,33 @@
     <?php
     }
 
-    function affichagemodifierChamps($resultatChampsModifier, $i, $adressModule)
+    // Formulaire pour modifier les champs
+
+    function affichagemodifierChamps($resultatChampsModifier, $i, $adressModule,$resultSelectChampsNom)
     {
         
         ?>
-        <div>
-        <div>
+        <div class="row">
+        <div class="form-holder">
             <div class="form-content">
-                <div>
+                <div class="form-items">
                     <h1><?php echo "Champs ".$i." :";?><h1>
                         
                     <form class="requires-validation" action="" method="POST" novalidate>
 
-                        
+                        <?php $tabCHampsNom = $resultSelectChampsNom->fetch()?>
 
                         <select name="idChampsModifier">
+                            <?php
+                            if(isset($tabCHampsNom))
+                            {
+                                echo '<option value="'.$tabCHampsNom["id"].'">';echo ''.$tabCHampsNom["nomChamps"].'';'</option>';
+                            }
+                            ?>
                             <option value=""> Choisissez une Champs</option>
                             <?php 
                             // affiche les commandes déja faites par l'utilisateur
                             $n7= 0;
-                            
                             
                             while($tabCHamps = $resultatChampsModifier->fetch())
                             {      
@@ -217,6 +226,8 @@
                                 ?>
                                     
                                 <?php
+                                    
+                                    
                                     echo '<option value="'.$tabCHamps["id"].'">';echo ''.$tabCHamps["nomChamps"].'';'</option>';
                                 ?>
                                     
@@ -227,8 +238,10 @@
                             
                         </select>
 
+                        
+
                         <div class="col-md-12">
-                            <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                            <input class="form-control" type="text" name="nom" placeholder="Nom" value="<?php if(isset($tabCHampsNom)){echo $tabCHampsNom['nomChamps'];} ?>" required>
                                
                         </div>
 
@@ -368,12 +381,12 @@
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Modifier" name="ModifierModule"  >
+                                <input class="btn btn-secondary" type="submit" value="Modification" name="ModifierModule"  >
                             </div>
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Supprimer" name="SupprimerModule"  >
+                                <input class="btn btn-secondary" type="submit" value="Suppression" name="SupprimerModule"  >
                             </div>
                         </div>
                         <div class="col-md-12">  
@@ -406,12 +419,12 @@
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Modifier" name="ModifierChamps">
+                                <input class="btn btn-secondary" type="submit" value="Modification" name="ModifierChamps">
                             </div>
                         </div>
                         <div class="col-md-12">  
                             <div class="form-group">
-                                <input class="btn btn-secondary" type="submit" value="Supprimer" name="SupprimerChamps">
+                                <input class="btn btn-secondary" type="submit" value="Suppression" name="SupprimerChamps">
                             </div>
                         </div>
                         <div class="col-md-12">  
@@ -425,11 +438,19 @@
                 </div>
             </li>
 
-            
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
+            <li class="nav-item active">
+                <a class="nav-link" href="../Site">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Lancement des scènes</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -479,33 +500,8 @@
         
         
         return $_SESSION['IDModuleCreation'];
-   
-        /* 
-        for ($i = 1; $i <= $nbrChannels; $i++) 
-        {
-            $sqlSelectIDModule = "SELECT id FROM module where nomEquipement ='".$nomEquipement."' AND `adress`='".$adresse."'";
-            $_SESSION['IDModuleCreation']= $GLOBALS['bdd']->query($sqlSelectIDModule)->fetchColumn();
-           
-
-            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
-
-            afficheCreationChamps($resultatCanaux, $i,$_SESSION['CreationModuleAdress'] );
-            $_SESSION['CreationModuleAdress']++;
-            
-        } 
-        $_SESSION['CreationModuleAdress']= $_SESSION['CreationModuleAdress'] -3;
-        
-
-        */
-        
 
     }
-
-
-    
-   
-
-    
 
      // Création des champs submit-creation-champs
     
@@ -607,42 +603,20 @@
             $_SESSION['b']++;
         }
         
-
-
-
-
-         /*
-         
-         if($_SESSION['nbrChannels'] != 0)
-         {
-            
-             for ($i = 1; $i <= $_SESSION['nbrChannels']; $i++) 
-             {
-                echo $_SESSION['CreationModuleAdress'];
- 
-                 $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['IDModuleCreation']);
- 
-                 afficheCreationChamps($resultatCanaux, $i, $_SESSION['CreationModuleAdress']);  
-                 $_SESSION['CreationModuleAdress']++;
-             } 
-             $_SESSION['CreationModuleAdress']= $_SESSION['CreationModuleAdress'] -2;
-         }
-         */
-         
-         
- 
      }
      
      // Création d'un champs submit-creation-champs-solo
 
      if(isset($_POST['submit-creation-champs-solo']))
      {
-         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],0,1);
+         $TheChamps->creationChamps($_POST['nomChamps'],$_POST['adress'],0,$_POST['idModuleSolo']);
+
+
          
      }
 
     
-    //echo $_SESSION['nbrChannels'];
+   
 
     //Formulaire de création module
 
@@ -732,16 +706,7 @@
     </div>
     <?php
     }
-
-    //$resultCanauxID = "SELECT `id` FROM `canaux` WHERE idmodule = 14;";
-
-    //$resultatCanauxID = $GLOBALS['bdd'] -> query($resultCanauxID);
-    
-
-
-    //$count = $resultatCanauxID->rowCount();
         
-
     // Modification des modules
 
     if(isset($_POST['submit-modifier']))
@@ -768,53 +733,42 @@
         
         
         
-        //$_SESSION['resultatChampsModifier']
+        
         $_SESSION['count1'] = $resultatCanauxID->rowCount();
 
         $_SESSION['q'] = 1;
         if ($_SESSION['q'] == 1 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 0";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         }
         
-        //echo $count;
-
-        
-           /* for ($i = 1; $i <= $_SESSION['count1']; $i++) 
-            { 
-                $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
-    
-        
-     
-    
-                $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
-    
-            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $_SESSION['adresse-Module-Modifier']);
-            $_SESSION['adresse-Module-Modifier']++;
-                
-             } */
-            afficheNonModifierChamps(); 
+       
+            
     }
 
-    //$idModuleModifier = $_SESSION['idModuleModifier'];
-    //echo '3: ' . $idModuleModifier;
+   
 
     // Affichage pour ne pas modifier les champs
 
     function afficheNonModifierChamps()
     {
         ?>
-        <div>
-        <div>
+        <div class="row">
+        <div class="form-holder">
             <div class="form-content">
-                <div>
+                <div class="form-items">
                     <h1>Pour ne pas modifer de champs<h1>
                         
                     <form class="requires-validation" action="" method="POST" novalidate>
@@ -834,188 +788,208 @@
     <?php
     }
 
-    //echo $_SESSION['adresse-Module-Modifier'];
     
-    
-    
-    //echo $_SESSION['adresse-Module-Modifier'];
 
     // Modification des champs 
 
     if(isset($_POST['submit-modifier-champs']))
     {
-        echo $_SESSION['adresse-Module-Modifier'];
-        echo $_SESSION['q'];
 
         $TheChamps->modificationChamps($_POST['idChampsModifier'],0,$_POST['nom'],$_POST['adresseModifier']);
 
         if ($_SESSION['q'] == 2 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 1";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 3 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 2";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 4 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 3";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 5 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 4";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 6 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 5";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 7 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 6";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 8 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 7";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 9 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 8";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 10 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 9";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 11 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 10";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
         else if ($_SESSION['q'] == 12 && $_SESSION['q']<= $_SESSION['count1'])
         {
+            $reqSelectChampsNOM = "SELECT champs.id, champs.nomChamps FROM `champs`, module WHERE champs.idModule = module.id AND module.id = '".$_SESSION['idModuleModifier']."' LIMIT 1 OFFSET 11";
+            $resultSelectChampsNom = $GLOBALS['bdd']-> query($reqSelectChampsNOM);
+
             $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
 
             $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
 
-            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier']);
+            affichagemodifierChamps($resultatChampsModifier, $_SESSION['q'], $_SESSION['adresse-Module-Modifier'],$resultSelectChampsNom);
 
             $_SESSION['adresse-Module-Modifier']++;
             $_SESSION['q']++;
+
+            afficheNonModifierChamps(); 
         
         }
-
-
-
-
-
-        //echo '2] : ' . $_SESSION['idModuleModifier'];   
-        
-        /*for ($i = 1; $i <= $_SESSION['count1']; $i++) 
-        { 
-           
-            
-            $resultatCanaux = $TheModule->getIDCanauxNomEquipementModuleANDValeurCanaux($_SESSION['idModuleModifier']);
-    
-        
-            
-    
-            $resultatChampsModifier = $TheChamps->getIDandNOM($_SESSION['idModuleModifier']);
-
-            
-    
-            affichagemodifierChamps($resultatChampsModifier, $i, $resultatCanaux, $_SESSION['adresse-Module-Modifier']);
-
-           // echo $_SESSION['adresse-Module-Modifier'];
-
-            $_SESSION['adresse-Module-Modifier']++;
-            
-                
-        } */
         
         
-        afficheNonModifierChamps(); 
 
     }
 
-    //echo  $_SESSION['idModuleModifier'];
+    
 
     //Modification des champs
 
@@ -1073,6 +1047,34 @@
                             ?>
                             
                         </select>
+                        <?php
+                        $resultatChampsModifier = $TheModule->getIDnomEquip();
+                        ?>
+
+                        <select name="idModuleSolo">
+                            <option value=""> Choisissez le Module a associé</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            
+                            while($tabModule = $resultatModule->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabModule['id'].'">';echo ''.$tabModule['nomEquipement'].'</option>';
+                                ?>
+                                    
+                                <?php
+                                
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
 
                        
                                
@@ -1096,7 +1098,7 @@
 
 
     
-
+    // Formulaire pour choisir le module que l'on souhaite modifier
 
     if(isset($_POST['ModifierModule']))
     {
@@ -1154,6 +1156,8 @@
 
  
     }
+
+    //Formulaire pour modifier un module
 
     if(isset($_POST['submit-choix-modifier-valider']))
     {
@@ -1359,15 +1363,20 @@
 
     }
 
+    // Formulaire pour modifier des champs
+
     if(isset($_POST['submit-modifier-champs']))
     {
         $TheChamps->modificationChamps($_POST['idChampsModifier'],0,$_POST['nom'],$_POST['adresseModifier']);
 
     }
+
+    // Formulaire pour modifier un seul champ
+
     if(isset($_POST['submit-modifier-champs-solo']))
     {
 
-        $TheChamps->modificationChamps($_SESSION['idChampsModifier-choisi'],0,$_POST['nom'],$_POST['adresseModifier']);
+        $TheChamps->modificationChampsSolo($_SESSION['idChampsModifier-choisi'],0,$_POST['nom'],$_POST['adresseModifier'], $_POST['idModuleSolo']);
 
     }
 
@@ -1426,17 +1435,21 @@
     
     }
 
+    //Formulaire pour modifier un seul champ
+
     if(isset($_POST['submit-modifier-champs-solo-choisi']))
     {
 
         $_SESSION['idChampsModifier-choisi'] = $_POST['idChampsModifier'];
         
         // Exécutez votre requête ici avec $idChampsModifier
-        $reqInfoChamps = "SELECT `nomChamps`, `adress` FROM `champs` WHERE id = '".$_POST['idChampsModifier']."'";
+        $reqInfoChamps = "SELECT champs.nomChamps AS nomChamps, champs.adress AS adress, champs.idModule AS idModule, module.nomEquipement FROM champs, module WHERE champs.id = '".$_POST['idChampsModifier']."' AND module.id = champs.idModule";
         $InfoChamps = $GLOBALS['bdd']->query($reqInfoChamps);
         $champs = $InfoChamps->fetch();
         $nomChampsExistant = $champs['nomChamps'];
         $adresseExistant = $champs['adress'];
+        $idModule = $champs['idModule'];
+        $nomEquipement = $champs['nomEquipement'];
         ?>
         <div class="row">
         <div class="form-holder">
@@ -1467,6 +1480,38 @@
                                     }   
                                     echo '>'.$adress.'</option>';
                                     $adress++;
+                                            
+                                        
+                            }
+                                
+
+                            ?>
+                            
+                        </select>
+
+                        <?php
+                        $resultatChampsModifier = $TheModule->getIDnomEquip();
+                        ?>
+
+                        <select name="idModuleSolo">
+                            <?php 
+                                echo '<option value="'.$idModule.'">';echo ''.$nomEquipement.'</option>'; 
+                            ?>
+                            <option value=""> Choisissez le Module a associé</option>
+                            <?php 
+                            // affiche les commandes déja faites par l'utilisateur
+                            
+                            while($tabModule = $resultatModule->fetch()){    
+                                    
+                                    
+                                ?>
+                                    
+                                <?php
+                                    echo '<option value="'.$tabModule['id'].'">';echo ''.$tabModule['nomEquipement'].'</option>';
+                                ?>
+                                    
+                                <?php
+                                
                                             
                                         
                             }
