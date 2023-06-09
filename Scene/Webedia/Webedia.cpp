@@ -11,16 +11,34 @@ Webedia::Webedia(QWidget *parent)
     ui->setupUi(this);
 
 	dmx = new DMX();
-	WebSocketServer server;
+	server = new QWebSocketServer(QStringLiteral("Server WebSocket"), QWebSocketServer::NonSecureMode);
 
-	QObject::connect(&server, &WebSocketServer::sceneIdReceived, [&server](int sceneId) {
-		qDebug() << "Received scene ID:" << sceneId;
-		});
+	if (this->server->listen(QHostAddress::AnyIPv4, 12345)) {
+		QObject::connect(server, SIGNAL(newConnection()), this, SLOT(wSocketConnected()));
+		QObject::connect(this, SIGNAL(sceneIdReceived()), dmx, SLOT(RequeteID()));
+		qDebug() << "Server WebSocket: Debut d'ecoute sur le port" << 12345;
+	}
+	else {
+		qDebug() << "Server WebSocket: Erreur d'ecoute sur le port" << 12345;
+	}
 }
 
 Webedia::~Webedia()
 {
 
+}
+
+void Webedia::wSocketConnected()
+{
+	socket = this->server->nextPendingConnection();
+	connect(socket, &QWebSocket::textMessageReceived, this, &Webedia::lectureSite);
+	socket->sendTextMessage("Bonjour Client, bienvenu sur l'application C++");
+	qDebug("Nouveau client connecte");
+}
+
+void Webedia::wSocketDeconnected()
+{
+	qDebug("Client deconnecte");
 }
 
 QSqlDatabase Webedia::ConnexionBDD()
@@ -31,16 +49,38 @@ QSqlDatabase Webedia::ConnexionBDD()
     QString Pass = "root";
 
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName(Host);
     db.setDatabaseName(Name);
     db.setUserName(User);
     db.setPassword(Pass);
 
-    return db;
+    return db;    
+}
 
-    
-    
+void Webedia::lectureSite(const QString& message)
+{
+    QWebSocket* sender = qobject_cast<QWebSocket*>(QObject::sender());
+    qDebug() << "Message received from client:" << message;
+
+    // Convertir le message en entier (ID de la scène)
+    bool conversionOk;
+    int sceneId = message.toInt(&conversionOk);
+    if (conversionOk) {
+        // Émettre le signal pour informer l'application C++
+        emit sceneIdReceived(sceneId);
+        // Construire le message de réponse avec l'ID de scène
+        QString responseMessage = "Voici la scène : " + QString::number(sceneId);
+
+        // Répondre au client avec le message contenant l'ID de scène
+        sender->sendTextMessage(responseMessage);
+    }
+    else {
+        qDebug() << "Invalid scene ID received";
+    }
+
+    // Répondre au client
+    sender->sendTextMessage("Message received by server");
 }
 
 void Webedia::RequeteInsertScene(QSqlDatabase db, QString nom)

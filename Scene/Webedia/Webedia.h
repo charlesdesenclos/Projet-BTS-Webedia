@@ -12,7 +12,8 @@
 
 #include <QString>
 #include "DMX.h"
-#include "websocketserver.h"
+#include <QWebSocketServer>
+#include <QWebSocket>
 
 class Webedia : public QMainWindow
 {
@@ -22,11 +23,17 @@ public:
     Webedia(QWidget *parent = nullptr);
     ~Webedia();
 
+   
+
 private:
     Ui::WebediaClass *ui;
 	DMX * dmx;
+    QSqlDatabase db;
+    QWebSocketServer* server;
+    QWebSocket* socket = nullptr;
 
-  
+signals:
+    void sceneIdReceived(int sceneId);
 
 public slots : 
 
@@ -34,6 +41,7 @@ public slots :
     void onButtonClickedScene();
     void afficherScene(QSqlDatabase db, QComboBox* comboBox_scene);
     void onbuttonAfficherScene();
+    void lectureSite(const QString& message);
     void RequeteInsertScene(QSqlDatabase db, QString nom);
     void RequeteUpdateCanaux(QSqlDatabase db, QString valeur, QComboBox* CanauxcomboBox);
     void RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecomboBox, QComboBox* CanauxcomboBox, QString valeur);
@@ -42,5 +50,7 @@ public slots :
     void onClickedCanal();
     void RequeteInsertCanaux(QSqlDatabase db, QString valeur, QComboBox* scenecomboBox);
     void onButtonClickedCanal();
+    void wSocketConnected();
+    void wSocketDeconnected();
     //void updateChannelComboBox(const QString& sceneName, QComboBox* CanauxcomboBox)
 };

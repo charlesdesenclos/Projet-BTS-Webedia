@@ -28,6 +28,7 @@ public slots:
 public : 
 	DMX();
 	QSqlDatabase ConnexionBDD();
+	void RequeteID(int sceneId);
 	/*int Requeteselect(QSqlDatabase db);*/
 	/*QVector<int> Requeteselect(QSqlDatabase db);*/
 	int* RequeteselectAdress(QSqlDatabase db, int& taille_tableau_resultat);

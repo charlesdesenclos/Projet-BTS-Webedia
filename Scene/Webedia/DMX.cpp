@@ -227,3 +227,36 @@ int* DMX::RequeteselectValeur(QSqlDatabase db, int& taille_tableau_resultat)
 }
 
 
+void DMX::RequeteID(int sceneId) {
+	QSqlDatabase db = ConnexionBDD();
+	int taille_tableau_resultat = 0;
+	int* tableau_resultat = nullptr;
+	QSqlQuery query;
+
+	if (db.open()) {
+		query.prepare("SELECT canaux.valeur FROM canaux WHERE canaux.idscene = ?");
+		query.addBindValue(sceneId);
+		if (query.exec()) {
+			taille_tableau_resultat = 0;
+			while (query.next()) {
+				QString valeur = query.value(0).toString();
+				taille_tableau_resultat++;
+				int* nouveau_tableau_resultat = new int[taille_tableau_resultat];
+				if (tableau_resultat) {
+					memcpy(nouveau_tableau_resultat, tableau_resultat, (taille_tableau_resultat - 1) * sizeof(int));
+					delete[] tableau_resultat;
+				}
+				nouveau_tableau_resultat[taille_tableau_resultat - 1] = valeur.toInt();
+				tableau_resultat = nouveau_tableau_resultat;
+			}
+		}
+		else {
+			qInfo() << "Error executing query:" << query.lastError().text();
+		}
+		db.close();
+	}
+	else {
+		qInfo() << "Error opening database";
+	}
+
+}
