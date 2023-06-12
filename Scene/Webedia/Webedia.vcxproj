@@ -105,7 +105,7 @@
     <QtMoc Include="DMX.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="websocketserver.h" />
+    <ClInclude Include="websocketserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

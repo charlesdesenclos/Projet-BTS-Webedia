@@ -51,8 +51,10 @@
     <QtMoc Include="DMX.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="websocketserver.h">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="websocketserver.h">
       <Filter>Header Files</Filter>
-    </QtMoc>
+    </ClInclude>
   </ItemGroup>
 </Project>

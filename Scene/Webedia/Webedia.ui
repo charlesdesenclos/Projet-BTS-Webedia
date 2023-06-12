@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>937</width>
+    <width>1068</width>
     <height>657</height>
    </rect>
   </property>
@@ -159,8 +159,8 @@
    <widget class="QWidget" name="verticalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>210</y>
+      <x>240</x>
+      <y>300</y>
       <width>241</width>
       <height>151</height>
      </rect>
@@ -209,8 +209,8 @@
    <widget class="QPushButton" name="pushButton_afficher_scene">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>270</y>
+      <x>70</x>
+      <y>330</y>
       <width>101</width>
       <height>23</height>
      </rect>
@@ -219,13 +219,66 @@
      <string>Afficher liste scène</string>
     </property>
    </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>289</y>
+      <width>231</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Supprimer une scène :</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Scène : </string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="supprimer_scene"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_supprimer_scne">
+       <property name="text">
+        <string>supprimer la scène</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_afficher_scene2">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>310</y>
+      <width>91</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Afficher scène</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>937</width>
+     <width>1068</width>
      <height>21</height>
     </rect>
    </property>
@@ -365,6 +418,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_supprimer_scne</sender>
+   <signal>clicked()</signal>
+   <receiver>WebediaClass</receiver>
+   <slot>OnbuttonSupprimerScene()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>795</x>
+     <y>440</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onButtonClickedScene()</slot>
@@ -373,5 +442,6 @@
   <slot>onButtonSceneDeroulante()</slot>
   <slot>onButtonClickedCanal()</slot>
   <slot>onbuttonAfficherScene()</slot>
+  <slot>OnbuttonSupprimerScene()</slot>
  </slots>
 </ui>
