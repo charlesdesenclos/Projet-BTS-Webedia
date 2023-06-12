@@ -47,6 +47,10 @@ public slots :
     void RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecomboBox, QComboBox* CanauxcomboBox, QString valeur);
     void onButtonSceneDeroulante();
     void updateChannelComboBox(QSqlDatabase db, const QString& sceneName, QComboBox* CanauxcomboBox);
+    void supprimerScene(QSqlDatabase db, QComboBox* supprimer_scene);
+    void AffichersupprimerScene(QSqlDatabase db, QComboBox* supprimer_scene);
+    void OnbuttonAfficherScene_supprimer();
+    void OnbuttonSupprimerScene();
     void onClickedCanal();
     void RequeteInsertCanaux(QSqlDatabase db, QString valeur, QComboBox* scenecomboBox);
     void onButtonClickedCanal();

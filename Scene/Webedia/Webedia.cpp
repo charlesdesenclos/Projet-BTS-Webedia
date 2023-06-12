@@ -312,3 +312,56 @@ void Webedia::updateChannelComboBox(QSqlDatabase db,const QString& sceneName, QC
 	}
 	
 }
+
+void Webedia::supprimerScene(QSqlDatabase db, QComboBox* supprimer_scene) {
+	QSqlQuery query;
+	int supprimerSceneIndex = supprimer_scene->currentIndex();
+	if (db.open()) {
+		if (!query.exec("SELECT nom FROM scene")) {
+			qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
+		}
+		while (query.next()) {
+			QString sceneName = query.value(0).toString();
+			supprimer_scene->addItem(sceneName);
+		}
+		if (supprimerSceneIndex >= 0 && supprimerSceneIndex < supprimer_scene->count()) {
+			supprimer_scene->setCurrentIndex(supprimerSceneIndex);
+		}
+		QString selectedScene = supprimer_scene->currentText();
+		query.prepare("DELETE FROM scene WHERE nom = ?");
+		query.addBindValue(selectedScene);
+		if (!query.exec()) {
+			qDebug() << "Erreur lors de l'exécution de la requête de suppression :" << query.lastError().text();
+		}
+	}
+	db.close();
+}
+
+void Webedia::OnbuttonSupprimerScene() {
+	supprimerScene(ConnexionBDD(), ui->supprimer_scene);
+}
+
+void Webedia::AffichersupprimerScene(QSqlDatabase db, QComboBox* supprimer_scene) {
+	QSqlQuery query;
+	int supprimerSceneIndex = supprimer_scene->currentIndex();
+	if (db.open()) {
+		if (!query.exec("SELECT nom FROM scene")) {
+			qDebug() << "Erreur lors de l'exécution de la requête SQL :" << query.lastError().text();
+		}
+		while (query.next()) {
+			QString sceneName = query.value(0).toString();
+			supprimer_scene->addItem(sceneName);
+		}
+		if (supprimerSceneIndex >= 0 && supprimerSceneIndex < supprimer_scene->count()) {
+			supprimer_scene->setCurrentIndex(supprimerSceneIndex);
+		}
+	}
+	db.close();
+}
+void Webedia::OnbuttonAfficherScene_supprimer() {
+	AffichersupprimerScene(ConnexionBDD(), ui->supprimer_scene);
+}
+
+
+
+
