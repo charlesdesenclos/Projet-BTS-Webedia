@@ -11,8 +11,10 @@ Webedia::Webedia(QWidget *parent)
     ui->setupUi(this);
 
 	dmx = new DMX();
+	// Cr√©ation d'un serveur WebSocket
 	server = new QWebSocketServer(QStringLiteral("Server WebSocket"), QWebSocketServer::NonSecureMode);
-
+	
+	// Toutes les adresses IPV4 autoris√© sur le port 12345
 	if (this->server->listen(QHostAddress::AnyIPv4, 12345)) {
 		QObject::connect(server, SIGNAL(newConnection()), this, SLOT(wSocketConnected()));
 		QObject::connect(this, SIGNAL(sceneIdReceived()), dmx, SLOT(RequeteID()));
@@ -23,19 +25,23 @@ Webedia::Webedia(QWidget *parent)
 	}
 }
 
+// Destructeur de la classe
 Webedia::~Webedia()
 {
 
 }
 
+// Slot appel√© lorsqu'il y a une nouvelle connexion
 void Webedia::wSocketConnected()
 {
 	socket = this->server->nextPendingConnection();
 	connect(socket, &QWebSocket::textMessageReceived, this, &Webedia::lectureSite);
+	// Envoie un message de bienvenue au client connect√©
 	socket->sendTextMessage("Bonjour Client, bienvenu sur l'application C++");
 	qDebug("Nouveau client connecte");
 }
 
+// Slot appel√© lorsqu'il y a une d√©connexion
 void Webedia::wSocketDeconnected()
 {
 	qDebug("Client deconnecte");
@@ -63,23 +69,23 @@ void Webedia::lectureSite(const QString& message)
     QWebSocket* sender = qobject_cast<QWebSocket*>(QObject::sender());
     qDebug() << "Message received from client:" << message;
 
-    // Convertir le message en entier (ID de la scËne)
+    // Convertir le message en entier (ID de la sc√®ne)
     bool conversionOk;
     int sceneId = message.toInt(&conversionOk);
     if (conversionOk) {
-        // …mettre le signal pour informer l'application C++
+        // √âmettre le signal pour informer l'application C++
         emit sceneIdReceived(sceneId);
-        // Construire le message de rÈponse avec l'ID de scËne
-        QString responseMessage = "Voici la scËne : " + QString::number(sceneId);
+        // Construire le message de r√©ponse avec l'ID de sc√®ne
+        QString responseMessage = "Voici la sc√®ne : " + QString::number(sceneId);
 
-        // RÈpondre au client avec le message contenant l'ID de scËne
+        // R√©pondre au client avec le message contenant l'ID de sc√®ne
         sender->sendTextMessage(responseMessage);
     }
     else {
         qDebug() << "Invalid scene ID received";
     }
 
-    // RÈpondre au client
+    // R√©pondre au client
     sender->sendTextMessage("Message received by server");
 }
 
@@ -92,7 +98,7 @@ void Webedia::RequeteInsertScene(QSqlDatabase db, QString nom)
 
         QSqlQuery query;
 
-		// VÈrifier si le nom de la scËne est dÈj‡ prÈsent en BDD
+		// V√©rifier si le nom de la sc√®ne est d√©j√† pr√©sent en BDD
 		query.prepare("SELECT COUNT(*) FROM `scene` WHERE `nom` = :nom");
 		query.bindValue(":nom", nom);
 		query.exec();
@@ -100,7 +106,7 @@ void Webedia::RequeteInsertScene(QSqlDatabase db, QString nom)
 		if (query.next()) {
 			int count = query.value(0).toInt();
 			if (count > 0) {
-				// Le nom de la scËne est dÈj‡ prÈsent en BDD, afficher une erreur
+				// Le nom de la sc√®ne est d√©j√† pr√©sent en BDD, afficher une erreur
 				ui->label_bdd->setText("Error: Scene name already exists");
 				db.close();
 				return;
@@ -136,7 +142,7 @@ void Webedia::afficherScene(QSqlDatabase db, QComboBox* comboBox_scene){
 	int selectedSceneIndex = comboBox_scene->currentIndex();
 	if (db.open()) {
 		if (!query.exec("SELECT nom FROM scene")) {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 		}
 		while (query.next()) {
 			QString sceneName = query.value(0).toString();
@@ -161,7 +167,7 @@ void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur, QComboBox* co
 
 		if (db.open()) {
 			if (!query.exec("SELECT nom FROM scene")) {
-				qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+				qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 			}
 			while (query.next()) {
 				QString sceneName = query.value(0).toString();
@@ -177,10 +183,10 @@ void Webedia::RequeteInsertCanaux(QSqlDatabase db, QString valeur, QComboBox* co
 		query.bindValue(":sceneName", sceneName);
 		query.bindValue(":valeur", valeur);
 		if (query.exec()) {
-			qDebug() << "Nouveau canal insÈrÈ avec succËs.";
+			qDebug() << "Nouveau canal ins√©r√© avec succ√®s.";
 		}
 		else {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 		}
 	}
 	db.close();
@@ -205,7 +211,7 @@ void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecombo
 
 	if (db.open()) {
 		if (!query.exec("SELECT nom FROM scene")) {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 		}
 		while (query.next()) {
 			QString sceneName = query.value(0).toString();
@@ -242,7 +248,7 @@ void Webedia::RequeteSceneListeDeroulante(QSqlDatabase db, QComboBox* scenecombo
 		}
 
 		else {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 		}
 
 
@@ -270,12 +276,12 @@ void Webedia::RequeteUpdateCanaux(QSqlDatabase db, QString valeur, QComboBox* Ca
 		query.bindValue(":id", canauxId);
 
 		if (query.exec()) {
-			// La requÍte s'est exÈcutÈe avec succËs
+			// La requ√™te s'est ex√©cut√©e avec succ√®s
 			db.commit();
 			ui->label_bdd->setText("Update successful");
 		}
 		else {
-			// Erreur lors de l'exÈcution de la requÍte
+			// Erreur lors de l'ex√©cution de la requ√™te
 			db.rollback();
 			ui->label_bdd->setText("Error updating canal");
 		}
@@ -299,7 +305,7 @@ void Webedia::onClickedCanal()
 void Webedia::updateChannelComboBox(QSqlDatabase db,const QString& sceneName, QComboBox* CanauxcomboBox) {
 	CanauxcomboBox->clear();
 	if (db.open()) {
-		// ExÈcuter la requÍte pour rÈcupÈrer les canaux associÈs ‡ la scËne sÈlectionnÈe
+		// Ex√©cuter la requ√™te pour r√©cup√©rer les canaux associ√©s √† la sc√®ne s√©lectionn√©e
 		QSqlQuery query;
 		query.prepare("SELECT id FROM canaux WHERE idscene = ?");
 		query.addBindValue(sceneName);
@@ -318,7 +324,7 @@ void Webedia::supprimerScene(QSqlDatabase db, QComboBox* supprimer_scene) {
 	int supprimerSceneIndex = supprimer_scene->currentIndex();
 	if (db.open()) {
 		if (!query.exec("SELECT nom FROM scene")) {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 		}
 		while (query.next()) {
 			QString sceneName = query.value(0).toString();
@@ -331,7 +337,7 @@ void Webedia::supprimerScene(QSqlDatabase db, QComboBox* supprimer_scene) {
 		query.prepare("DELETE FROM scene WHERE nom = ?");
 		query.addBindValue(selectedScene);
 		if (!query.exec()) {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte de suppression :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te de suppression :" << query.lastError().text();
 		}
 	}
 	db.close();
@@ -346,7 +352,7 @@ void Webedia::AffichersupprimerScene(QSqlDatabase db, QComboBox* supprimer_scene
 	int supprimerSceneIndex = supprimer_scene->currentIndex();
 	if (db.open()) {
 		if (!query.exec("SELECT nom FROM scene")) {
-			qDebug() << "Erreur lors de l'exÈcution de la requÍte SQL :" << query.lastError().text();
+			qDebug() << "Erreur lors de l'ex√©cution de la requ√™te SQL :" << query.lastError().text();
 		}
 		while (query.next()) {
 			QString sceneName = query.value(0).toString();
